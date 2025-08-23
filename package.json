@@ -1,0 +1,25 @@
+{
+  "name": "autoladenaltesland",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "build": "npm run build:js",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
+    "build:js": "npx esbuild js/app.js --bundle --minify --format=esm --outfile=dist/app.bundle.js",
+    "dev": "npx live-server --port=8080",
+    "vercel-build": "npm run build:js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "esbuild": "^0.25.9",
+    "tailwindcss": "^4.1.12"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.9.0",
+    "@sanity/image-url": "^1.1.0"
+  }
+}

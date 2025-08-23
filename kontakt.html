@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Autoladen Altes Land</title>
+    <link href="./dist/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans antialiased text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="logo.png" alt="Autoladen Altes Land" class="h-10 w-auto">
+                    <span class="ml-3 text-xl font-semibold text-primary">Autoladen Altes Land</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+                    <a href="index.html#angebote" class="text-gray-700 hover:text-primary transition-colors">Angebote</a>
+                    <a href="index.html#ueber-uns" class="text-gray-700 hover:text-primary transition-colors">Über uns</a>
+                    <a href="kontakt.html" class="text-primary font-medium">Kontakt</a>
+                </div>
+                <button class="md:hidden p-2" id="mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-4 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-primary">Home</a>
+                <a href="index.html#angebote" class="block px-3 py-2 text-gray-700 hover:text-primary">Angebote</a>
+                <a href="index.html#ueber-uns" class="block px-3 py-2 text-gray-700 hover:text-primary">Über uns</a>
+                <a href="kontakt.html" class="block px-3 py-2 text-primary font-medium">Kontakt</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero -->
+    <section class="pt-16 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+                <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                    Kontaktieren Sie uns
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Wir sind für Sie da! Nehmen Sie Kontakt mit uns auf für eine persönliche Beratung rund um Elektromobilität.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold mb-6">Nachricht senden</h2>
+                    <form action="#" method="POST" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstname" class="block text-sm font-medium text-gray-700 mb-2">Vorname</label>
+                                <input type="text" id="firstname" name="firstname" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                            </div>
+                            <div>
+                                <label for="lastname" class="block text-sm font-medium text-gray-700 mb-2">Nachname</label>
+                                <input type="text" id="lastname" name="lastname" required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-Mail</label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Telefon</label>
+                            <input type="tel" id="phone" name="phone"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Betreff</label>
+                            <select id="subject" name="subject" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors">
+                                <option value="">Bitte wählen...</option>
+                                <option value="beratung">Beratung</option>
+                                <option value="probefahrt">Probefahrt</option>
+                                <option value="service">Service & Wartung</option>
+                                <option value="ladeinfrastruktur">Ladeinfrastruktur</option>
+                                <option value="finanzierung">Finanzierung</option>
+                                <option value="sonstiges">Sonstiges</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Nachricht</label>
+                            <textarea id="message" name="message" rows="4" required
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors resize-none"></textarea>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="privacy" name="privacy" required
+                                class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
+                            <label for="privacy" class="ml-2 text-sm text-gray-600">
+                                Ich stimme der Verarbeitung meiner Daten gemäß der <a href="#" class="text-primary hover:underline">Datenschutzerklärung</a> zu.
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            Nachricht senden
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Contact Information -->
+                <div>
+                    <div class="bg-gray-50 rounded-xl p-8 mb-8">
+                        <h2 class="text-2xl font-bold mb-6">Kontaktinformationen</h2>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-primary mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Adresse</h3>
+                                    <p class="text-gray-600">
+                                        Autoladen Altes Land<br>
+                                        Hauptstraße 123<br>
+                                        21635 Jork
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-primary mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Telefon</h3>
+                                    <p class="text-gray-600">
+                                        <a href="tel:+494162123456" class="hover:text-primary">+49 (0) 4162 123456</a><br>
+                                        <a href="tel:+494162123457" class="hover:text-primary">+49 (0) 4162 123457</a> (Service)
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-primary mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <div>
+                                    <h3 class="font-semibold mb-1">E-Mail</h3>
+                                    <p class="text-gray-600">
+                                        <a href="mailto:info@autoladen-altesland.de" class="hover:text-primary">info@autoladen-altesland.de</a><br>
+                                        <a href="mailto:service@autoladen-altesland.de" class="hover:text-primary">service@autoladen-altesland.de</a>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <svg class="w-6 h-6 text-primary mt-1 mr-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Öffnungszeiten</h3>
+                                    <p class="text-gray-600">
+                                        Montag - Freitag: 9:00 - 18:00 Uhr<br>
+                                        Samstag: 9:00 - 14:00 Uhr<br>
+                                        Sonntag: Geschlossen
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map placeholder -->
+                    <div class="bg-gray-200 rounded-xl h-64 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                            </svg>
+                            <p class="text-gray-500">Interaktive Karte</p>
+                            <p class="text-sm text-gray-400">Google Maps Integration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-primary to-blue-700">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">
+                Bereit für die Zukunft der Mobilität?
+            </h2>
+            <p class="text-xl text-blue-100 mb-8">
+                Vereinbaren Sie noch heute einen Beratungstermin und entdecken Sie die Vorteile der Elektromobilität.
+            </p>
+            <a href="tel:+494162123456" class="inline-block bg-white text-primary px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                Jetzt anrufen: +49 (0) 4162 123456
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="logo.png" alt="Autoladen Altes Land" class="h-8 w-auto brightness-0 invert">
+                        <span class="ml-2 text-lg font-semibold">Autoladen Altes Land</span>
+                    </div>
+                    <p class="text-gray-400">Ihr Partner für nachhaltige Mobilität in der Region Altes Land.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Schnelllinks</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="index.html#angebote" class="text-gray-400 hover:text-white transition-colors">Angebote</a></li>
+                        <li><a href="kontakt.html" class="text-gray-400 hover:text-white transition-colors">Kontakt</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Impressum</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Kontakt</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Hauptstraße 123</li>
+                        <li>21635 Jork</li>
+                        <li>Tel: +49 (0) 4162 123456</li>
+                        <li>info@autoladen-altesland.de</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Öffnungszeiten</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Mo-Fr: 9:00 - 18:00 Uhr</li>
+                        <li>Sa: 9:00 - 14:00 Uhr</li>
+                        <li>So: Geschlossen</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Autoladen Altes Land. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Form submission (basic example)
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Vielen Dank für Ihre Nachricht! Wir werden uns schnellstmöglich bei Ihnen melden.');
+            form.reset();
+        });
+    </script>
+</body>
+</html>
