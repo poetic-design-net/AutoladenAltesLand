@@ -26,6 +26,10 @@ const fullTitle = `${title} | Autohaus & Fahrzeugberatung im Alten Land`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Alexander Phillipowski - Autoladen Altes Land" />
     <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#22c55e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=yes" />
     <link rel="canonical" href={siteUrl} />
     
     <!-- Open Graph / Facebook -->
@@ -99,13 +103,59 @@ const fullTitle = `${title} | Autohaus & Fahrzeugberatung im Alten Land`;
     }
     </script>
     
+    <!-- FAQ Schema for better search results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Welche Fahrzeuge bietet Autoladen Altes Land an?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wir bieten eine große Auswahl an Neu- und Gebrauchtwagen, mit Schwerpunkt auf nachhaltiger Mobilität. Von kompakten Stadtfahrzeugen bis zu geräumigen Familienautos - wir finden das passende Fahrzeug für Ihre Bedürfnisse."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wo befindet sich Autoladen Altes Land?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unser Standort ist in Grünendeich im Alten Land, Hauptstraße 123, 21720 Grünendeich. Wir sind gut erreichbar aus Hamburg, Stade und Buxtehude."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie sind die Öffnungszeiten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Montag bis Freitag: 9:00 - 17:00 Uhr, Samstag: 9:00 - 14:00 Uhr, Sonntag: Geschlossen. Gerne können Sie auch einen individuellen Termin vereinbaren."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bietet Autoladen Altes Land auch Finanzierung an?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, wir bieten flexible Finanzierungsmöglichkeiten und Leasing-Optionen an. Alexander Phillipowski berät Sie gerne persönlich zu den besten Konditionen für Ihre Situation."
+          }
+        }
+      ]
+    }
+    </script>
+    
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{fullTitle}</title>
     
-    <!-- Google Fonts -->
+    <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    
+    <!-- Google Fonts with font-display: swap for better performance -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet" />
   </head>
   <body class="font-sans antialiased text-gray-900">
