@@ -42,3 +42,4 @@ studio/node_modules/
 tmp/
 temp/
 .vercel
+autoladen-astro/

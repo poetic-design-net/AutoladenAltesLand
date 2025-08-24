@@ -30,7 +30,7 @@ const queries = {
     "imageAlt": image.alt
   }`,
   
-  angebote: `*[_type == "angebot"] | order(order asc)[0...6]{
+  leistungen: `*[_type == "leistung"] | order(order asc)[0...6]{
     _id,
     title,
     description,
@@ -98,12 +98,12 @@ export async function getHeroData() {
   }
 }
 
-export async function getAngebote() {
+export async function getLeistungen() {
   try {
-    const data = await client.fetch(queries.angebote);
+    const data = await client.fetch(queries.leistungen);
     return data;
   } catch (error) {
-    console.error('Error fetching angebote:', error);
+    console.error('Error fetching leistungen:', error);
     return [];
   }
 }
@@ -140,9 +140,9 @@ export async function getSiteSettings() {
 
 // Helper function to get all data for initial page load
 export async function getAllPageData() {
-  const [hero, angebote, fahrzeuge, kontakt, siteSettings] = await Promise.all([
+  const [hero, leistungen, fahrzeuge, kontakt, siteSettings] = await Promise.all([
     getHeroData(),
-    getAngebote(),
+    getLeistungen(),
     getFahrzeuge(),
     getKontakt(),
     getSiteSettings()
@@ -150,7 +150,7 @@ export async function getAllPageData() {
   
   return {
     hero,
-    angebote,
+    angebote: leistungen, // Keep 'angebote' key for backward compatibility
     fahrzeuge,
     kontakt,
     siteSettings

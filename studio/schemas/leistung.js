@@ -1,6 +1,6 @@
 export default {
-  name: 'angebot',
-  title: 'Angebote',
+  name: 'leistung',
+  title: 'Leistungen',
   type: 'document',
   fields: [
     {

@@ -43,20 +43,13 @@ const sampleData = {
     primaryButtonText: 'Fahrzeuge entdecken',
     primaryButtonLink: '#fahrzeuge',
     secondaryButtonText: 'Beratung anfordern',
-    secondaryButtonLink: '/kontakt.html',
-    image: {
-      _type: 'image',
-      asset: {
-        _type: 'reference',
-        _ref: 'image-placeholder' // Will need actual image upload
-      },
-      alt: 'Modernes Elektroauto'
-    }
+    secondaryButtonLink: '/kontakt'
+    // Bilder müssen über Sanity Studio hochgeladen werden
   },
 
   leistungen: [
     {
-      _type: 'angebot',
+      _type: 'leistung',
       _id: 'leistung-1',
       title: 'Fahrzeugverkauf',
       description: 'Große Auswahl an neuen und gebrauchten Elektrofahrzeugen aller führenden Marken.',
