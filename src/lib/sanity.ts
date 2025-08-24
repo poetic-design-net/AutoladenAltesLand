@@ -25,6 +25,8 @@ export const queries = {
     primaryButtonLink,
     secondaryButtonText,
     secondaryButtonLink,
+    trustBadges,
+    floatingCard,
     "imageUrl": image.asset->url,
     "imageAlt": image.alt
   }`,
@@ -40,7 +42,7 @@ export const queries = {
     order
   }`,
   
-  fahrzeuge: `*[_type == "fahrzeug" && verfuegbar == true && highlight == true] | order(_createdAt desc)[0...3]{
+  fahrzeuge: `*[_type == "fahrzeug" && verfuegbar == true] | order(_createdAt desc){
     _id,
     marke,
     modell,

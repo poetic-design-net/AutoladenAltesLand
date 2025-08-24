@@ -8,7 +8,7 @@ const navItems = [
 ];
 ---
 
-<nav id="navbar" class="fixed w-full bg-white/95 backdrop-blur-md z-50 shadow-sm transition-all duration-300">
+<nav id="navbar" class="fixed w-full bg-white/95 backdrop-blur-md shadow-sm transition-all duration-300" style="z-index: 100;">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div id="nav-container" class="flex justify-between items-center transition-all duration-300 py-4">
       <div class="flex items-center">
@@ -16,9 +16,9 @@ const navItems = [
           id="nav-logo" 
           src="/logo.png" 
           alt="Autoladen Altes Land" 
-          class="transition-all duration-300 h-14 w-auto" 
+          class="transition-all duration-300 h-24 w-auto" 
         />
-        <span id="nav-title" class="ml-3 text-2xl font-semibold text-gray-900 transition-all duration-300">Autoladen Altes Land</span>
+        <span id="nav-title" class="ml-4 text-2xl font-bold text-gray-900 transition-all duration-300">Autoladen Altes Land</span>
       </div>
       
       <div class="hidden md:flex space-x-8">
@@ -33,40 +33,184 @@ const navItems = [
         ))}
       </div>
       
-      <button class="md:hidden p-2 rounded-lg hover:bg-gray-100" id="mobile-menu-button">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+      <button class="md:hidden relative w-10 h-10 rounded-lg hover:bg-gray-100 flex items-center justify-center" id="mobile-menu-button" aria-label="Toggle menu">
+        <div class="hamburger-menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </div>
       </button>
     </div>
   </div>
   
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-    <div class="px-2 pt-2 pb-3 space-y-1">
-      {navItems.map((item) => (
-        <a 
-          href={item.href}
-          class="block px-3 py-2 text-gray-700 hover:text-brand-green rounded-lg hover:bg-gray-50"
-        >
-          {item.label}
-        </a>
-      ))}
-    </div>
-  </div>
 </nav>
+
+<!-- Mobile Menu Overlay (Outside of nav) -->
+<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden" style="z-index: 9998;"></div>
+
+<!-- Mobile Menu (Outside of nav) -->
+<div id="mobile-menu" class="fixed top-0 right-0 h-full w-80 max-w-[85vw] shadow-2xl transform translate-x-full transition-transform duration-300 md:hidden" style="z-index: 9999; background-color: white;">
+    <div class="flex items-center justify-between p-6 border-b">
+      <span class="text-xl font-bold text-gray-900">Menu</span>
+      <button id="mobile-menu-close" class="w-10 h-10 rounded-lg hover:bg-gray-100 flex items-center justify-center group" aria-label="Close menu">
+        <svg class="w-6 h-6 text-gray-600 group-hover:text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <nav class="p-6">
+      <div class="space-y-1">
+        {navItems.map((item, index) => (
+          <a 
+            href={item.href}
+            class="mobile-menu-item block px-4 py-3 text-lg text-gray-700 hover:text-brand-green rounded-xl hover:bg-gray-50 transition-all duration-200 transform translate-x-0 opacity-0"
+            style={`animation-delay: ${index * 50}ms`}
+          >
+            <div class="flex items-center justify-between">
+              <span>{item.label}</span>
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <!-- Mobile Menu CTA -->
+      <div class="mt-8 pt-8 border-t">
+        <a 
+          href="/kontakt"
+          class="block w-full px-6 py-3 bg-brand-green text-white text-center rounded-full font-medium hover:bg-brand-blue transition-colors duration-200"
+        >
+          Kostenloses Beratungsgespräch
+        </a>
+      </div>
+      
+      <!-- Mobile Menu Contact Info -->
+      <div class="mt-8 space-y-4 text-sm text-gray-600">
+        <a href="tel:+491234567890" class="flex items-center space-x-3 hover:text-brand-green">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+          </svg>
+          <span>+49 123 456 7890</span>
+        </a>
+        <a href="mailto:info@autoladen-altesland.de" class="flex items-center space-x-3 hover:text-brand-green">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          <span>info@autoladen-altesland.de</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+<style>
+  .hamburger-menu {
+    position: relative;
+    width: 24px;
+    height: 20px;
+  }
+  
+  .hamburger-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #111827;
+    transition: all 0.3s ease;
+  }
+  
+  .hamburger-line:nth-child(1) {
+    top: 0;
+  }
+  
+  .hamburger-line:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .hamburger-line:nth-child(3) {
+    bottom: 0;
+  }
+  
+  .menu-open .hamburger-line:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  
+  .menu-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .menu-open .hamburger-line:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+  }
+  
+  @keyframes slideInMenuItem {
+    from {
+      transform: translateX(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .mobile-menu-item.menu-open {
+    animation: slideInMenuItem 0.3s ease forwards;
+  }
+</style>
 
 <script>
   const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
   const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
   const navbar = document.getElementById('navbar');
   const navContainer = document.getElementById('nav-container');
   const navLogo = document.getElementById('nav-logo');
   const navTitle = document.getElementById('nav-title');
+  const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
   
-  // Mobile menu toggle
-  mobileMenuButton?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
+  // Mobile menu functions
+  function openMobileMenu() {
+    mobileMenu?.classList.remove('translate-x-full');
+    mobileMenuOverlay?.classList.remove('opacity-0', 'pointer-events-none');
+    mobileMenuButton?.classList.add('menu-open');
+    document.body.style.overflow = 'hidden';
+    
+    // Animate menu items
+    mobileMenuItems.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add('menu-open');
+      }, index * 50);
+    });
+  }
+  
+  function closeMobileMenu() {
+    mobileMenu?.classList.add('translate-x-full');
+    mobileMenuOverlay?.classList.add('opacity-0', 'pointer-events-none');
+    mobileMenuButton?.classList.remove('menu-open');
+    document.body.style.overflow = '';
+    
+    // Reset menu items
+    mobileMenuItems.forEach(item => {
+      item.classList.remove('menu-open');
+    });
+  }
+  
+  // Mobile menu event listeners
+  mobileMenuButton?.addEventListener('click', openMobileMenu);
+  mobileMenuClose?.addEventListener('click', closeMobileMenu);
+  mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+  
+  // Close menu when clicking on a link
+  mobileMenuItems.forEach(item => {
+    item.addEventListener('click', () => {
+      closeMobileMenu();
+    });
   });
   
   // Scroll effect for navbar
@@ -81,8 +225,8 @@ const navItems = [
       navbar?.classList.remove('shadow-sm');
       navContainer?.classList.remove('py-4');
       navContainer?.classList.add('py-2');
-      navLogo?.classList.remove('h-14');
-      navLogo?.classList.add('h-10');
+      navLogo?.classList.remove('h-24');
+      navLogo?.classList.add('h-12');
       navTitle?.classList.remove('text-2xl');
       navTitle?.classList.add('text-xl');
     } else {
@@ -91,8 +235,8 @@ const navItems = [
       navbar?.classList.add('shadow-sm');
       navContainer?.classList.remove('py-2');
       navContainer?.classList.add('py-4');
-      navLogo?.classList.remove('h-10');
-      navLogo?.classList.add('h-14');
+      navLogo?.classList.remove('h-12');
+      navLogo?.classList.add('h-24');
       navTitle?.classList.remove('text-xl');
       navTitle?.classList.add('text-2xl');
     }
