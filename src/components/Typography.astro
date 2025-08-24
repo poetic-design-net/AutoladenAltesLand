@@ -1,0 +1,42 @@
+---
+interface Props {
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'span';
+  variant?: 'hero' | 'title' | 'subtitle' | 'body' | 'caption';
+  color?: 'default' | 'brand-blue' | 'brand-green' | 'gray';
+  align?: 'left' | 'center' | 'right';
+  class?: string;
+}
+
+const { 
+  as: Tag = 'p',
+  variant = 'body',
+  color = 'default',
+  align = 'left',
+  class: className = ''
+} = Astro.props;
+
+const variants = {
+  hero: 'text-4xl md:text-5xl lg:text-6xl font-bold leading-tight',
+  title: 'text-3xl md:text-4xl font-bold',
+  subtitle: 'text-xl md:text-2xl font-semibold',
+  body: 'text-base md:text-lg',
+  caption: 'text-sm text-gray-600'
+};
+
+const colors = {
+  default: 'text-gray-900',
+  'brand-blue': 'text-brand-blue',
+  'brand-green': 'text-brand-green',
+  gray: 'text-gray-600'
+};
+
+const alignments = {
+  left: 'text-left',
+  center: 'text-center',
+  right: 'text-right'
+};
+---
+
+<Tag class={`${variants[variant]} ${colors[color]} ${alignments[align]} ${className}`}>
+  <slot />
+</Tag>

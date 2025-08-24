@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+const kontaktData = {
+  firmenname: "Autoladen Altes Land",
+  strasse: "Hauptstraße 123",
+  plz: "21635",
+  ort: "Jork",
+  telefon: "+49 162 123 4567",
+  email: "alex@autoladen-altesland.de",
+  oeffnungszeiten: [
+    { tag: "Mo-Fr", zeit: "9:00 - 18:00 Uhr" },
+    { tag: "Sa", zeit: "9:00 - 14:00 Uhr" },
+    { tag: "So", zeit: "Nach Vereinbarung" }
+  ]
+};
+---
+
+<Layout title="Kontakt - Autoladen Altes Land">
+  <Navigation />
+  
+  <main class="min-h-screen pt-24 pb-12 bg-gradient-to-br from-white via-gray-50 to-blue-50/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Kontakt</h1>
+        <p class="text-xl text-gray-600">Ich bin für dich da - persönlich und direkt</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-12">
+        <!-- Kontaktformular -->
+        <div class="bg-white rounded-lg shadow-md p-8">
+          <h2 class="text-2xl font-semibold mb-6 text-gray-900">Nachricht senden</h2>
+          <form class="space-y-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-lightblue focus:border-transparent"
+                required
+              />
+            </div>
+            
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-Mail</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-lightblue focus:border-transparent"
+                required
+              />
+            </div>
+            
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telefon (optional)</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                name="phone" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-lightblue focus:border-transparent"
+              />
+            </div>
+            
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Betreff</label>
+              <select 
+                id="subject" 
+                name="subject" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-lightblue focus:border-transparent"
+              >
+                <option>Allgemeine Anfrage</option>
+                <option>Fahrzeugberatung</option>
+                <option>Probefahrt vereinbaren</option>
+                <option>Service & Wartung</option>
+                <option>Ladeinfrastruktur</option>
+                <option>Finanzierung & Leasing</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Nachricht</label>
+              <textarea 
+                id="message" 
+                name="message" 
+                rows="4" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-lightblue focus:border-transparent"
+                required
+              ></textarea>
+            </div>
+            
+            <button 
+              type="submit" 
+              class="w-full bg-brand-blue text-white py-3 rounded-full font-medium hover:bg-brand-lightblue transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+              Nachricht senden
+            </button>
+          </form>
+        </div>
+        
+        <!-- Kontaktinformationen -->
+        <div class="space-y-8">
+          <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-900">Kontaktdaten</h2>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <span class="text-2xl mr-4">📍</span>
+                <div>
+                  <p class="font-medium">Adresse</p>
+                  <p class="text-gray-600">{kontaktData.strasse}</p>
+                  <p class="text-gray-600">{kontaktData.plz} {kontaktData.ort}</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <span class="text-2xl mr-4">📞</span>
+                <div>
+                  <p class="font-medium">Telefon</p>
+                  <a href={`tel:${kontaktData.telefon.replace(/\s/g, '')}`} class="text-brand-lightblue hover:text-brand-blue">
+                    {kontaktData.telefon}
+                  </a>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <span class="text-2xl mr-4">✉️</span>
+                <div>
+                  <p class="font-medium">E-Mail</p>
+                  <a href={`mailto:${kontaktData.email}`} class="text-brand-lightblue hover:text-brand-blue">
+                    {kontaktData.email}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-900">Öffnungszeiten</h2>
+            <div class="space-y-2">
+              {kontaktData.oeffnungszeiten.map((zeit) => (
+                <div class="flex justify-between">
+                  <span class="font-medium">{zeit.tag}</span>
+                  <span class="text-gray-600">{zeit.zeit}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Google Maps Placeholder -->
+          <div class="bg-white rounded-lg shadow-md p-8">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-900">Anfahrt</h2>
+            <div class="bg-gray-100 rounded-lg h-64 flex items-center justify-center">
+              <p class="text-gray-500">Google Maps Karte hier einbinden</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<script>
+  // Formular-Handler (nur für Demo, später mit echter Funktionalität ersetzen)
+  const form = document.querySelector('form');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Danke für deine Nachricht! Ich melde mich schnellstmöglich bei dir.');
+  });
+</script>

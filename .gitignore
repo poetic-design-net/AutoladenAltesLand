@@ -1,45 +1,26 @@
-# Dependencies
-node_modules/
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# Build outputs
+# build output
 dist/
-.next/
-out/
-build/
+# generated types
+.astro/
 
-# Vercel
-.vercel/
+# dependencies
+node_modules/
 
-# Environment variables
-.env
-.env.local
-.env.production
-.env.development
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# Logs
-*.log
+# logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# Sanity
-studio/dist/
-studio/.sanity/
-studio/node_modules/
 
-# Temporary files
-tmp/
-temp/
-.vercel
-autoladen-astro/
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+old-static-site/
+.astro/

@@ -1,0 +1,80 @@
+---
+interface Props {
+  brand: string;
+  model: string;
+  price: number;
+  range: number;
+  power: number;
+  chargeTime: string;
+  status: 'neu' | 'vorfuehrwagen';
+  description: string;
+  imageUrl: string;
+}
+
+const { 
+  brand, 
+  model, 
+  price, 
+  range, 
+  power, 
+  chargeTime, 
+  status, 
+  description, 
+  imageUrl 
+} = Astro.props;
+
+function formatPrice(price: number) {
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0
+  }).format(price);
+}
+---
+
+<article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-200">
+  <div class="h-48 overflow-hidden">
+    <img 
+      src={imageUrl}
+      alt={`${brand} ${model}`}
+      class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+      loading="lazy"
+    />
+  </div>
+  
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-2">
+      <h3 class="text-xl font-semibold text-gray-900">
+        {brand} {model}
+      </h3>
+      <span class={`px-3 py-1 text-xs font-medium rounded-full ${
+        status === 'neu' 
+          ? 'bg-brand-green/10 text-brand-green' 
+          : 'bg-brand-lightblue/10 text-brand-lightblue'
+      }`}>
+        {status === 'neu' ? 'Neu' : 'Vorführwagen'}
+      </span>
+    </div>
+    
+    <p class="text-xl font-bold text-brand-lightblue mb-4">
+      {formatPrice(price)}
+    </p>
+    
+    <div class="space-y-2 text-sm text-gray-600">
+      <p>🔋 Reichweite: {range} km</p>
+      <p>⚡ Leistung: {power} kW</p>
+      <p>⏱️ Schnellladen: {chargeTime}</p>
+    </div>
+    
+    <p class="mt-4 text-gray-600 text-sm line-clamp-2">
+      {description}
+    </p>
+    
+    <a 
+      href="/kontakt" 
+      class="mt-4 inline-block text-brand-green font-medium hover:text-brand-blue text-sm transition-colors"
+    >
+      Details ansehen →
+    </a>
+  </div>
+</article>

@@ -1,0 +1,26 @@
+---
+interface Props {
+  name: string;
+  location: string;
+  vehicle: string;
+  text: string;
+  highlight: string;
+}
+
+const { name, location, vehicle, text, highlight } = Astro.props;
+---
+
+<div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+  <p class="text-brand-blue font-semibold mb-3">
+    {highlight}
+  </p>
+  
+  <p class="text-gray-600 mb-4 text-sm leading-relaxed italic">
+    "{text}"
+  </p>
+  
+  <div class="border-t pt-4">
+    <p class="font-medium text-gray-900">{name}</p>
+    <p class="text-sm text-gray-500">{location} · {vehicle}</p>
+  </div>
+</div>

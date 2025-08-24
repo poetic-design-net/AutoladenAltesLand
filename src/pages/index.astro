@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Leistungen from '../components/Leistungen.astro';
+import Fahrzeuge from '../components/Fahrzeuge.astro';
+import Kundenstimmen from '../components/Kundenstimmen.astro';
+import Stats from '../components/Stats.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Autoladen Altes Land - Alexander Philipowsky | Mobilität mit Herz">
+  <Navigation />
+  <main>
+    <Hero />
+    <About />
+    <Leistungen />
+    <Fahrzeuge />
+    <Kundenstimmen />
+    <Stats />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Neue Farben für mehr Wärme */
+  :root {
+    --color-primary-green: #2E7D32;
+    --color-secondary-orange: #FF6B35;
+    --color-accent-blue: #4A90E2;
+  }
+</style>

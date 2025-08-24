@@ -1,0 +1,100 @@
+---
+import { client, queries } from '../lib/sanity.ts';
+
+// Daten aus Sanity holen
+let leistungen;
+try {
+  leistungen = await client.fetch(queries.leistungen);
+} catch (error) {
+  console.error('Error fetching leistungen:', error);
+}
+
+// Fallback zu statischen Daten wenn Sanity nicht verfügbar
+if (!leistungen || leistungen.length === 0) {
+  leistungen = [
+    {
+      title: "Fahrzeugberatung",
+      description: "Umfassende Beratung zu Fahrzeugen aller führenden Marken.",
+      icon: "check",
+      gradientFrom: "blue-500",
+      gradientTo: "blue-600",
+    },
+    {
+      title: "Technische Lösungen",
+      description: "Installation und Wartung technischer Ausstattung für Ihr Fahrzeug.",
+      icon: "lightning",
+      gradientFrom: "cyan-500",
+      gradientTo: "cyan-600",
+    },
+    {
+      title: "Beratung",
+      description: "Individuelle Beratung zu Fördermöglichkeiten, Steuervorteilen und Finanzierung.",
+      icon: "users",
+      gradientFrom: "orange-500",
+      gradientTo: "orange-600",
+    },
+    {
+      title: "Finanzierung & Leasing",
+      description: "Attraktive Finanzierungs- und Leasingmodelle für Privat- und Geschäftskunden.",
+      icon: "euro",
+      gradientFrom: "green-500",
+      gradientTo: "green-600",
+    },
+    {
+      title: "Service & Wartung",
+      description: "Professioneller Service und Wartung für alle Elektrofahrzeuge - ich kümmere mich persönlich darum.",
+      icon: "settings",
+      gradientFrom: "purple-500",
+      gradientTo: "purple-600",
+    },
+    {
+      title: "Probefahrten",
+      description: "Testen Sie Ihr Wunschfahrzeug ausgiebig bei einer unverbindlichen Probefahrt.",
+      icon: "clipboard",
+      gradientFrom: "pink-500",
+      gradientTo: "pink-600",
+    },
+  ];
+}
+
+// Icon-Mapping von Sanity zu Emoji
+const iconMap: Record<string, string> = {
+  check: "✅",
+  lightning: "⚡",
+  users: "👥",
+  euro: "💰",
+  settings: "🔧",
+  clipboard: "📋"
+};
+---
+
+<section id="leistungen" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">Meine Leistungen</h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Kompetente Beratung und umfassender Service für Ihre Mobilität
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {leistungen.map((leistung, index) => (
+          <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-200">
+            <div class={`h-1 ${
+              index === 0 || index === 3 ? 'bg-brand-blue' :
+              index === 1 || index === 4 ? 'bg-brand-green' :
+              'bg-brand-lightblue'
+            }`}></div>
+          <div class="p-6">
+            <h3 class="text-lg font-semibold mb-3 text-gray-900">{leistung.title}</h3>
+            <p class="text-gray-600 text-sm mb-4 leading-relaxed">{leistung.description}</p>
+            <a href="#kontakt" class="text-brand-lightblue font-medium hover:text-brand-blue inline-flex items-center text-sm transition-colors duration-200">
+              Mehr erfahren
+              <span class="ml-1">→</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

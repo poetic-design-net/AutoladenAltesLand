@@ -1,0 +1,31 @@
+---
+interface Stat {
+  value: string;
+  label: string;
+  icon?: string;
+}
+
+const stats: Stat[] = [
+  { value: "500+", label: "Zufriedene Kunden", icon: "👥" },
+  { value: "2019", label: "Gegründet", icon: "🚀" },
+  { value: "4.9⭐", label: "Google Bewertung", icon: "⭐" },
+  { value: "100%", label: "Persönlich", icon: "🤝" }
+];
+---
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {stats.map((stat) => (
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-brand-blue mb-2">
+            {stat.value}
+          </div>
+          <div class="text-gray-600">
+            {stat.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

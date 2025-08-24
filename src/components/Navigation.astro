@@ -1,0 +1,61 @@
+---
+const navItems = [
+  { label: "Home", href: "#home" },
+  { label: "Über mich", href: "#ueber-alex" },
+  { label: "Leistungen", href: "#leistungen" },
+  { label: "Fahrzeuge", href: "#fahrzeuge" },
+  { label: "Kontakt", href: "/kontakt" },
+];
+---
+
+<nav class="fixed w-full bg-white/95 backdrop-blur-md z-50 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <img src="/logo.png" alt="Autoladen Altes Land" class="h-10 w-auto" />
+        <span class="ml-3 text-xl font-semibold text-gray-900">Autoladen Altes Land</span>
+      </div>
+      
+      <div class="hidden md:flex space-x-8">
+        {navItems.map((item) => (
+          <a 
+            href={item.href}
+            class="text-gray-700 hover:text-brand-green transition-colors duration-200 relative group"
+          >
+            {item.label}
+            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-green transition-all duration-200 group-hover:w-full"></span>
+          </a>
+        ))}
+      </div>
+      
+      <button class="md:hidden p-2 rounded-lg hover:bg-gray-100" id="mobile-menu-button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+    <div class="px-2 pt-2 pb-3 space-y-1">
+      {navItems.map((item) => (
+        <a 
+          href={item.href}
+          class="block px-3 py-2 text-gray-700 hover:text-brand-green rounded-lg hover:bg-gray-50"
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

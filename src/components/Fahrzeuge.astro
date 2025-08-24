@@ -1,0 +1,120 @@
+---
+import { client, queries } from '../lib/sanity.ts';
+
+// Daten aus Sanity holen
+let fahrzeuge;
+try {
+  fahrzeuge = await client.fetch(queries.fahrzeuge);
+} catch (error) {
+  console.error('Error fetching fahrzeuge:', error);
+}
+
+// Fallback zu statischen Daten wenn Sanity nicht verfügbar
+if (!fahrzeuge || fahrzeuge.length === 0) {
+  fahrzeuge = [
+  {
+    marke: "Tesla",
+    modell: "Model 3",
+    jahr: 2024,
+    preis: 42900,
+    reichweite: 513,
+    ladezeit: "27 Min auf 80%",
+    leistung: 325,
+    zustand: "neu",
+    beschreibung: "Das meistverkaufte Elektroauto Europas mit herausragender Reichweite und Supercharger-Zugang.",
+    // Unsplash Bild eines Tesla Model 3
+    imageUrl: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&h=600&fit=crop&q=80",
+  },
+  {
+    marke: "Volkswagen",
+    modell: "ID.4",
+    jahr: 2024,
+    preis: 39990,
+    reichweite: 521,
+    ladezeit: "30 Min auf 80%",
+    leistung: 204,
+    zustand: "neu",
+    beschreibung: "Der perfekte Familien-SUV mit viel Platz und modernster Technik.",
+    // Unsplash Bild eines VW ID.4
+    imageUrl: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&h=600&fit=crop&q=80",
+  },
+  {
+    marke: "BMW",
+    modell: "iX3",
+    jahr: 2023,
+    preis: 55900,
+    reichweite: 461,
+    ladezeit: "32 Min auf 80%",
+    leistung: 286,
+    zustand: "vorfuehrwagen",
+    beschreibung: "Premium-SUV mit typischer BMW-Qualität und sportlicher Performance.",
+    // Unsplash Bild eines BMW Elektroautos
+    imageUrl: "https://images.unsplash.com/photo-1617654112329-c1b614b0ffc6?w=800&h=600&fit=crop&q=80",
+  },
+  ];
+}
+
+// Nutze Sanity-Bilder wenn vorhanden, sonst Unsplash
+fahrzeuge = fahrzeuge.map(f => ({
+  ...f,
+  imageUrl: f.hauptbild || f.imageUrl || `https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=600&fit=crop&q=80`
+}));
+
+function formatPrice(price: number) {
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0
+  }).format(price);
+}
+---
+
+<section id="fahrzeuge" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-brand-blue mb-4">Aktuelle Fahrzeuge</h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+        Diese Fahrzeuge sind verfügbar oder kurzfristig lieferbar
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {fahrzeuge.map((fahrzeug) => (
+        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-200">
+          <div class="h-48 overflow-hidden">
+            <img 
+              src={fahrzeug.imageUrl}
+              alt={`${fahrzeug.marke} ${fahrzeug.modell}`}
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="text-xl font-semibold text-gray-900">
+                {fahrzeug.marke} {fahrzeug.modell}
+              </h3>
+              <span class={`px-3 py-1 text-xs font-medium rounded-full ${
+                fahrzeug.zustand === 'neu' 
+                  ? 'bg-brand-green/10 text-brand-green' 
+                  : 'bg-brand-lightblue/10 text-brand-lightblue'
+              }`}>
+                {fahrzeug.zustand === 'neu' ? 'Neu' : 'Vorführwagen'}
+              </span>
+            </div>
+            <p class="text-xl font-bold text-brand-lightblue mb-4">{formatPrice(fahrzeug.preis)}</p>
+            <div class="space-y-2 text-sm text-gray-600">
+              <p>🔋 Reichweite: {fahrzeug.reichweite} km</p>
+              <p>⚡ Leistung: {fahrzeug.leistung} kW</p>
+              <p>⏱️ Schnellladen: {fahrzeug.ladezeit}</p>
+            </div>
+            <p class="mt-4 text-gray-600 text-sm line-clamp-2">{fahrzeug.beschreibung}</p>
+            <a href="/kontakt" class="mt-4 inline-block text-brand-green font-medium hover:text-brand-blue text-sm">
+              Details ansehen →
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
