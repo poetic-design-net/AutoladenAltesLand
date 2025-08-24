@@ -1,0 +1,35 @@
+---
+import Layout from './Layout.astro';
+import TopBar from '../components/TopBar.astro';
+import Navigation from '../components/Navigation.astro';
+import NavigationContact from '../components/NavigationContact.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppChat from '../components/WhatsAppChat.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+// Check if we're on the contact page
+const isContactPage = Astro.url.pathname === '/kontakt';
+---
+
+<Layout title={title} description={description}>
+  <TopBar />
+  {isContactPage ? <NavigationContact /> : <Navigation />}
+  <main class="min-h-screen pt-24 md:pt-28">
+    <slot />
+  </main>
+  <Footer />
+  <WhatsAppChat />
+</Layout>
+
+<style>
+  /* Account for fixed headers */
+  :global(.page-content) {
+    padding-top: calc(2.5rem + 4rem); /* TopBar (40px) + Navigation (~64px) */
+  }
+</style>

@@ -69,25 +69,56 @@ function formatPrice(price: number) {
 }
 ---
 
-<section id="fahrzeuge" class="py-20 bg-white">
+<section id="fahrzeuge" class="py-20 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
-      <h2 class="text-3xl font-bold text-brand-blue mb-4">Aktuelle Fahrzeuge</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-brand-blue mb-4">Aktuelle Fahrzeuge</h2>
       <p class="text-lg text-gray-600 max-w-3xl mx-auto">
-        Diese Fahrzeuge sind verfügbar oder kurzfristig lieferbar
+        Große Auswahl an Neu- und Gebrauchtwagen - faire Preise, transparente Beratung
       </p>
     </div>
     
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {fahrzeuge.map((fahrzeug) => (
-        <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-200">
-          <div class="h-48 overflow-hidden">
+    <!-- Slider Container -->
+    <div class="relative">
+      <!-- Slider Wrapper with professional shadow containment -->
+      <div class="relative">
+        <!-- Invisible padding container for hover space -->
+        <div class="overflow-hidden -mx-8 px-8 pb-12 pt-4">
+          <div id="vehicle-slider" class="flex transition-transform duration-500 ease-out">
+      {fahrzeuge.map((fahrzeug, index) => (
+        <article 
+          class="vehicle-slide flex-none w-full sm:w-1/2 lg:w-1/3 px-4"
+          data-index={index}
+        >
+          <a href="/kontakt" class="block h-full relative">
+            <!-- Share Button positioned outside of scaling card -->
+            <button 
+              class="share-btn absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm flex items-center justify-center rounded-full hover:bg-white transition-all duration-200 hover:scale-110 z-20 opacity-0 hover:opacity-100"
+              data-vehicle={`${fahrzeug.marke} ${fahrzeug.modell}`}
+              data-price={formatPrice(fahrzeug.preis)}
+              data-index={index}
+              aria-label="Teilen"
+              onclick="event.preventDefault(); event.stopPropagation();"
+            >
+              <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+              </svg>
+            </button>
+            
+            <div class="vehicle-card bg-white rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer h-full transform-gpu hover:scale-[1.02] hover:z-10 relative">
+          <div class="h-56 overflow-hidden relative group">
             <img 
               src={fahrzeug.imageUrl}
               alt={`${fahrzeug.marke} ${fahrzeug.modell}`}
-              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               loading="lazy"
             />
+            <!-- Overlay on Hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="absolute bottom-4 left-4 text-white">
+                <p class="text-sm font-medium">Modelljahr {fahrzeug.jahr}</p>
+              </div>
+            </div>
           </div>
           <div class="p-6">
             <div class="flex justify-between items-start mb-2">
@@ -109,12 +140,491 @@ function formatPrice(price: number) {
               <p>⏱️ Schnellladen: {fahrzeug.ladezeit}</p>
             </div>
             <p class="mt-4 text-gray-600 text-sm line-clamp-2">{fahrzeug.beschreibung}</p>
-            <a href="/kontakt" class="mt-4 inline-block text-brand-green font-medium hover:text-brand-blue text-sm">
-              Details ansehen →
-            </a>
+            <div class="mt-4 inline-flex items-center text-brand-green font-medium text-sm transition-colors duration-200">
+              Details ansehen 
+              <svg class="w-4 h-4 ml-1 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
           </div>
+            </div>
+          </a>
         </article>
       ))}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Navigation Buttons -->
+      <button 
+        id="slider-prev" 
+        class="absolute left-2 lg:left-0 top-1/2 -translate-y-1/2 lg:-translate-x-12 bg-white/95 backdrop-blur-sm text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl hover:bg-white transition-all duration-200 z-10 group"
+        aria-label="Previous vehicle"
+      >
+        <svg class="w-6 h-6 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      
+      <button 
+        id="slider-next" 
+        class="absolute right-2 lg:right-0 top-1/2 -translate-y-1/2 lg:translate-x-12 bg-white/95 backdrop-blur-sm text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl hover:bg-white transition-all duration-200 z-10 group"
+        aria-label="Next vehicle"
+      >
+        <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+      
+      <!-- Smart Indicator - Only show if needed -->
+      <div class="flex justify-center mt-6" id="slider-indicator">
+        <!-- Will be populated by JavaScript based on actual slide count -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modern Share Modal -->
+  <div id="share-modal" class="fixed inset-0 z-50 hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="share-backdrop"></div>
+    
+    <!-- Modal -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-900">Fahrzeug teilen</h3>
+        <button id="close-share" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <p class="text-sm text-gray-600 mb-6" id="share-vehicle-info">
+        <!-- Will be populated by JavaScript -->
+      </p>
+      
+      <!-- Share Options Grid -->
+      <div class="grid grid-cols-4 gap-4 mb-6">
+        <!-- WhatsApp -->
+        <button class="share-option flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 transition-colors" data-platform="whatsapp">
+          <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+          </div>
+          <span class="text-xs text-gray-600">WhatsApp</span>
+        </button>
+        
+        <!-- Facebook -->
+        <button class="share-option flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 transition-colors" data-platform="facebook">
+          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </div>
+          <span class="text-xs text-gray-600">Facebook</span>
+        </button>
+        
+        <!-- Email -->
+        <button class="share-option flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 transition-colors" data-platform="email">
+          <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="text-xs text-gray-600">E-Mail</span>
+        </button>
+        
+        <!-- Copy Link -->
+        <button class="share-option flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 transition-colors" data-platform="copy">
+          <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span class="text-xs text-gray-600">Link</span>
+        </button>
+      </div>
+      
+      <!-- Native Share Button (if supported) -->
+      <button id="native-share" class="w-full bg-brand-green text-white py-3 rounded-xl font-medium hover:bg-brand-green/90 transition-colors hidden">
+        Weitere Optionen
+      </button>
+      
+      <!-- Success Message -->
+      <div id="share-success" class="hidden bg-green-50 text-green-700 p-3 rounded-lg text-sm text-center">
+        ✓ Link kopiert!
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* Professional shadow system inspired by Apple/Tesla */
+  .vehicle-card {
+    /* Base shadow - subtle and elegant */
+    box-shadow: 
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vehicle-card:hover {
+    /* Enhanced shadow on hover - elevation without overflow */
+    box-shadow: 
+      0 10px 25px -5px rgba(0, 0, 0, 0.15),
+      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Hover effect for the arrow */
+  a:hover .vehicle-card svg {
+    transform: translateX(4px);
+  }
+  
+  /* Make the Details text change color on card hover */
+  a:hover .vehicle-card div[class*="text-brand-green"] {
+    color: #3BA4C7; /* brand-blue */
+  }
+  
+  /* Show share button on card hover */
+  .vehicle-slide:hover .share-btn,
+  .share-btn:hover {
+    opacity: 1 !important;
+  }
+  
+  /* Smooth transitions for slider */
+  #vehicle-slider {
+    scroll-behavior: smooth;
+  }
+  
+  /* Disable scroll snap on mobile for better touch experience */
+  @media (max-width: 640px) {
+    #vehicle-slider {
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .vehicle-slide {
+      scroll-snap-align: start;
+    }
+  }
+  
+  /* Hide navigation buttons on mobile */
+  @media (max-width: 640px) {
+    #slider-prev, #slider-next {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Vehicle Slider Logic
+  const slider = document.getElementById('vehicle-slider');
+  const prevBtn = document.getElementById('slider-prev');
+  const nextBtn = document.getElementById('slider-next');
+  const indicatorContainer = document.getElementById('slider-indicator');
+  const slides = document.querySelectorAll('.vehicle-slide');
+  
+  if (slider && prevBtn && nextBtn) {
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let progressBar = null;
+    let dots = [];
+    
+    // Determine visible slides based on screen size
+    function getVisibleSlides() {
+      if (window.innerWidth >= 1024) return 3; // Desktop: 3 slides
+      if (window.innerWidth >= 640) return 2;  // Tablet: 2 slides
+      return 1; // Mobile: 1 slide
+    }
+    
+    // Calculate max index based on visible slides
+    function getMaxIndex() {
+      const visibleSlides = getVisibleSlides();
+      return Math.max(0, totalSlides - visibleSlides);
+    }
+    
+    // Setup smart indicators based on slide count
+    function setupIndicators() {
+      if (!indicatorContainer) return;
+      
+      const maxIndex = getMaxIndex();
+      const numPositions = maxIndex + 1;
+      
+      // Clear existing indicators
+      indicatorContainer.innerHTML = '';
+      dots = [];
+      progressBar = null;
+      
+      if (numPositions <= 1) {
+        // No indicators needed - only one position
+        return;
+      } else if (numPositions <= 3) {
+        // Use simple dots for 2-3 positions
+        const dotsContainer = document.createElement('div');
+        dotsContainer.className = 'flex gap-2';
+        
+        for (let i = 0; i < numPositions; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'w-2 h-2 rounded-full bg-gray-300 hover:bg-brand-green transition-all duration-200';
+          dot.setAttribute('aria-label', `Go to position ${i + 1}`);
+          dot.addEventListener('click', () => {
+            currentIndex = i;
+            updateSlider();
+          });
+          dots.push(dot);
+          dotsContainer.appendChild(dot);
+        }
+        
+        indicatorContainer.appendChild(dotsContainer);
+      } else {
+        // Use progress bar for 4+ positions
+        const progressContainer = document.createElement('div');
+        progressContainer.className = 'relative w-32 h-1 bg-gray-200 rounded-full overflow-hidden cursor-pointer';
+        
+        progressBar = document.createElement('div');
+        progressBar.className = 'absolute left-0 top-0 h-full bg-brand-green rounded-full transition-all duration-500 ease-out pointer-events-none';
+        progressBar.style.width = '25%';
+        
+        progressContainer.appendChild(progressBar);
+        indicatorContainer.appendChild(progressContainer);
+        
+        // Click navigation on progress bar
+        progressContainer.addEventListener('click', (e) => {
+          const rect = progressContainer.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const percentage = clickX / rect.width;
+          currentIndex = Math.round(percentage * maxIndex);
+          currentIndex = Math.max(0, Math.min(currentIndex, maxIndex));
+          updateSlider();
+        });
+      }
+    }
+    
+    // Update slider position
+    function updateSlider() {
+      const slideWidth = 100 / getVisibleSlides();
+      const translateX = -(currentIndex * slideWidth);
+      slider.style.transform = `translateX(${translateX}%)`;
+      
+      // Update indicators
+      if (dots.length > 0) {
+        // Update dots
+        dots.forEach((dot, index) => {
+          if (index === currentIndex) {
+            dot.classList.add('bg-brand-green', 'w-8');
+            dot.classList.remove('bg-gray-300', 'w-2');
+          } else {
+            dot.classList.remove('bg-brand-green', 'w-8');
+            dot.classList.add('bg-gray-300', 'w-2');
+          }
+        });
+      } else if (progressBar) {
+        // Update progress bar
+        const maxIndex = getMaxIndex();
+        const progress = maxIndex > 0 ? ((currentIndex / maxIndex) * 100) : 0;
+        progressBar.style.width = `${Math.max(25, Math.min(100, progress + 25))}%`; // 25% to 100% range
+      }
+      
+      // Update button states
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex >= getMaxIndex();
+      
+      // Update opacity for disabled state
+      prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+      nextBtn.style.opacity = currentIndex >= getMaxIndex() ? '0.5' : '1';
+    }
+    
+    // Next slide
+    function nextSlide() {
+      const maxIndex = getMaxIndex();
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+        updateSlider();
+      }
+    }
+    
+    // Previous slide
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateSlider();
+      }
+    }
+    
+    // Touch support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    slider.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    slider.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          nextSlide(); // Swipe left
+        } else {
+          prevSlide(); // Swipe right
+        }
+      }
+    }
+    
+    // Setup indicators on load
+    setupIndicators();
+    
+    // Button navigation
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+    
+    // Auto-play (optional - currently disabled)
+    let autoPlayInterval;
+    const enableAutoPlay = false; // Set to true to enable
+    
+    if (enableAutoPlay) {
+      function startAutoPlay() {
+        autoPlayInterval = setInterval(() => {
+          if (currentIndex >= getMaxIndex()) {
+            currentIndex = 0;
+          } else {
+            currentIndex++;
+          }
+          updateSlider();
+        }, 5000); // Change slide every 5 seconds
+      }
+      
+      function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+      }
+      
+      // Start auto-play
+      startAutoPlay();
+      
+      // Pause on hover
+      slider.addEventListener('mouseenter', stopAutoPlay);
+      slider.addEventListener('mouseleave', startAutoPlay);
+      
+      // Pause on touch
+      slider.addEventListener('touchstart', stopAutoPlay);
+    }
+    
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Reset to valid index if needed
+        currentIndex = Math.min(currentIndex, getMaxIndex());
+        // Recreate indicators for new screen size
+        setupIndicators();
+        updateSlider();
+      }, 250);
+    });
+    
+    // Initialize
+    updateSlider();
+  }
+  
+  // Modern Share Functionality
+  const shareButtons = document.querySelectorAll('.share-btn');
+  const shareModal = document.getElementById('share-modal');
+  const shareBackdrop = document.getElementById('share-backdrop');
+  const closeShareBtn = document.getElementById('close-share');
+  const shareOptions = document.querySelectorAll('.share-option');
+  const shareVehicleInfo = document.getElementById('share-vehicle-info');
+  const shareSuccess = document.getElementById('share-success');
+  const nativeShareBtn = document.getElementById('native-share');
+  
+  let currentShareData = {};
+  
+  // Prevent link navigation when clicking share button
+  shareButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const vehicle = btn.dataset.vehicle;
+      const price = btn.dataset.price;
+      
+      currentShareData = {
+        title: `${vehicle} - Autoladen Altes Land`,
+        text: `Schau dir dieses Elektrofahrzeug an: ${vehicle} für ${price}. Jetzt bei Autoladen Altes Land!`,
+        url: window.location.href
+      };
+      
+      shareVehicleInfo.textContent = `${vehicle} - ${price}`;
+      shareModal.classList.remove('hidden');
+      
+      // Check for native share API
+      if (navigator.share) {
+        nativeShareBtn.classList.remove('hidden');
+      }
+    });
+  });
+  
+  // Close modal
+  function closeShareModal() {
+    shareModal.classList.add('hidden');
+    shareSuccess.classList.add('hidden');
+  }
+  
+  closeShareBtn?.addEventListener('click', closeShareModal);
+  shareBackdrop?.addEventListener('click', closeShareModal);
+  
+  // Share options
+  shareOptions.forEach(option => {
+    option.addEventListener('click', async () => {
+      const platform = option.dataset.platform;
+      const { title, text, url } = currentShareData;
+      
+      switch(platform) {
+        case 'whatsapp':
+          window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`, '_blank');
+          break;
+          
+        case 'facebook':
+          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+          break;
+          
+        case 'email':
+          window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text + '\n\n' + url)}`;
+          break;
+          
+        case 'copy':
+          try {
+            await navigator.clipboard.writeText(url);
+            shareSuccess.classList.remove('hidden');
+            setTimeout(() => {
+              shareSuccess.classList.add('hidden');
+            }, 2000);
+          } catch (err) {
+            console.error('Failed to copy:', err);
+          }
+          break;
+      }
+    });
+  });
+  
+  // Native share
+  nativeShareBtn?.addEventListener('click', async () => {
+    try {
+      await navigator.share(currentShareData);
+      closeShareModal();
+    } catch (err) {
+      console.log('Share cancelled or failed:', err);
+    }
+  });
+</script>

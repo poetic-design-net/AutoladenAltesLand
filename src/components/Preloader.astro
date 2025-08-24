@@ -1,0 +1,366 @@
+---
+// Preloader component with modern logo animation
+---
+
+<div id="preloader" class="fixed inset-0 bg-white flex items-center justify-center transition-opacity duration-700" style="z-index: 10000;">
+  <div class="preloader-content">
+    <!-- Logo Container with Animation -->
+    <div class="logo-container">
+      <img 
+        src="/logo.png" 
+        alt="Autoladen Altes Land" 
+        class="logo-animation"
+      />
+      
+      <!-- Animated Ring -->
+      <div class="ring-container">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+      </div>
+      
+      <!-- Loading Dots -->
+      <div class="loading-dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+    
+    <!-- Text Animation -->
+    <div class="text-container">
+      <h1 class="brand-text">
+        <span class="word word-1">Autoladen</span>
+        <span class="word word-2">Altes</span>
+        <span class="word word-3">Land</span>
+      </h1>
+      <p class="tagline">Ihr Experte für Elektromobilität</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  /* Logo Container */
+  .logo-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Logo Animation */
+  .logo-animation {
+    width: 120px;
+    height: auto;
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+    animation: logoFadeInScale 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    z-index: 2;
+    position: relative;
+  }
+
+  @keyframes logoFadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(-15deg);
+      filter: blur(20px);
+    }
+    40% {
+      opacity: 0.7;
+      transform: scale(1.15) rotate(8deg);
+      filter: blur(2px);
+    }
+    70% {
+      opacity: 0.95;
+      transform: scale(0.95) rotate(-2deg);
+      filter: blur(0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+      filter: blur(0);
+    }
+  }
+
+  /* Animated Rings */
+  .ring-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .ring {
+    position: absolute;
+    inset: 0;
+    border: 2px solid;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  .ring-1 {
+    border-color: #44B35A;
+    animation: ringPulse 2s cubic-bezier(0.4, 0, 0.6, 1) 0.5s infinite;
+  }
+
+  .ring-2 {
+    border-color: #3BA4C7;
+    animation: ringPulse 2s cubic-bezier(0.4, 0, 0.6, 1) 0.8s infinite;
+  }
+
+  @keyframes ringPulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  /* Loading Dots */
+  .loading-dots {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #44B35A, #3BA4C7);
+    border-radius: 50%;
+    animation: dotBounce 1.4s ease-in-out infinite;
+  }
+
+  .dot:nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  .dot:nth-child(3) {
+    animation-delay: 0.32s;
+  }
+
+  @keyframes dotBounce {
+    0%, 80%, 100% {
+      transform: scale(0.8);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+  }
+
+  /* Text Animation */
+  .text-container {
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .brand-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: wordSlideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .word-1 {
+    animation-delay: 0.8s;
+  }
+
+  .word-2 {
+    animation-delay: 1s;
+  }
+
+  .word-3 {
+    animation-delay: 1.2s;
+  }
+
+  @keyframes wordSlideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .tagline {
+    font-size: 1rem;
+    color: #6b7280;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: wordSlideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+  }
+
+  /* Fade out animation */
+  .preloader-fade-out {
+    animation: fadeOut 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 640px) {
+    .logo-container {
+      width: 150px;
+      height: 150px;
+    }
+
+    .logo-animation {
+      width: 90px;
+    }
+
+    .brand-text {
+      font-size: 1.8rem;
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-animation,
+    .ring,
+    .dot,
+    .word,
+    .tagline {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Preloader as Intro Animation
+  const preloader = document.getElementById('preloader');
+  
+  // Function to hide preloader with smooth transition
+  function hidePreloader() {
+    if (preloader) {
+      // Add fade-out class
+      preloader.classList.add('preloader-fade-out');
+      
+      // Remove from DOM after animation
+      setTimeout(() => {
+        preloader.style.display = 'none';
+        // Enable scrolling
+        document.body.style.overflow = '';
+        // Dispatch event for other components
+        window.dispatchEvent(new Event('preloaderComplete'));
+      }, 700);
+    }
+  }
+
+  // Check if this is a repeat visit in the same session
+  const hasVisited = sessionStorage.getItem('hasVisitedSession');
+  
+  if (hasVisited) {
+    // If already visited in this session, hide immediately
+    if (preloader) {
+      preloader.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  } else {
+    // First visit - ALWAYS play the full intro animation
+    // Disable scrolling during intro
+    document.body.style.overflow = 'hidden';
+    
+    // Set session flag
+    sessionStorage.setItem('hasVisitedSession', 'true');
+    
+    // Minimum display time for the intro animation (3 seconds)
+    const INTRO_DURATION = 3000;
+    const startTime = Date.now();
+    
+    // Function to ensure minimum display time
+    function hideAfterMinimumTime() {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(0, INTRO_DURATION - elapsed);
+      
+      // Wait for remaining time if needed
+      setTimeout(hidePreloader, remaining);
+    }
+    
+    // Hide after the intro animation completes
+    // This ensures the animation plays fully regardless of load speed
+    if (document.readyState === 'complete') {
+      // Page already loaded, still show intro for full duration
+      hideAfterMinimumTime();
+    } else {
+      // Wait for page load, then ensure minimum time
+      window.addEventListener('load', hideAfterMinimumTime);
+    }
+    
+    // Fallback: Hide after maximum time (4 seconds)
+    setTimeout(hidePreloader, 4000);
+  }
+  
+  // Optional: Allow skip on click/tap after 1 second
+  setTimeout(() => {
+    preloader?.addEventListener('click', hidePreloader);
+    // Add subtle hint
+    if (preloader && !hasVisited) {
+      const hint = document.createElement('div');
+      hint.className = 'skip-hint';
+      hint.textContent = 'Klicken zum Überspringen';
+      hint.style.cssText = `
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #9ca3af;
+        font-size: 0.875rem;
+        opacity: 0;
+        animation: fadeIn 0.5s ease 0.5s forwards;
+        cursor: pointer;
+      `;
+      preloader.appendChild(hint);
+    }
+  }, 1000);
+</script>
+
+<style>
+  /* Add fade in animation for skip hint */
+  @keyframes fadeIn {
+    to {
+      opacity: 0.7;
+    }
+  }
+</style>

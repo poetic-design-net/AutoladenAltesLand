@@ -1,38 +1,45 @@
 ---
 const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Über mich", href: "#ueber-alex" },
-  { label: "Leistungen", href: "#leistungen" },
-  { label: "Fahrzeuge", href: "#fahrzeuge" },
+  { label: "Home", href: "/" },
+  { label: "Über mich", href: "/#ueber-alex" },
+  { label: "Leistungen", href: "/#leistungen" },
+  { label: "Fahrzeuge", href: "/#fahrzeuge" },
   { label: "Kontakt", href: "/kontakt" },
 ];
+
+// Check if we're on the contact page
+const isContactPage = Astro.url.pathname === '/kontakt';
 ---
 
 <nav id="navbar" class="fixed w-full bg-white/95 backdrop-blur-md shadow-sm transition-all duration-300" style="z-index: 50; top: 2.5rem;">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div id="nav-container" class="flex justify-between items-center py-3">
       <div class="flex items-center">
-        <img 
-          id="nav-logo" 
-          src="/logo.png" 
-          alt="Autoladen Altes Land Logo - Autohaus Grünendeich" 
-          class="h-14 w-auto"
-          loading="eager"
-          fetchpriority="high"
-          width="auto"
-          height="56" 
-        />
-        <span id="nav-title" class="ml-4 text-lg font-bold text-gray-900">Autoladen Altes Land</span>
+        <a href="/">
+          <img 
+            id="nav-logo" 
+            src="/logo.png" 
+            alt="Autoladen Altes Land" 
+            class="h-14 w-auto cursor-pointer" 
+          />
+        </a>
+        <a href="/" class="ml-4 text-lg font-bold text-gray-900 hover:text-brand-green transition-colors">
+          Autoladen Altes Land
+        </a>
       </div>
       
       <div class="hidden md:flex space-x-8">
         {navItems.map((item) => (
           <a 
             href={item.href}
-            class="text-gray-700 hover:text-brand-green transition-colors duration-200 relative group"
+            class={`text-gray-700 hover:text-brand-green transition-colors duration-200 relative group ${
+              (item.href === '/kontakt' && isContactPage) ? 'text-brand-green' : ''
+            }`}
           >
             {item.label}
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-green transition-all duration-200 group-hover:w-full"></span>
+            <span class={`absolute bottom-0 left-0 h-0.5 bg-brand-green transition-all duration-200 ${
+              (item.href === '/kontakt' && isContactPage) ? 'w-full' : 'w-0 group-hover:w-full'
+            }`}></span>
           </a>
         ))}
       </div>
@@ -173,9 +180,6 @@ const navItems = [
   const mobileMenu = document.getElementById('mobile-menu');
   const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
   const navbar = document.getElementById('navbar');
-  const navContainer = document.getElementById('nav-container');
-  const navLogo = document.getElementById('nav-logo');
-  const navTitle = document.getElementById('nav-title');
   const mobileMenuItems = document.querySelectorAll('.mobile-menu-item');
   
   // Mobile menu functions

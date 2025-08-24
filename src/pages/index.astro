@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Preloader from '../components/Preloader.astro';
+import TopBar from '../components/TopBar.astro';
 import Hero from '../components/Hero.astro';
 import About from '../components/About.astro';
 import Leistungen from '../components/Leistungen.astro';
@@ -8,6 +10,7 @@ import Kundenstimmen from '../components/Kundenstimmen.astro';
 import Stats from '../components/Stats.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import WhatsAppChat from '../components/WhatsAppChat.astro';
 import { client, queries } from '../lib/sanity';
 
 // Fetch all data from Sanity
@@ -26,7 +29,7 @@ const hero = heroData || {
   highlightedText: 'faire Mobilität',
   subtitle: 'Ehrliche Beratung, transparente Preise und nachhaltige Lösungen.',
   primaryButtonText: 'Kostenloses Beratungsgespräch',
-  primaryButtonLink: '#kontakt',
+  primaryButtonLink: '/kontakt',
   secondaryButtonText: 'Meine Leistungen',
   secondaryButtonLink: '#leistungen'
 };
@@ -60,10 +63,12 @@ const kundenstimmen = kundenstimmenData || {
   secondaryButtonText: 'Weitere Bewertungen auf Google'
 };
 
-const pageTitle = siteSettings?.title || 'Autoladen Altes Land - Alexander Philipowsky | Mobilität mit Herz';
+const pageTitle = siteSettings?.title || 'Autoladen Altes Land - Alexander Phillipowski | Mobilität mit Herz';
 ---
 
 <Layout title={pageTitle}>
+  <Preloader />
+  <TopBar />
   <Navigation />
   <main>
     <Hero 
@@ -106,6 +111,7 @@ const pageTitle = siteSettings?.title || 'Autoladen Altes Land - Alexander Phili
     <Stats stats={stats.stats} />
   </main>
   <Footer siteSettings={siteSettings} />
+  <WhatsAppChat />
 </Layout>
 
 <style>
