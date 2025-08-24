@@ -32,7 +32,7 @@ const kontaktData = {
         <!-- Kontaktformular -->
         <div class="bg-white rounded-lg shadow-md p-8">
           <h2 class="text-2xl font-semibold mb-6 text-gray-900">Nachricht senden</h2>
-          <form class="space-y-4">
+          <form id="contact-form" class="space-y-4">
             <div>
               <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
               <input 
@@ -94,10 +94,14 @@ const kontaktData = {
             
             <button 
               type="submit" 
-              class="w-full bg-brand-blue text-white py-3 rounded-full font-medium hover:bg-brand-lightblue transition-all duration-200 shadow-lg hover:shadow-xl"
+              id="submit-button"
+              class="w-full bg-brand-blue text-white py-3 rounded-full font-medium hover:bg-brand-lightblue transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Nachricht senden
+              <span id="button-text">Nachricht senden</span>
+              <span id="button-loading" class="hidden">Wird gesendet...</span>
             </button>
+            
+            <div id="form-message" class="hidden mt-4 p-4 rounded-lg"></div>
           </form>
         </div>
         
@@ -165,10 +169,55 @@ const kontaktData = {
 </Layout>
 
 <script>
-  // Formular-Handler (nur für Demo, später mit echter Funktionalität ersetzen)
-  const form = document.querySelector('form');
-  form?.addEventListener('submit', (e) => {
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
+  const buttonText = document.getElementById('button-text');
+  const buttonLoading = document.getElementById('button-loading');
+  const formMessage = document.getElementById('form-message');
+
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    alert('Danke für deine Nachricht! Ich melde mich schnellstmöglich bei dir.');
+    
+    // Disable button and show loading state
+    submitButton.disabled = true;
+    buttonText?.classList.add('hidden');
+    buttonLoading?.classList.remove('hidden');
+    
+    // Hide previous messages
+    formMessage?.classList.add('hidden');
+    
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        // Success
+        formMessage!.className = 'mt-4 p-4 rounded-lg bg-green-100 text-green-700';
+        formMessage!.textContent = 'Vielen Dank für deine Nachricht! Ich melde mich schnellstmöglich bei dir.';
+        formMessage?.classList.remove('hidden');
+        form.reset();
+      } else {
+        // Error
+        formMessage!.className = 'mt-4 p-4 rounded-lg bg-red-100 text-red-700';
+        formMessage!.textContent = result.error || 'Fehler beim Senden der Nachricht. Bitte versuche es später erneut.';
+        formMessage?.classList.remove('hidden');
+      }
+    } catch (error) {
+      // Network error
+      formMessage!.className = 'mt-4 p-4 rounded-lg bg-red-100 text-red-700';
+      formMessage!.textContent = 'Netzwerkfehler. Bitte überprüfe deine Internetverbindung.';
+      formMessage?.classList.remove('hidden');
+    } finally {
+      // Reset button state
+      submitButton.disabled = false;
+      buttonText?.classList.remove('hidden');
+      buttonLoading?.classList.add('hidden');
+    }
   });
 </script>
