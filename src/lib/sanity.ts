@@ -70,9 +70,15 @@ export const queries = {
     ort,
     telefon,
     telefonService,
+    whatsappNummer,
     email,
     emailService,
-    oeffnungszeiten
+    oeffnungszeiten,
+    "alexBild": alexBild.asset->url,
+    "alexBildAlt": alexBild.alt,
+    "logoUrl": logo.asset->url,
+    "logoAlt": logo.alt,
+    socialMedia
   }`,
   
   siteSettings: `*[_type == "siteSettings"][0]{

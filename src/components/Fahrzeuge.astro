@@ -451,25 +451,68 @@ function formatPrice(price: number) {
       }
     }
     
-    // Touch support for mobile
+    // Touch support for mobile with better handling
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
+    let isSwipeIntent = false;
+    let initialScrollTop = 0;
     
     slider.addEventListener('touchstart', (e) => {
       touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+      initialScrollTop = window.scrollY;
+      isSwipeIntent = false;
+    }, { passive: true });
+    
+    slider.addEventListener('touchmove', (e) => {
+      if (!touchStartX || !touchStartY) return;
+      
+      const currentX = e.changedTouches[0].screenX;
+      const currentY = e.changedTouches[0].screenY;
+      const diffX = touchStartX - currentX;
+      const diffY = touchStartY - currentY;
+      
+      // Determine if this is a horizontal swipe (more X movement than Y)
+      if (!isSwipeIntent && Math.abs(diffX) > 5) {
+        isSwipeIntent = Math.abs(diffX) > Math.abs(diffY) * 1.5; // 1.5 ratio for better detection
+        
+        // If horizontal swipe detected, prevent vertical scrolling
+        if (isSwipeIntent) {
+          // Lock scroll position
+          window.scrollTo(0, initialScrollTop);
+        }
+      }
+      
+      // Continue preventing vertical scroll during horizontal swipe
+      if (isSwipeIntent && Math.abs(diffX) > Math.abs(diffY)) {
+        window.scrollTo(0, initialScrollTop);
+      }
     }, { passive: true });
     
     slider.addEventListener('touchend', (e) => {
       touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
+      touchEndY = e.changedTouches[0].screenY;
+      
+      if (isSwipeIntent) {
+        handleSwipe();
+      }
+      
+      // Reset
+      touchStartX = 0;
+      touchStartY = 0;
+      isSwipeIntent = false;
     }, { passive: true });
     
     function handleSwipe() {
-      const swipeThreshold = 50;
-      const diff = touchStartX - touchEndX;
+      const swipeThreshold = 30; // Reduced threshold for easier swiping
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
       
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
+      // Only handle horizontal swipes
+      if (Math.abs(diffX) > swipeThreshold && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 0) {
           nextSlide(); // Swipe left
         } else {
           prevSlide(); // Swipe right

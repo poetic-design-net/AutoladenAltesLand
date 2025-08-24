@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { client, queries } from '../lib/sanity.ts';
 
 // Get current German time for online status
 const now = new Date();
@@ -12,19 +13,34 @@ const isOnline =
   (day >= 1 && day <= 5 && hours >= 9 && hours < 17) || 
   (day === 6 && hours >= 9 && hours < 14);
 
-const kontaktData = {
-  firmenname: "Autoladen Altes Land",
-  strasse: "Hauptstraße 123",
-  plz: "21720",
-  ort: "Grünendeich",
-  telefon: "+49 162 123 4567",
-  email: "info@autoladen-altesland.de",
-  oeffnungszeiten: [
-    { tag: "Mo-Fr", zeit: "9:00 - 17:00 Uhr" },
-    { tag: "Sa", zeit: "9:00 - 14:00 Uhr" },
-    { tag: "So", zeit: "Geschlossen" }
-  ]
-};
+// Kontaktdaten aus Sanity holen
+let kontaktData;
+try {
+  kontaktData = await client.fetch(queries.kontakt);
+} catch (error) {
+  console.error('Error fetching kontakt data:', error);
+}
+
+// Fallback-Daten wenn Sanity nicht verfügbar
+if (!kontaktData) {
+  kontaktData = {
+    firmenname: "Autoladen Altes Land",
+    strasse: "Hauptstraße 123",
+    plz: "21720",
+    ort: "Grünendeich",
+    telefon: "+49 162 123 4567",
+    whatsappNummer: "491621234567",
+    email: "info@autoladen-altesland.de",
+    oeffnungszeiten: [
+      { tag: "Mo-Fr", zeit: "9:00 - 17:00 Uhr" },
+      { tag: "Sa", zeit: "9:00 - 14:00 Uhr" },
+      { tag: "So", zeit: "Geschlossen" }
+    ]
+  };
+}
+
+// WhatsApp-Nummer formatieren
+const whatsappNumber = kontaktData.whatsappNummer?.replace(/[^0-9+]/g, '').replace('+', '') || "491621234567";
 ---
 
 <PageLayout title="Kontakt - Autoladen Altes Land">
@@ -46,7 +62,7 @@ const kontaktData = {
         <!-- Quick contact badges -->
         <div class="flex flex-wrap justify-center gap-4 mt-8">
           <a 
-            href="tel:+491621234567" 
+            href={`tel:${kontaktData.telefon?.replace(/\s/g, '')}`} 
             class="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +72,7 @@ const kontaktData = {
           </a>
           
           <a 
-            href="https://wa.me/491621234567" 
+            href={`https://wa.me/${whatsappNumber}`} 
             target="_blank"
             class="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-green-600"
           >
@@ -67,7 +83,7 @@ const kontaktData = {
           </a>
           
           <a 
-            href="mailto:info@autoladen-altesland.de" 
+            href={`mailto:${kontaktData.email}`} 
             class="inline-flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
           >
             <svg class="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
