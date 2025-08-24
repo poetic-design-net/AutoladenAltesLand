@@ -14,16 +14,16 @@ interface Props {
 }
 
 const {
-  greeting = "Moin!",
-  headline = "Dein Partner für Mobilität",
-  subline = "Ich bin Alex – dein persönlicher Ansprechpartner im Alten Land. Seit 2019 betreue ich Kunden zwischen Apfelplantagen und Elbdeich.",
+  greeting = "Dein Partner für",
+  headline = "faire Mobilität",
+  subline = "Ehrliche Beratung, transparente Preise und nachhaltige Lösungen.",
   primaryCTA = {
-    text: "Kontakt aufnehmen",
+    text: "Kostenloses Beratungsgespräch",
     href: "/kontakt"
   },
   secondaryCTA = {
-    text: "Mehr erfahren", 
-    href: "#ueber-alex"
+    text: "Meine Leistungen", 
+    href: "#leistungen"
   }
 } = Astro.props;
 
@@ -34,7 +34,7 @@ const trustBadges = [
 ];
 ---
 
-<section id="home" class="relative min-h-screen flex items-center pt-20">
+<section id="home" class="relative min-h-screen flex items-center pt-28">
   <!-- Split Design -->
   <div class="w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

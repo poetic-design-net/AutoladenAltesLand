@@ -81,6 +81,44 @@ export const queries = {
     primaryColor,
     secondaryColor,
     footerText,
-    navigation
+    navigation,
+    phone,
+    email,
+    address,
+    openingHours,
+    facebook,
+    instagram,
+    linkedin
+  }`,
+  
+  about: `*[_type == "about"][0]{
+    _id,
+    title,
+    subtitle,
+    introText,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt,
+    timeline,
+    quote,
+    phoneButtonText,
+    contactButtonText
+  }`,
+  
+  stats: `*[_type == "stats"][0]{
+    _id,
+    title,
+    stats
+  }`,
+  
+  kundenstimmen: `*[_type == "kundenstimmen"][0]{
+    _id,
+    title,
+    subtitle,
+    testimonials,
+    ctaTitle,
+    ctaText,
+    primaryButtonText,
+    secondaryButtonText,
+    googleReviewLink
   }`
 };

@@ -1,16 +1,13 @@
 ---
-interface Stat {
-  value: string;
-  label: string;
-  icon?: string;
+interface Props {
+  stats: Array<{
+    value: string;
+    label: string;
+    order?: number;
+  }>;
 }
 
-const stats: Stat[] = [
-  { value: "500+", label: "Zufriedene Kunden", icon: "👥" },
-  { value: "2019", label: "Gegründet", icon: "🚀" },
-  { value: "4.9⭐", label: "Google Bewertung", icon: "⭐" },
-  { value: "100%", label: "Persönlich", icon: "🤝" }
-];
+const { stats } = Astro.props;
 ---
 
 <section class="py-16 bg-gray-50">

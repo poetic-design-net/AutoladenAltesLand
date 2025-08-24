@@ -1,38 +1,31 @@
 ---
-const testimonials = [
-  {
-    name: "Petra M.",
-    ort: "Steinkirchen",
-    fahrzeug: "VW ID.4",
-    bewertung: 5,
-    text: "Alex hat mich exzellent beraten. Die transparente und ehrliche Beratung hat mich überzeugt.",
-    highlight: "Super ehrliche Beratung!"
-  },
-  {
-    name: "Thomas K.",
-    ort: "Buxtehude",
-    fahrzeug: "Tesla Model 3",
-    bewertung: 5,
-    text: "Endlich jemand der Klartext redet und nicht nur verkaufen will. Alex hat sich richtig Zeit genommen und alle meine Fragen beantwortet.",
-    highlight: "Nimmt sich Zeit!"
-  },
-  {
-    name: "Familie Hansen",
-    ort: "Jork",
-    fahrzeug: "BMW iX3",
-    bewertung: 5,
-    text: "Von der ersten Beratung bis zur Übergabe - alles perfekt! Alex hat sogar die Wallbox-Installation organisiert. Besser geht's nicht!",
-    highlight: "Rundum-sorglos-Paket!"
-  },
-  {
-    name: "Marco S.",
-    ort: "Stade",
-    fahrzeug: "Hyundai Ioniq 5",
-    bewertung: 5,
-    text: "Kompetente Beratung mit fundierten Fachkenntnissen. Sehr professionell!",
-    highlight: "Echte Expertise!"
-  }
-];
+interface Props {
+  title: string;
+  subtitle: string;
+  testimonials: Array<{
+    name: string;
+    role?: string;
+    text: string;
+    rating?: number;
+    order?: number;
+  }>;
+  ctaTitle: string;
+  ctaText: string;
+  primaryButtonText: string;
+  secondaryButtonText: string;
+  googleReviewLink?: string;
+}
+
+const {
+  title,
+  subtitle,
+  testimonials,
+  ctaTitle,
+  ctaText,
+  primaryButtonText,
+  secondaryButtonText,
+  googleReviewLink
+} = Astro.props;
 ---
 
 <section class="py-20 bg-white">
@@ -40,10 +33,10 @@ const testimonials = [
     <!-- Headline -->
     <div class="text-center mb-16">
       <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        Das sagen meine Kunden
+        {title}
       </h2>
       <p class="text-xl text-gray-700">
-        Über 500 zufriedene E-Fahrer können nicht irren 😊
+        {subtitle}
       </p>
       
       <!-- Google Reviews Badge -->
@@ -59,7 +52,7 @@ const testimonials = [
         <div class="bg-white rounded-lg shadow-md p-6">
           <!-- Highlight -->
           <p class="text-brand-blue font-semibold mb-3">
-            {testimonial.highlight}
+            ⭐⭐⭐⭐⭐
           </p>
           
           <!-- Text -->
@@ -70,7 +63,7 @@ const testimonials = [
           <!-- Author -->
           <div>
             <p class="font-medium text-gray-900">{testimonial.name}</p>
-            <p class="text-sm text-gray-500">{testimonial.ort} · {testimonial.fahrzeug}</p>
+            <p class="text-sm text-gray-500">{testimonial.role}</p>
           </div>
         </div>
       ))}
@@ -96,7 +89,7 @@ const testimonials = [
           target="_blank"
           class="inline-flex items-center justify-center px-6 py-3 bg-white text-brand-green rounded-full font-medium border-2 border-brand-green hover:bg-brand-green hover:text-white transition-all duration-200 shadow-lg hover:shadow-xl"
         >
-          Weitere Bewertungen
+          {secondaryButtonText}
         </a>
       </div>
     </div>

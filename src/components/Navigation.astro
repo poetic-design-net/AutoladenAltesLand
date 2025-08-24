@@ -8,12 +8,17 @@ const navItems = [
 ];
 ---
 
-<nav class="fixed w-full bg-white/95 backdrop-blur-md z-50 shadow-sm">
+<nav id="navbar" class="fixed w-full bg-white/95 backdrop-blur-md z-50 shadow-sm transition-all duration-300">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
+    <div id="nav-container" class="flex justify-between items-center transition-all duration-300 py-4">
       <div class="flex items-center">
-        <img src="/logo.png" alt="Autoladen Altes Land" class="h-10 w-auto" />
-        <span class="ml-3 text-xl font-semibold text-gray-900">Autoladen Altes Land</span>
+        <img 
+          id="nav-logo" 
+          src="/logo.png" 
+          alt="Autoladen Altes Land" 
+          class="transition-all duration-300 h-14 w-auto" 
+        />
+        <span id="nav-title" class="ml-3 text-2xl font-semibold text-gray-900 transition-all duration-300">Autoladen Altes Land</span>
       </div>
       
       <div class="hidden md:flex space-x-8">
@@ -54,8 +59,44 @@ const navItems = [
 <script>
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
+  const navbar = document.getElementById('navbar');
+  const navContainer = document.getElementById('nav-container');
+  const navLogo = document.getElementById('nav-logo');
+  const navTitle = document.getElementById('nav-title');
   
+  // Mobile menu toggle
   mobileMenuButton?.addEventListener('click', () => {
     mobileMenu?.classList.toggle('hidden');
+  });
+  
+  // Scroll effect for navbar
+  let lastScrollTop = 0;
+  
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > 50) {
+      // Scrolled state - smaller
+      navbar?.classList.add('shadow-md');
+      navbar?.classList.remove('shadow-sm');
+      navContainer?.classList.remove('py-4');
+      navContainer?.classList.add('py-2');
+      navLogo?.classList.remove('h-14');
+      navLogo?.classList.add('h-10');
+      navTitle?.classList.remove('text-2xl');
+      navTitle?.classList.add('text-xl');
+    } else {
+      // Top state - larger
+      navbar?.classList.remove('shadow-md');
+      navbar?.classList.add('shadow-sm');
+      navContainer?.classList.remove('py-2');
+      navContainer?.classList.add('py-4');
+      navLogo?.classList.remove('h-10');
+      navLogo?.classList.add('h-14');
+      navTitle?.classList.remove('text-xl');
+      navTitle?.classList.add('text-2xl');
+    }
+    
+    lastScrollTop = scrollTop;
   });
 </script>

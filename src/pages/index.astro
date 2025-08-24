@@ -8,19 +8,102 @@ import Kundenstimmen from '../components/Kundenstimmen.astro';
 import Stats from '../components/Stats.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import { client, queries } from '../lib/sanity';
+
+// Fetch all data from Sanity
+const [heroData, aboutData, leistungenData, statsData, kundenstimmenData, siteSettings] = await Promise.all([
+  client.fetch(queries.hero),
+  client.fetch(queries.about),
+  client.fetch(queries.leistungen),
+  client.fetch(queries.stats),
+  client.fetch(queries.kundenstimmen),
+  client.fetch(queries.siteSettings)
+]);
+
+// Fallback data if Sanity is empty
+const hero = heroData || {
+  title: 'Dein Partner für',
+  highlightedText: 'faire Mobilität',
+  subtitle: 'Ehrliche Beratung, transparente Preise und nachhaltige Lösungen.',
+  primaryButtonText: 'Kostenloses Beratungsgespräch',
+  primaryButtonLink: '#kontakt',
+  secondaryButtonText: 'Meine Leistungen',
+  secondaryButtonLink: '#leistungen'
+};
+
+const about = aboutData || {
+  title: 'Über Alex',
+  subtitle: 'Dein persönlicher Ansprechpartner im Alten Land.',
+  introText: 'Ich bin dein Ansprechpartner für Mobilität im Alten Land.',
+  timeline: [],
+  quote: '',
+  phoneButtonText: 'Jetzt anrufen',
+  contactButtonText: 'Termin vereinbaren'
+};
+
+const stats = statsData || {
+  stats: [
+    { value: '500+', label: 'Zufriedene Kunden' },
+    { value: '2019', label: 'Gegründet' },
+    { value: '4.9⭐', label: 'Google Bewertung' },
+    { value: '100%', label: 'Persönlich' }
+  ]
+};
+
+const kundenstimmen = kundenstimmenData || {
+  title: 'Das sagen meine Kunden',
+  subtitle: 'Über 500 zufriedene Kunden vertrauen auf meine Beratung',
+  testimonials: [],
+  ctaTitle: 'Überzeuge dich selbst!',
+  ctaText: 'Lass uns gemeinsam deine perfekte Mobilitätslösung finden.',
+  primaryButtonText: 'Kostenloses Beratungsgespräch',
+  secondaryButtonText: 'Weitere Bewertungen auf Google'
+};
+
+const pageTitle = siteSettings?.title || 'Autoladen Altes Land - Alexander Philipowsky | Mobilität mit Herz';
 ---
 
-<Layout title="Autoladen Altes Land - Alexander Philipowsky | Mobilität mit Herz">
+<Layout title={pageTitle}>
   <Navigation />
   <main>
-    <Hero />
-    <About />
-    <Leistungen />
+    <Hero 
+      greeting={hero.title}
+      headline={hero.highlightedText}
+      subline={hero.subtitle}
+      primaryCTA={{
+        text: hero.primaryButtonText,
+        href: hero.primaryButtonLink
+      }}
+      secondaryCTA={{
+        text: hero.secondaryButtonText,
+        href: hero.secondaryButtonLink
+      }}
+    />
+    <About 
+      title={about.title}
+      subtitle={about.subtitle}
+      introText={about.introText}
+      timeline={about.timeline}
+      quote={about.quote}
+      phoneButtonText={about.phoneButtonText}
+      contactButtonText={about.contactButtonText}
+      imageUrl={about.imageUrl}
+    />
+    <Leistungen services={leistungenData} />
     <Fahrzeuge />
-    <Kundenstimmen />
-    <Stats />
+    <Kundenstimmen 
+      title={kundenstimmen.title}
+      subtitle={kundenstimmen.subtitle}
+      testimonials={kundenstimmen.testimonials}
+      ctaTitle={kundenstimmen.ctaTitle}
+      ctaText={kundenstimmen.ctaText}
+      primaryButtonText={kundenstimmen.primaryButtonText}
+      secondaryButtonText={kundenstimmen.secondaryButtonText}
+      googleReviewLink={kundenstimmen.googleReviewLink}
+    />
+    <Stats stats={stats.stats} />
   </main>
-  <Footer />
+  <Footer siteSettings={siteSettings} />
 </Layout>
 
 <style>
