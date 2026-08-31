@@ -1,58 +1,117 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
+export const prerender = false;
+
+/** Empfängeradresse – über die Umgebung setzbar, damit sie nicht im Code steht. */
+const TO = import.meta.env.CONTACT_TO;
+const FROM = import.meta.env.CONTACT_FROM ?? 'Website <onboarding@resend.dev>';
+
+const LABELS: Record<string, string> = {
+  privat: 'Privatkunde',
+  firma: 'Unternehmen',
+  transporter: 'Transporter',
+  offen: 'Noch offen',
+  tel: 'Anruf',
+  wa: 'WhatsApp',
+  mail: 'E-Mail',
+};
+
+/** Kürzt und entschärft Freitext, bevor er in eine HTML-Mail geht. */
+function clean(value: unknown, max = 500): string {
+  if (typeof value !== 'string') return '';
+  return value
+    .slice(0, max)
+    .replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' })[c] as string)
+    .trim();
+}
+
+function row(label: string, value: string): string {
+  return value ? `<p><strong>${label}:</strong> ${value}</p>` : '';
+}
 
 export const POST: APIRoute = async ({ request }) => {
+  let body: Record<string, unknown>;
   try {
-    const data = await request.formData();
-    const name = data.get('name')?.toString();
-    const email = data.get('email')?.toString();
-    const phone = data.get('phone')?.toString() || 'Nicht angegeben';
-    const subject = data.get('subject')?.toString();
-    const message = data.get('message')?.toString();
+    body = await request.json();
+  } catch {
+    return json({ error: 'Anfrage konnte nicht gelesen werden' }, 400);
+  }
 
-    if (!name || !email || !subject || !message) {
-      return new Response(
-        JSON.stringify({ error: 'Bitte alle Pflichtfelder ausfüllen' }),
-        { status: 400 }
-      );
-    }
+  const reach = clean(body.reach, 120);
+  const channel = clean(body.channel, 20);
+  const message = clean(body.message, 2000);
 
-    // Send email using Resend
+  // Ohne Rückkanal ist die Anfrage wertlos – hier wird geprüft, nicht im Browser.
+  const looksLikeMail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(reach);
+  const looksLikePhone = reach.replace(/\D/g, '').length >= 6;
+  if (!reach || (channel === 'mail' ? !looksLikeMail : !looksLikePhone)) {
+    return json({ error: 'Bitte eine erreichbare Nummer oder E-Mail-Adresse angeben' }, 400);
+  }
+
+  if (!TO) {
+    console.error('CONTACT_TO ist nicht gesetzt – Anfrage kann nicht zugestellt werden.');
+    return json({ error: 'Der Mailversand ist noch nicht eingerichtet' }, 503);
+  }
+  if (!import.meta.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY fehlt.');
+    return json({ error: 'Der Mailversand ist noch nicht eingerichtet' }, 503);
+  }
+
+  const name = clean(body.name, 120);
+  const vehicle = clean(body.vehicle, 160);
+  const need = clean(body.need, 300);
+  const kind = clean(body.kind, 20);
+  const topic = clean(body.topic, 20);
+  const budget = clean(body.budget, 120);
+  const timing = clean(body.timing, 120);
+  const source = clean(body.source, 40);
+
+  const subject = vehicle
+    ? `Anfrage: ${vehicle}`
+    : `Anfrage${name ? ` von ${name}` : ''}${topic ? ` – ${LABELS[topic] ?? topic}` : ''}`;
+
+  const html = [
+    '<h2>Neue Anfrage über die Website</h2>',
+    row('Name', name),
+    row('Kunde', LABELS[kind] ?? kind),
+    row('Thema', LABELS[topic] ?? topic),
+    row('Fahrzeug', vehicle),
+    row('Bedarf', need),
+    row('Budget / Rate', budget),
+    row('Zeitraum', timing),
+    row('Rückmeldung per', LABELS[channel] ?? channel),
+    row('Erreichbar unter', reach),
+    message ? `<h3>Nachricht</h3><p>${message.replace(/\n/g, '<br>')}</p>` : '',
+    `<hr><p style="color:#888;font-size:12px">Quelle: ${source || 'unbekannt'}</p>`,
+  ]
+    .filter(Boolean)
+    .join('\n');
+
+  try {
+    const resend = new Resend(import.meta.env.RESEND_API_KEY);
     const result = await resend.emails.send({
-      from: 'Kontaktformular <onboarding@resend.dev>', // You'll need to verify your domain
-      to: 'alex@autoladen-altesland.de',
-      subject: `Neue Anfrage: ${subject}`,
-      html: `
-        <h2>Neue Kontaktanfrage über die Website</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>E-Mail:</strong> ${email}</p>
-        <p><strong>Telefon:</strong> ${phone}</p>
-        <p><strong>Betreff:</strong> ${subject}</p>
-        <h3>Nachricht:</h3>
-        <p>${message.replace(/\n/g, '<br>')}</p>
-      `,
-      reply_to: email,
+      from: FROM,
+      to: TO,
+      subject,
+      html,
+      ...(looksLikeMail ? { replyTo: reach } : {}),
     });
 
     if (result.error) {
-      console.error('Resend error:', result.error);
-      return new Response(
-        JSON.stringify({ error: 'Fehler beim Senden der E-Mail' }),
-        { status: 500 }
-      );
+      console.error('Resend:', result.error);
+      return json({ error: 'Die Anfrage konnte gerade nicht gesendet werden' }, 502);
     }
-
-    return new Response(
-      JSON.stringify({ success: true, message: 'E-Mail erfolgreich gesendet' }),
-      { status: 200 }
-    );
+    return json({ ok: true }, 200);
   } catch (error) {
-    console.error('Error sending email:', error);
-    return new Response(
-      JSON.stringify({ error: 'Serverfehler beim Senden der E-Mail' }),
-      { status: 500 }
-    );
+    console.error('Mailversand fehlgeschlagen:', error);
+    return json({ error: 'Die Anfrage konnte gerade nicht gesendet werden' }, 500);
   }
 };
+
+function json(payload: unknown, status: number) {
+  return new Response(JSON.stringify(payload), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}

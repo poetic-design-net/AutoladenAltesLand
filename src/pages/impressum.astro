@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { brand } from '../data/site';
+---
+
+<Base title={`Impressum – ${brand.name}`} description="Impressum" theme="light">
+  <main class="legal">
+    <a class="back" href="/">← Zurück</a>
+    <h1>Impressum</h1>
+    <p class="hint">
+      Die folgenden Angaben fehlen noch. Ohne vollständiges Impressum darf die Seite nicht online gehen
+      (§ 5 DDG).
+    </p>
+    <dl>
+      <dt>Anbieter</dt><dd><span class="ph">[Firmierung / Inhaber]</span></dd>
+      <dt>Anschrift</dt><dd><span class="ph">[Straße, PLZ, Ort]</span></dd>
+      <dt>Telefon</dt><dd><span class="ph">[Nummer]</span></dd>
+      <dt>E-Mail</dt><dd><span class="ph">[Adresse]</span></dd>
+      <dt>Umsatzsteuer-ID</dt><dd><span class="ph">[falls vorhanden]</span></dd>
+      <dt>Verantwortlich für den Inhalt</dt><dd><span class="ph">[Name, Anschrift]</span></dd>
+    </dl>
+  </main>
+</Base>
+
+<style>
+  .legal { width: min(680px, 100% - 40px); margin: 0 auto; padding: 56px 0 120px; }
+  .back { font-size: 13.5px; font-weight: 600; }
+  h1 { margin-top: 20px; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; }
+  .hint { margin-top: 16px; padding: 14px 16px; border-radius: 16px; background: rgba(0,51,102,.055);
+          box-shadow: inset 0 0 0 1px rgba(0,51,102,.1); font-size: 14.5px; line-height: 1.55; color: var(--accent); }
+  dl { margin-top: 28px; display: grid; grid-template-columns: 200px 1fr; gap: 14px 20px; font-size: 15.5px; }
+  dt { font-weight: 600; color: var(--ink-2); }
+  dd { margin: 0; }
+  .ph { color: var(--ink-3); background: rgba(16,24,32,.05); border-radius: 6px; padding: 2px 8px; font-size: 14px; }
+  @media (max-width: 640px) { dl { grid-template-columns: 1fr; gap: 4px 0; } dt { margin-top: 12px; } }
+</style>

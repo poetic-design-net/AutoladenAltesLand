@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { brand } from '../data/site';
+---
+
+<Base title={`Datenschutz – ${brand.name}`} description="Datenschutzerklärung" theme="light">
+  <main class="legal">
+    <a class="back" href="/">← Zurück</a>
+    <h1>Datenschutz</h1>
+    <p class="hint">
+      Diese Seite ist noch ein Gerüst. Die Datenschutzerklärung muss vor dem Livegang ergänzt werden –
+      am besten juristisch geprüft.
+    </p>
+    <h2>Was die Seite verarbeitet</h2>
+    <ul>
+      <li>Beim Absenden einer Anfrage: die Angaben aus dem Formular (Name, Kontaktweg, Nummer bzw. Adresse, Nachricht). Sie werden per E-Mail an <span class="ph">[Empfänger]</span> zugestellt und dort gespeichert.</li>
+      <li>Versanddienstleister: Resend (Auftragsverarbeitung). <span class="ph">[AV-Vertrag ergänzen]</span></li>
+      <li>Schriften werden von Google Fonts geladen. <span class="ph">[Alternativ lokal einbinden]</span></li>
+      <li>Hosting: Vercel. <span class="ph">[Serverstandort und AV-Vertrag ergänzen]</span></li>
+    </ul>
+    <h2>Deine Rechte</h2>
+    <p>Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit. Kontakt: <span class="ph">[Adresse]</span></p>
+  </main>
+</Base>
+
+<style>
+  .legal { width: min(680px, 100% - 40px); margin: 0 auto; padding: 56px 0 120px; }
+  .back { font-size: 13.5px; font-weight: 600; }
+  h1 { margin-top: 20px; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; }
+  h2 { margin-top: 34px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+  .hint { margin-top: 16px; padding: 14px 16px; border-radius: 16px; background: rgba(0,51,102,.055);
+          box-shadow: inset 0 0 0 1px rgba(0,51,102,.1); font-size: 14.5px; line-height: 1.55; color: var(--accent); }
+  p, li { font-size: 15.5px; line-height: 1.65; color: var(--ink-2); }
+  ul { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+  li { padding-left: 18px; position: relative; }
+  li::before { content: ''; position: absolute; left: 0; top: 11px; width: 6px; height: 6px; border-radius: 999px; background: var(--ink-3); }
+  .ph { color: var(--ink-3); background: rgba(16,24,32,.05); border-radius: 6px; padding: 2px 8px; font-size: 14px; }
+</style>

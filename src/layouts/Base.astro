@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  theme?: 'light' | 'dark';
+  /** Google-Fonts-Familie(n) für dieses Theme */
+  fonts?: string;
+}
+
+const {
+  title,
+  description,
+  theme = 'light',
+  fonts = 'family=Instrument+Sans:wght@400;500;600;700',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
+const themeColor = theme === 'dark' ? '#0d1013' : '#f5f4f1';
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content={themeColor} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/logo.png', Astro.url.origin).href} />
+    <meta property="og:locale" content="de_DE" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?${fonts}&display=swap`} />
+  </head>
+  <body data-theme={theme}>
+    <slot />
+  </body>
+</html>
