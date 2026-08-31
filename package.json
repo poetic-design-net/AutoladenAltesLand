@@ -12,6 +12,7 @@
     "@astrojs/sitemap": "^3.5.1",
     "@astrojs/tailwind": "^6.0.2",
     "@astrojs/vercel": "^8.2.6",
+    "@hugeicons/core-free-icons": "^4.3.0",
     "@sanity/client": "^7.9.0",
     "@sanity/image-url": "^1.1.0",
     "astro": "^5.13.3",

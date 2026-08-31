@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { ArrowRight02Icon, BubbleChatIcon, Building03Icon, Call02Icon, Cancel01Icon, Car03Icon, DashboardSquare01Icon, Home01Icon, Mail01Icon, MoreHorizontalIcon, Sent02Icon, Tick02Icon, UserGroupIcon, UserIcon, WhatsappIcon } from '@hugeicons/core-free-icons';
 import { brand, vehicles, priceNote, telHref, waHref, mailHref, contact } from '../data/site';
 
 const title = 'Autoladen Altes Land – ein Ansprechpartner für dein Fahrzeug';
@@ -33,11 +35,7 @@ const description =
       <div class="wrap hero-grid">
         <div>
           <span class="eyebrow">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-              ><rect x="4" y="4" width="7" height="7" rx="2"></rect><rect x="13" y="4" width="7" height="7" rx="2"
-              ></rect><rect x="4" y="13" width="7" height="7" rx="2"></rect><rect x="13" y="13" width="7" height="7" rx="2"
-              ></rect></svg
-            >
+            <Icon icon={DashboardSquare01Icon} />
             Markenunabhängig vermittelt
           </span>
           <h1>Ein Ansprechpartner.<br /><span class="accent">Fertig.</span></h1>
@@ -54,10 +52,7 @@ const description =
           </div>
           <div class="hero-cta">
             <button class="btn-primary" type="button" data-open-dialog>
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                ><path d="M20.5 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.4A8 8 0 1 1 20.5 11.5Z"></path><path
-                  d="M9 11.6h.01M12 11.6h.01M15 11.6h.01"></path></svg
-              >
+              <Icon icon={BubbleChatIcon} />
               Kurz mit Alex sprechen
             </button>
             <span class="hero-note">Kein Verkaufstheater.</span>
@@ -70,18 +65,11 @@ const description =
             <div class="hv-wash"></div>
           </div>
           <span class="hv-chip hv-a">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-              ><rect x="4" y="4" width="7" height="7" rx="2"></rect><rect x="13" y="4" width="7" height="7" rx="2"
-              ></rect><rect x="4" y="13" width="7" height="7" rx="2"></rect><rect x="13" y="13" width="7" height="7" rx="2"
-              ></rect></svg
-            >
+            <Icon icon={DashboardSquare01Icon} />
             markenunabhängig
           </span>
           <span class="hv-chip hv-b">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-              ><circle cx="9.5" cy="8.5" r="3"></circle><path d="M4 18.6a5.5 5.5 0 0 1 11 0"></path><path
-                d="M16 6.2a3 3 0 0 1 0 5.8"></path><path d="M17.4 18.6a5.6 5.6 0 0 0-2-4.2"></path></svg
-            >
+            <Icon icon={UserGroupIcon} />
             privat &amp; gewerblich
           </span>
           <div class="hv-card">
@@ -124,9 +112,7 @@ const description =
                   <ul class="tile-feats">
                     {v.features.map((f) => (
                       <li>
-                        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                          <path d="m5.5 12.6 4 4 9-9" />
-                        </svg>
+                        <Icon icon={Tick02Icon} />
                         {f}
                       </li>
                     ))}
@@ -141,10 +127,7 @@ const description =
                   <button class="btn-tile" type="button" data-open-dialog data-vehicle={v.name} data-topic={v.topic}>
                     Preis &amp; Verfügbarkeit anfragen
                     <span class="arw">
-                      <svg class="ic" viewBox="0 0 24 24" style="width:17px;height:17px" aria-hidden="true">
-                        <path d="M4.8 12h13.4" />
-                        <path d="m12.9 6.6 5.3 5.4-5.3 5.4" />
-                      </svg>
+                      <Icon icon={ArrowRight02Icon} size={17} />
                     </span>
                   </button>
                 </div>
@@ -177,10 +160,7 @@ const description =
             <p class="alex-kicker">Also: Was soll’s werden?</p>
             <div class="alex-cta">
               <button class="btn-light" type="button" data-open-dialog>
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                  ><path d="M20.5 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.4A8 8 0 1 1 20.5 11.5Z"></path><path
-                    d="M9 11.6h.01M12 11.6h.01M15 11.6h.01"></path></svg
-                >
+                <Icon icon={BubbleChatIcon} />
                 Kurz mit Alex sprechen
               </button>
               <span class="alex-sig">Zehn Minuten reichen meistens.</span>
@@ -226,97 +206,65 @@ const description =
         {
           telHref ? (
             <a class="cp-item" href={telHref}>
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4.2 6.4c0-1.1.9-2 2-2h1.6c.7 0 1.3.4 1.6 1l1 2.2c.3.6.1 1.3-.4 1.7l-1 .8a11 11 0 0 0 4.9 4.9l.8-1c.4-.5 1.1-.7 1.7-.4l2.2 1c.6.3 1 .9 1 1.6v1.6c0 1.1-.9 2-2 2A15.3 15.3 0 0 1 4.2 6.4Z" />
-              </svg>
+              <Icon icon={Call02Icon} />
               Anrufen
             </a>
           ) : (
-            <span class="cp-item is-ph">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4.2 6.4c0-1.1.9-2 2-2h1.6c.7 0 1.3.4 1.6 1l1 2.2c.3.6.1 1.3-.4 1.7l-1 .8a11 11 0 0 0 4.9 4.9l.8-1c.4-.5 1.1-.7 1.7-.4l2.2 1c.6.3 1 .9 1 1.6v1.6c0 1.1-.9 2-2 2A15.3 15.3 0 0 1 4.2 6.4Z" />
-              </svg>
-              Anrufen <em>[Nummer fehlt]</em>
+            <span class="cp-item">
+              <Icon icon={Call02Icon} />
+              Anrufen
             </span>
           )
         }
         {
           waHref ? (
             <a class="cp-item" href={waHref} target="_blank" rel="noopener">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L4 20.4l1.4-4.1A8.4 8.4 0 1 1 20.5 11.6Z" />
-                <path d="M9.4 9.4c.2-.4.4-.4.6-.4h.4c.2 0 .4 0 .6.5l.6 1.5c.1.2.1.4 0 .5l-.4.5c-.1.2-.2.3-.1.5a5.6 5.6 0 0 0 2.7 2.4c.3.1.4 0 .6-.1l.5-.6c.2-.2.3-.2.6-.1l1.4.7c.3.1.4.3.4.5s0 .8-.3 1.1c-.3.4-.9.7-1.5.7-1.4 0-3.2-1-4.4-2.2a8.6 8.6 0 0 1-1.9-2.9c-.2-.6-.1-1.3.2-1.8Z" />
-              </svg>
+              <Icon icon={WhatsappIcon} />
               WhatsApp
             </a>
           ) : (
-            <span class="cp-item is-ph">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L4 20.4l1.4-4.1A8.4 8.4 0 1 1 20.5 11.6Z" />
-                <path d="M9.4 9.4c.2-.4.4-.4.6-.4h.4c.2 0 .4 0 .6.5l.6 1.5c.1.2.1.4 0 .5l-.4.5c-.1.2-.2.3-.1.5a5.6 5.6 0 0 0 2.7 2.4c.3.1.4 0 .6-.1l.5-.6c.2-.2.3-.2.6-.1l1.4.7c.3.1.4.3.4.5s0 .8-.3 1.1c-.3.4-.9.7-1.5.7-1.4 0-3.2-1-4.4-2.2a8.6 8.6 0 0 1-1.9-2.9c-.2-.6-.1-1.3.2-1.8Z" />
-              </svg>
-              WhatsApp <em>[Nummer fehlt]</em>
+            <span class="cp-item">
+              <Icon icon={WhatsappIcon} />
+              WhatsApp
             </span>
           )
         }
         {
           mailHref ? (
             <a class="cp-item" href={mailHref}>
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3.6 8.4a2.6 2.6 0 0 1 2.6-2.6h11.6a2.6 2.6 0 0 1 2.6 2.6v7.2a2.6 2.6 0 0 1-2.6 2.6H6.2a2.6 2.6 0 0 1-2.6-2.6Z" />
-                <path d="m4.7 8.9 6 4a2.4 2.4 0 0 0 2.6 0l6-4" />
-              </svg>
+              <Icon icon={Mail01Icon} />
               E-Mail
             </a>
           ) : (
-            <span class="cp-item is-ph">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3.6 8.4a2.6 2.6 0 0 1 2.6-2.6h11.6a2.6 2.6 0 0 1 2.6 2.6v7.2a2.6 2.6 0 0 1-2.6 2.6H6.2a2.6 2.6 0 0 1-2.6-2.6Z" />
-                <path d="m4.7 8.9 6 4a2.4 2.4 0 0 0 2.6 0l6-4" />
-              </svg>
-              E-Mail <em>[Adresse fehlt]</em>
+            <span class="cp-item">
+              <Icon icon={Mail01Icon} />
+              E-Mail
             </span>
           )
         }
         <button class="cp-item" type="button" data-open-dialog>
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M20.1 4.4 3.6 9.7c-.9.3-.9 1.5 0 1.8l6.5 2.2 2.2 6.5c.3.9 1.5.9 1.8 0l5.3-16.5a.9.9 0 0 0-1.3-1.3Z"
-            ></path><path d="m10.3 13.5 4.1-4.1"></path></svg
-          >
+          <Icon icon={Sent02Icon} />
           Anfrage senden
         </button>
       </div>
       <div class="cp-fillet" data-open="0"></div>
       <nav class="cp-bar" aria-label="Schnellzugriff">
         <a class="cp-btn" href="#top" data-section="top">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M3.5 9.9 12 3.4l8.5 6.5"></path><path
-              d="M5.5 11.4V19a1.6 1.6 0 0 0 1.6 1.6h3v-4.3a1.9 1.9 0 1 1 3.8 0v4.3h3A1.6 1.6 0 0 0 18.5 19v-7.6"
-            ></path></svg
-          >
+          <Icon icon={Home01Icon} />
           <span class="cp-label">Start</span>
         </a>
         <a class="cp-btn" href="#fahrzeuge" data-section="fahrzeuge">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M5 13.6h14"></path><path d="m6.6 13.6 1.2-4.3A2.3 2.3 0 0 1 10 7.6h4a2.3 2.3 0 0 1 2.2 1.7l1.2 4.3"
-            ></path><path d="M5 13.6v3.1M19 13.6v3.1"></path><circle cx="8.2" cy="16.7" r="1.5"></circle><circle
-              cx="15.8" cy="16.7" r="1.5"></circle></svg
-          >
+          <Icon icon={Car03Icon} />
           <span class="cp-label">Fahrzeuge</span>
         </a>
         <span class="cp-sep"></span>
         <button class="cp-main" type="button" data-open-dialog>
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M20.5 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.4A8 8 0 1 1 20.5 11.5Z"></path><path
-              d="M9 11.6h.01M12 11.6h.01M15 11.6h.01"></path></svg
-          >
+          <Icon icon={BubbleChatIcon} />
           Alex fragen
         </button>
         <span class="cp-sep"></span>
         <a class="cp-btn" href="#ueber-alex" data-section="ueber-alex">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><circle cx="12" cy="8.3" r="3.5"></circle><path d="M5.4 19.4a6.8 6.8 0 0 1 13.2 0"></path></svg
-          >
+          <Icon icon={UserIcon} />
           <span class="cp-label">Über Alex</span>
         </a>
         <button
@@ -327,10 +275,7 @@ const description =
           aria-controls="cp-panel"
           id="cp-more"
         >
-          <svg class="ic ic-dots" viewBox="0 0 24 24" aria-hidden="true"
-            ><circle cx="6" cy="12" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle><circle
-              cx="18" cy="12" r="1.5"></circle></svg
-          >
+          <Icon icon={MoreHorizontalIcon} />
         </button>
       </nav>
     </div>
@@ -347,21 +292,15 @@ const description =
           <div class="sheet-sub">Sag mir grob, worum es geht – den Rest klären wir persönlich.</div>
         </div>
         <button class="x-btn" type="button" aria-label="Dialog schließen" data-close-dialog>
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"></path></svg>
+          <Icon icon={Cancel01Icon} />
         </button>
       </div>
 
       <div class="ctx" id="ctx" hidden>
-        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-          ><path d="M5 13.6h14"></path><path d="m6.6 13.6 1.2-4.3A2.3 2.3 0 0 1 10 7.6h4a2.3 2.3 0 0 1 2.2 1.7l1.2 4.3"
-          ></path><path d="M5 13.6v3.1M19 13.6v3.1"></path><circle cx="8.2" cy="16.7" r="1.5"></circle><circle
-            cx="15.8" cy="16.7" r="1.5"></circle></svg
-        >
+        <Icon icon={Car03Icon} />
         <span>Anfrage zu: <span id="ctx-name"></span></span>
         <button class="ctx-x" type="button" aria-label="Fahrzeugbezug entfernen" id="ctx-clear">
-          <svg class="ic" viewBox="0 0 24 24" style="width:15px;height:15px" aria-hidden="true"
-            ><path d="m7 7 10 10M17 7 7 17"></path></svg
-          >
+          <Icon icon={Cancel01Icon} size={15} />
         </button>
       </div>
 
@@ -375,18 +314,11 @@ const description =
             <span class="lbl" id="lbl-kind">Ich frage als</span>
             <div class="seg" role="radiogroup" aria-labelledby="lbl-kind" data-seg="kind">
               <button class="seg-b" type="button" role="radio" aria-checked="true" data-val="privat">
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                  ><circle cx="12" cy="8.3" r="3.2"></circle><path d="M6 19.2a6.2 6.2 0 0 1 12 0"></path></svg
-                >
+                <Icon icon={UserIcon} />
                 Privat
               </button>
               <button class="seg-b" type="button" role="radio" aria-checked="false" data-val="firma">
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                  ><path d="M4.6 20.4h14.8"></path><path
-                    d="M6.6 20.4V5.9a1.4 1.4 0 0 1 1.4-1.4h5.2a1.4 1.4 0 0 1 1.4 1.4v14.5"></path><path
-                    d="M14.6 20.4V10.2h2.4a1.4 1.4 0 0 1 1.4 1.4v8.8"></path><path d="M9.2 8.3h2.6M9.2 11.7h2.6M9.2 15.1h2.6"
-                  ></path></svg
-                >
+                <Icon icon={Building03Icon} />
                 Unternehmen
               </button>
             </div>
@@ -419,27 +351,15 @@ const description =
           <span class="lbl" id="lbl-ch">So erreichst du mich am liebsten</span>
           <div class="seg" role="radiogroup" aria-labelledby="lbl-ch" data-seg="channel">
             <button class="seg-b" type="button" role="radio" aria-checked="true" data-val="tel">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                ><path
-                  d="M4.2 6.4c0-1.1.9-2 2-2h1.6c.7 0 1.3.4 1.6 1l1 2.2c.3.6.1 1.3-.4 1.7l-1 .8a11 11 0 0 0 4.9 4.9l.8-1c.4-.5 1.1-.7 1.7-.4l2.2 1c.6.3 1 .9 1 1.6v1.6c0 1.1-.9 2-2 2A15.3 15.3 0 0 1 4.2 6.4Z"
-                ></path></svg
-              >
+              <Icon icon={Call02Icon} />
               Anruf
             </button>
             <button class="seg-b" type="button" role="radio" aria-checked="false" data-val="wa">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                ><path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L4 20.4l1.4-4.1A8.4 8.4 0 1 1 20.5 11.6Z"></path><path
-                  d="M9.4 9.4c.2-.4.4-.4.6-.4h.4c.2 0 .4 0 .6.5l.6 1.5c.1.2.1.4 0 .5l-.4.5c-.1.2-.2.3-.1.5a5.6 5.6 0 0 0 2.7 2.4c.3.1.4 0 .6-.1l.5-.6c.2-.2.3-.2.6-.1l1.4.7c.3.1.4.3.4.5s0 .8-.3 1.1c-.3.4-.9.7-1.5.7-1.4 0-3.2-1-4.4-2.2a8.6 8.6 0 0 1-1.9-2.9c-.2-.6-.1-1.3.2-1.8Z"
-                ></path></svg
-              >
+              <Icon icon={WhatsappIcon} />
               WhatsApp
             </button>
             <button class="seg-b" type="button" role="radio" aria-checked="false" data-val="mail">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                ><path
-                  d="M3.6 8.4a2.6 2.6 0 0 1 2.6-2.6h11.6a2.6 2.6 0 0 1 2.6 2.6v7.2a2.6 2.6 0 0 1-2.6 2.6H6.2a2.6 2.6 0 0 1-2.6-2.6Z"
-                ></path><path d="m4.7 8.9 6 4a2.4 2.4 0 0 0 2.6 0l6-4"></path></svg
-              >
+              <Icon icon={Mail01Icon} />
               E-Mail
             </button>
           </div>
@@ -457,10 +377,7 @@ const description =
         </div>
 
         <button class="btn-send" type="submit" id="submit">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M20.1 4.4 3.6 9.7c-.9.3-.9 1.5 0 1.8l6.5 2.2 2.2 6.5c.3.9 1.5.9 1.8 0l5.3-16.5a.9.9 0 0 0-1.3-1.3Z"
-            ></path><path d="m10.3 13.5 4.1-4.1"></path></svg
-          >
+          <Icon icon={Sent02Icon} />
           <span id="submit-label">Anfrage an Alex senden</span>
         </button>
         <p class="fine">Deine Angaben gehen direkt an Alex – nicht an ein Portal.</p>
@@ -469,7 +386,7 @@ const description =
 
       <div class="done" id="done" hidden>
         <span class="done-ring"
-          ><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.6 4 4 9-9"></path></svg></span
+          ><Icon icon={Tick02Icon} /></span
         >
         <h3>Alles klar – ist bei mir.</h3>
         <p>Ich schaue, ob ich so etwas finde, und melde mich persönlich bei dir.</p>
@@ -516,7 +433,7 @@ const description =
     position: sticky;
     top: 0;
     z-index: 30;
-    height: 76px;
+    height: 88px;
     background: rgba(245, 244, 241, 0.72);
     backdrop-filter: blur(18px) saturate(1.4);
     border-bottom: 1px solid var(--line-soft);
@@ -525,7 +442,7 @@ const description =
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 76px;
+    height: 88px;
   }
   .brand,
   .foot-brand {
@@ -535,8 +452,8 @@ const description =
     color: inherit;
   }
   .logo {
-    width: 58px;
-    height: 58px;
+    width: 72px;
+    height: 72px;
     flex: none;
     object-fit: contain;
   }
@@ -588,8 +505,8 @@ const description =
   }
   .hero-grid {
     display: grid;
-    grid-template-columns: 552px 1fr;
-    gap: 88px;
+    grid-template-columns: 620px 1fr;
+    gap: 80px;
     align-items: center;
   }
   .eyebrow {
@@ -613,7 +530,7 @@ const description =
   }
   h1 {
     margin-top: 26px;
-    font-size: clamp(41px, 5.4vw, 74px);
+    font-size: clamp(32px, 4.2vw, 58px);
     line-height: 0.98;
     font-weight: 600;
     letter-spacing: -0.04em;
@@ -680,7 +597,7 @@ const description =
 
   .hero-visual {
     position: relative;
-    height: 496px;
+    height: 460px;
   }
   .hv-frame {
     position: absolute;
@@ -1234,19 +1151,6 @@ const description =
   .cp-item .ic {
     color: var(--accent);
   }
-  .cp-item.is-ph {
-    color: var(--ink-3);
-    cursor: default;
-  }
-  .cp-item.is-ph:hover {
-    background: none;
-  }
-  .cp-item em {
-    font-style: normal;
-    font-size: 11px;
-    margin-left: auto;
-    color: var(--ink-3);
-  }
   .cp-bar {
     display: flex;
     align-items: center;
@@ -1321,10 +1225,6 @@ const description =
   .cp-more[aria-expanded='true'] {
     background: #f0f1ee;
     color: var(--ink);
-  }
-  .ic-dots circle {
-    fill: currentColor;
-    stroke: none;
   }
 
   /* --------------------------------- Dialog ------------------------------ */
@@ -1661,7 +1561,7 @@ const description =
     }
     .header,
     .header .wrap {
-      height: 64px;
+      height: 74px;
     }
     .status-label {
       display: none;
@@ -1669,12 +1569,12 @@ const description =
     .status-pill {
       padding: 0 12px;
     }
-    .brand-sub {
-      font-size: 9.5px;
+    .header .brand-sub {
+      display: none;
     }
     .logo {
-      width: 46px;
-      height: 46px;
+      width: 58px;
+      height: 58px;
     }
     .hero-copy .lead {
       font-size: 18px;

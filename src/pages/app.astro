@@ -1,5 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { ArrowRight01Icon, ArrowRight02Icon, BubbleChatIcon, Call02Icon, Cancel01Icon, Car03Icon, DashboardSquare01Icon, Sent02Icon, Tick02Icon, WhatsappIcon } from '@hugeicons/core-free-icons';
 import { brand, vehicles, priceNote, topics, telHref, waHref, contact } from '../data/site';
 
 const title = 'Autoladen Altes Land – sag Alex, was du brauchst';
@@ -35,9 +37,7 @@ const description =
           <span class="alex-r">Persönlich, direkt und ohne großes Verkaufstheater.</span>
           <span class="alex-more">
             Was das für dich heißt
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-              ><path d="M4.8 12h13.4"></path><path d="m12.9 6.6 5.3 5.4-5.3 5.4"></path></svg
-            >
+            <Icon icon={ArrowRight02Icon} />
           </span>
         </span>
         <span class="alex-pic"
@@ -48,11 +48,7 @@ const description =
       <!-- ------------------------- Mitte (Spalte 2) ----------------------- -->
       <main class="mid">
         <span class="eyebrow">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><rect x="4" y="4" width="7" height="7" rx="2"></rect><rect x="13" y="4" width="7" height="7" rx="2"
-            ></rect><rect x="4" y="13" width="7" height="7" rx="2"></rect><rect x="13" y="13" width="7" height="7" rx="2"
-            ></rect></svg
-          >
+          <Icon icon={DashboardSquare01Icon} />
           Markenunabhängig · privat &amp; gewerblich
         </span>
         <h1>Ein Ansprechpartner.<br /><span class="a">Fertig.</span></h1>
@@ -62,36 +58,26 @@ const description =
           {
             telHref ? (
               <a class="act" href={telHref}>
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4.2 6.4c0-1.1.9-2 2-2h1.6c.7 0 1.3.4 1.6 1l1 2.2c.3.6.1 1.3-.4 1.7l-1 .8a11 11 0 0 0 4.9 4.9l.8-1c.4-.5 1.1-.7 1.7-.4l2.2 1c.6.3 1 .9 1 1.6v1.6c0 1.1-.9 2-2 2A15.3 15.3 0 0 1 4.2 6.4Z" />
-                </svg>
+                <Icon icon={Call02Icon} />
                 Anrufen
               </a>
             ) : (
-              <button class="act is-ph" type="button" data-view="ask">
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4.2 6.4c0-1.1.9-2 2-2h1.6c.7 0 1.3.4 1.6 1l1 2.2c.3.6.1 1.3-.4 1.7l-1 .8a11 11 0 0 0 4.9 4.9l.8-1c.4-.5 1.1-.7 1.7-.4l2.2 1c.6.3 1 .9 1 1.6v1.6c0 1.1-.9 2-2 2A15.3 15.3 0 0 1 4.2 6.4Z" />
-                </svg>
-                Anrufen<em>Nummer fehlt</em>
+              <button class="act" type="button" data-view="ask">
+                <Icon icon={Call02Icon} />
+                Anrufen
               </button>
             )
           }
           {
             waHref ? (
               <a class="act" href={waHref} target="_blank" rel="noopener">
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L4 20.4l1.4-4.1A8.4 8.4 0 1 1 20.5 11.6Z" />
-                  <path d="M9.4 9.4c.2-.4.4-.4.6-.4h.4c.2 0 .4 0 .6.5l.6 1.5c.1.2.1.4 0 .5l-.4.5c-.1.2-.2.3-.1.5a5.6 5.6 0 0 0 2.7 2.4c.3.1.4 0 .6-.1l.5-.6c.2-.2.3-.2.6-.1l1.4.7c.3.1.4.3.4.5s0 .8-.3 1.1c-.3.4-.9.7-1.5.7-1.4 0-3.2-1-4.4-2.2a8.6 8.6 0 0 1-1.9-2.9c-.2-.6-.1-1.3.2-1.8Z" />
-                </svg>
+                <Icon icon={WhatsappIcon} />
                 WhatsApp
               </a>
             ) : (
-              <button class="act is-ph" type="button" data-view="ask">
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L4 20.4l1.4-4.1A8.4 8.4 0 1 1 20.5 11.6Z" />
-                  <path d="M9.4 9.4c.2-.4.4-.4.6-.4h.4c.2 0 .4 0 .6.5l.6 1.5c.1.2.1.4 0 .5l-.4.5c-.1.2-.2.3-.1.5a5.6 5.6 0 0 0 2.7 2.4c.3.1.4 0 .6-.1l.5-.6c.2-.2.3-.2.6-.1l1.4.7c.3.1.4.3.4.5s0 .8-.3 1.1c-.3.4-.9.7-1.5.7-1.4 0-3.2-1-4.4-2.2a8.6 8.6 0 0 1-1.9-2.9c-.2-.6-.1-1.3.2-1.8Z" />
-                </svg>
-                WhatsApp<em>Nummer fehlt</em>
+              <button class="act" type="button" data-view="ask">
+                <Icon icon={WhatsappIcon} />
+                WhatsApp
               </button>
             )
           }
@@ -100,9 +86,7 @@ const description =
         <button class="primary" type="button" data-view="ask">
           Kurz mit Alex sprechen
           <span class="go"
-            ><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-              ><path d="M4.8 12h13.4"></path><path d="m12.9 6.6 5.3 5.4-5.3 5.4"></path></svg
-            ></span
+            ><Icon icon={ArrowRight02Icon} /></span
           >
         </button>
         <p class="note">Drei Angaben genügen: worum es geht, wie ich dich erreiche, deine Nummer.</p>
@@ -115,9 +99,7 @@ const description =
           <h2>Was gerade geht</h2>
           <button class="panel-more" type="button" data-view="cars">
             alle ansehen
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-              ><path d="M4.8 12h13.4"></path><path d="m12.9 6.6 5.3 5.4-5.3 5.4"></path></svg
-            >
+            <Icon icon={ArrowRight02Icon} />
           </button>
         </div>
 
@@ -140,9 +122,7 @@ const description =
                   </span>
                 </span>
                 <span class="ch">
-                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m9.5 5.5 6.5 6.5-6.5 6.5" />
-                  </svg>
+                  <Icon icon={ArrowRight01Icon} />
                 </span>
               </button>
             ))
@@ -200,7 +180,7 @@ const description =
           <div class="sh-sub">Ein Ansprechpartner. Fertig.</div>
         </div>
         <button class="sh-x" type="button" aria-label="Schließen" data-close>
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"></path></svg>
+          <Icon icon={Cancel01Icon} />
         </button>
       </div>
       <div class="sh-body">
@@ -227,10 +207,7 @@ const description =
         </div>
 
         <button class="send" type="button" data-view="ask">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M20.5 11.5a8 8 0 0 1-11.7 7.1L4 20l1.4-4.4A8 8 0 1 1 20.5 11.5Z"></path><path
-              d="M9 11.6h.01M12 11.6h.01M15 11.6h.01"></path></svg
-          >
+          <Icon icon={BubbleChatIcon} />
           Kurz mit Alex sprechen
         </button>
       </div>
@@ -245,7 +222,7 @@ const description =
           <div class="sh-sub">Drei Beispiele – kein Bestand, kein Katalog.</div>
         </div>
         <button class="sh-x" type="button" aria-label="Schließen" data-close>
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"></path></svg>
+          <Icon icon={Cancel01Icon} />
         </button>
       </div>
       <div class="sh-body">
@@ -266,9 +243,7 @@ const description =
                 </span>
               </span>
               <span class="ch">
-                <svg class="ic" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9.5 5.5 6.5 6.5-6.5 6.5" />
-                </svg>
+                <Icon icon={ArrowRight01Icon} />
               </span>
             </button>
           ))
@@ -286,22 +261,16 @@ const description =
           <div class="sh-sub">Drei Angaben – mehr brauche ich nicht.</div>
         </div>
         <button class="sh-x" type="button" aria-label="Schließen" data-close>
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"></path></svg>
+          <Icon icon={Cancel01Icon} />
         </button>
       </div>
 
       <form class="sh-body" id="form" novalidate>
         <div class="ctx" id="ctx" hidden>
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M5 13.6h14"></path><path d="m6.6 13.6 1.2-4.3A2.3 2.3 0 0 1 10 7.6h4a2.3 2.3 0 0 1 2.2 1.7l1.2 4.3"
-            ></path><path d="M5 13.6v3.1M19 13.6v3.1"></path><circle cx="8.2" cy="16.7" r="1.5"></circle><circle
-              cx="15.8" cy="16.7" r="1.5"></circle></svg
-          >
+          <Icon icon={Car03Icon} />
           <span id="ctx-name"></span>
           <button class="ctx-x" type="button" aria-label="Bezug entfernen" id="ctx-clear">
-            <svg class="ic" viewBox="0 0 24 24" style="width:14px;height:14px" aria-hidden="true"
-              ><path d="m7 7 10 10M17 7 7 17"></path></svg
-            >
+            <Icon icon={Cancel01Icon} size={14} />
           </button>
         </div>
 
@@ -322,19 +291,11 @@ const description =
           <span class="lbl" id="lbl-ch">Wie erreiche ich dich?</span>
           <div class="seg" role="radiogroup" aria-labelledby="lbl-ch" id="seg">
             <button class="seg-b" type="button" role="radio" aria-checked="true" data-val="tel">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                ><path
-                  d="M4.2 6.4c0-1.1.9-2 2-2h1.6c.7 0 1.3.4 1.6 1l1 2.2c.3.6.1 1.3-.4 1.7l-1 .8a11 11 0 0 0 4.9 4.9l.8-1c.4-.5 1.1-.7 1.7-.4l2.2 1c.6.3 1 .9 1 1.6v1.6c0 1.1-.9 2-2 2A15.3 15.3 0 0 1 4.2 6.4Z"
-                ></path></svg
-              >
+              <Icon icon={Call02Icon} />
               Anruf
             </button>
             <button class="seg-b" type="button" role="radio" aria-checked="false" data-val="wa">
-              <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-                ><path d="M20.5 11.6a8.4 8.4 0 0 1-12.3 7.5L4 20.4l1.4-4.1A8.4 8.4 0 1 1 20.5 11.6Z"></path><path
-                  d="M9.4 9.4c.2-.4.4-.4.6-.4h.4c.2 0 .4 0 .6.5l.6 1.5c.1.2.1.4 0 .5l-.4.5c-.1.2-.2.3-.1.5a5.6 5.6 0 0 0 2.7 2.4c.3.1.4 0 .6-.1l.5-.6c.2-.2.3-.2.6-.1l1.4.7c.3.1.4.3.4.5s0 .8-.3 1.1c-.3.4-.9.7-1.5.7-1.4 0-3.2-1-4.4-2.2a8.6 8.6 0 0 1-1.9-2.9c-.2-.6-.1-1.3.2-1.8Z"
-                ></path></svg
-              >
+              <Icon icon={WhatsappIcon} />
               WhatsApp
             </button>
           </div>
@@ -352,10 +313,7 @@ const description =
         </div>
 
         <button class="send" type="submit" id="submit">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"
-            ><path d="M20.1 4.4 3.6 9.7c-.9.3-.9 1.5 0 1.8l6.5 2.2 2.2 6.5c.3.9 1.5.9 1.8 0l5.3-16.5a.9.9 0 0 0-1.3-1.3Z"
-            ></path><path d="m10.3 13.5 4.1-4.1"></path></svg
-          >
+          <Icon icon={Sent02Icon} />
           <span id="submit-label">An Alex senden</span>
         </button>
         <p class="fine">Geht direkt an Alex – nicht an ein Portal.</p>
@@ -364,7 +322,7 @@ const description =
 
       <div class="done" id="done" hidden>
         <span class="ring"
-          ><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.6 4 4 9-9"></path></svg></span
+          ><Icon icon={Tick02Icon} /></span
         >
         <h3>Ist bei Alex.</h3>
         <p>Er schaut, ob er so etwas findet, und meldet sich persönlich bei dir.</p>
@@ -412,14 +370,14 @@ const description =
     width: 100%;
     max-width: 1240px;
     margin-inline: auto;
-    height: 68px;
+    height: 84px;
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 14px;
   }
   .logo {
-    width: 56px;
-    height: 56px;
+    width: 70px;
+    height: 70px;
     flex: none;
     object-fit: contain;
   }
@@ -630,12 +588,6 @@ const description =
   }
   .act .ic {
     color: var(--ink-2);
-  }
-  .act em {
-    font-style: normal;
-    font-size: 10.5px;
-    font-weight: 500;
-    color: var(--ink-3);
   }
   .primary {
     margin-top: 12px;
@@ -1201,16 +1153,16 @@ const description =
 
   @media (max-width: 760px) {
     .app {
-      padding: 0 0 18px;
+      padding: 0 0 14px;
     }
     .bar {
-      height: 56px;
+      height: 68px;
       padding: 0 20px;
-      gap: 10px;
+      gap: 11px;
     }
     .logo {
-      width: 44px;
-      height: 44px;
+      width: 56px;
+      height: 56px;
     }
     .bar-name {
       font-size: 13px;
@@ -1278,12 +1230,7 @@ const description =
       height: 60px;
       border-radius: 20px;
       font-size: 15.5px;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .act .ic {
-      width: 19px;
-      height: 19px;
+      gap: 9px;
     }
     .primary {
       margin-top: 8px;
@@ -1299,8 +1246,8 @@ const description =
       order: 2;
       flex-direction: row;
       justify-content: flex-start;
-      margin: 16px 20px 0;
-      height: 164px;
+      margin: 14px 20px 0;
+      height: 156px;
       border-radius: 26px;
       background: var(--surface);
       box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -22px rgba(0, 0, 0, 0.9);
