@@ -28,6 +28,7 @@ export const fallbackFrontpage = {
     'Ein Ansprechpartner für dein Fahrzeug. Markenunabhängig, für Unternehmen und Privatkunden. Anrufen, WhatsApp oder Anfrage mit drei Angaben.',
   hero: {
     eyebrow: 'Persönlich statt Verkaufstheater',
+    aboutLinkLabel: 'Mehr über Alex',
     availability: 'Persönlich erreichbar',
     personTitle: 'Moin, ich bin Alex.',
     personIntro: 'Persönlich, direkt und ohne großes Verkaufstheater.',

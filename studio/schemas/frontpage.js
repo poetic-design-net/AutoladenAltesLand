@@ -39,6 +39,7 @@ export default {
       group: 'hero',
       fields: [
         { name: 'eyebrow', title: 'Hinweis über der Hauptüberschrift', type: 'string' },
+        { name: 'aboutLinkLabel', title: 'Link in der kurzen Alex-Leiste', type: 'string' },
         requiredString('availability', 'Erreichbarkeits-Hinweis'),
         requiredString('personTitle', 'Persönliche Überschrift'),
         requiredText('personIntro', 'Persönlicher Kurztext', 2),
