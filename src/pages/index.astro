@@ -56,6 +56,18 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       <span>
         <span class="bar-name">{site.brandName}</span>
       </span>
+      <button
+        class="desktop-menu-trigger"
+        id="desktop-menu-trigger"
+        type="button"
+        data-view="menu"
+        aria-haspopup="dialog"
+        aria-controls="sheet-menu"
+        aria-expanded="false"
+        disabled
+      >
+        <span>Menü</span><Icon icon={Menu01Icon} />
+      </button>
     </header>
 
     <main id="start" tabindex="-1">
@@ -338,6 +350,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     id="ovl"
     data-open="0"
     aria-hidden="true"
+    inert
     data-context-prefix={page.form.contextPrefix}
     data-phone-label={page.form.phoneLabel}
     data-whatsapp-label={page.form.whatsappLabel}
@@ -345,6 +358,62 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     data-submit-label={page.form.submitLabel}
     data-send-error-suffix={page.form.sendErrorSuffix}
   >
+    <section
+      class="sheet desktop-drawer"
+      id="sheet-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="desktop-menu-title"
+      hidden
+    >
+      <h2 class="sr-only" id="desktop-menu-title">Hauptmenü</h2>
+      <div class="drawer-head">
+        <a class="drawer-brand" href="#start">
+          <img src={site.logo} alt="" width="44" height="44" />
+          <span>{site.brandName}</span>
+        </a>
+        <button class="drawer-close" type="button" aria-label="Menü schließen" data-close>
+          <Icon icon={Cancel01Icon} />
+        </button>
+      </div>
+      <nav class="drawer-links" aria-label="Hauptnavigation">
+        <a href="#start"><span>Startseite</span><Icon icon={ArrowRight02Icon} /></a>
+        <a href="#alex"><span>Über Alex</span><Icon icon={ArrowRight02Icon} /></a>
+        <a href="#fahrzeuge"><span>Fahrzeuge</span><Icon icon={ArrowRight02Icon} /></a>
+        <a href="#ablauf"><span>So läuft’s ab</span><Icon icon={ArrowRight02Icon} /></a>
+        <a href="#finanzierung"
+          ><span>Leasing & Finanzierung</span><Icon icon={ArrowRight02Icon} /></a
+        >
+      </nav>
+      <div class="drawer-footer">
+        <button class="drawer-cta" type="button" data-view="ask">
+          {page.hero.ctaLabel}<Icon icon={ArrowRight02Icon} />
+        </button>
+        <div class="drawer-contact">
+          {
+            telHref && (
+              <a href={telHref}>
+                <Icon icon={Call02Icon} />
+                {site.phone}
+              </a>
+            )
+          }
+          {
+            waHref && (
+              <a href={waHref} target="_blank" rel="noopener">
+                <Icon icon={WhatsappIcon} />
+                {page.hero.whatsappLabel}
+              </a>
+            )
+          }
+        </div>
+        <div class="drawer-legal">
+          <a href="/impressum">{page.footer.legalLabel}</a>
+          <a href="/datenschutz">{page.footer.privacyLabel}</a>
+        </div>
+      </div>
+    </section>
+
     <!-- Alex: der ganze Text -->
     <section
       class="sheet"
@@ -597,6 +666,36 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     font-size: 24px;
     font-weight: 600;
     letter-spacing: -0.014em;
+  }
+  .desktop-menu-trigger {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .desktop-menu-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: auto;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: inset 0 0 0 1px var(--line);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 500;
+      transition:
+        background 0.18s var(--ease),
+        box-shadow 0.18s var(--ease);
+    }
+    .desktop-menu-trigger:hover {
+      background: #edf1f3;
+      box-shadow: inset 0 0 0 1px var(--accent-hi);
+    }
+    .desktop-menu-trigger .ic {
+      width: 22px;
+      height: 22px;
+    }
   }
   .bar-sub {
     font-size: 10.5px;
@@ -1719,6 +1818,172 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     transform: none;
     opacity: 1;
   }
+  /* Desktop-Navigation: ruhiger Seiten-Drawer im Markenblau. */
+  .ovl[data-view='menu'] {
+    justify-content: flex-end;
+    align-items: stretch;
+    background: rgba(0, 26, 51, 0.28);
+    backdrop-filter: none;
+  }
+  .sheet.desktop-drawer {
+    --focus: #b8dfd1;
+    display: flex;
+    flex-direction: column;
+    width: min(540px, calc(100vw - 80px));
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding: 32px 36px;
+    border-radius: 24px 0 0 24px;
+    background: var(--accent-deep);
+    color: #fff;
+    box-shadow: -16px 0 48px rgba(0, 26, 51, 0.16);
+    overscroll-behavior: contain;
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  .ovl[data-open='1'] .desktop-drawer {
+    transform: none;
+    animation: drawer-enter 0.32s var(--ease);
+  }
+  @keyframes drawer-enter {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  .drawer-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+  .drawer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .drawer-brand img {
+    flex: none;
+  }
+  .drawer-close {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  .drawer-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .drawer-close .ic {
+    width: 22px;
+    height: 22px;
+  }
+  .drawer-links {
+    margin: 32px 0 28px;
+  }
+  .drawer-links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 0;
+    min-height: 64px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    color: #dce8f2;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+  .drawer-links a:hover,
+  .drawer-links a[aria-current='location'] {
+    color: #b8dfd1;
+  }
+  .drawer-links .ic {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.18s var(--ease);
+  }
+  .drawer-links a:hover .ic {
+    transform: translateX(4px);
+  }
+  .drawer-footer {
+    margin-top: auto;
+  }
+  .drawer-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .drawer-cta:hover {
+    background: #e5f2ed;
+  }
+  .drawer-cta .ic {
+    width: 22px;
+    height: 22px;
+  }
+  .drawer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 20px;
+    margin-top: 12px;
+  }
+  .drawer-contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    color: #dce8f2;
+    font-size: 13px;
+  }
+  .drawer-contact .ic {
+    width: 18px;
+    height: 18px;
+  }
+  .drawer-legal {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+  }
+  .drawer-legal a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    color: #b8cddd;
+    font-size: 12px;
+  }
+  .drawer-contact a:hover,
+  .drawer-legal a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  @media (max-width: 1023px) {
+    .sheet.desktop-drawer {
+      display: none !important;
+    }
+  }
   .grab {
     display: none;
   }
@@ -2431,7 +2696,10 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
   const ovl = document.getElementById('ovl')!;
   const app = document.querySelector<HTMLElement>('.app')!;
+  const desktopViewport = matchMedia('(min-width: 1024px)');
+  const desktopToggle = document.getElementById('desktop-menu-trigger') as HTMLButtonElement;
   const sheets: Record<string, HTMLElement> = {
+    menu: document.getElementById('sheet-menu')!,
     alex: document.getElementById('sheet-alex')!,
     cars: document.getElementById('sheet-cars')!,
     ask: document.getElementById('sheet-ask')!,
@@ -2455,11 +2723,27 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
   function open(view: string, name?: string, tpc?: string) {
     if (!sheets[view]) return;
+    if (view === 'menu' && !desktopViewport.matches) return;
     if (!current) lastFocused = document.activeElement as HTMLElement;
+    if (view === 'menu') {
+      const links = [...sheets.menu.querySelectorAll<HTMLAnchorElement>('.drawer-links a')];
+      let active = links[0];
+      links.forEach((link) => {
+        if ((document.querySelector(link.hash)?.getBoundingClientRect().top ?? Infinity) <= 96)
+          active = link;
+      });
+      links.forEach((link) => {
+        if (link === active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
     Object.entries(sheets).forEach(([k, el]) => (el.hidden = k !== view));
     current = view;
+    desktopToggle.setAttribute('aria-expanded', String(view === 'menu'));
+    ovl.dataset.view = view;
     ovl.dataset.open = '1';
     ovl.setAttribute('aria-hidden', 'false');
+    ovl.inert = false;
     app.inert = true;
     document.body.style.overflow = 'hidden';
 
@@ -2483,12 +2767,30 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
   function close() {
     current = null;
+    desktopToggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
     app.inert = false;
     lastFocused?.focus({ preventScroll: true });
     ovl.dataset.open = '0';
     ovl.setAttribute('aria-hidden', 'true');
+    ovl.inert = true;
   }
+
+  const syncDesktopMenu = () => {
+    desktopToggle.disabled = !desktopViewport.matches;
+    if (!desktopViewport.matches && current === 'menu') {
+      close();
+      document.getElementById('start')?.focus({ preventScroll: true });
+    }
+  };
+  desktopViewport.addEventListener('change', syncDesktopMenu);
+  syncDesktopMenu();
+  sheets.menu.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      close();
+      document.querySelector<HTMLElement>(link.hash)?.focus({ preventScroll: true });
+    });
+  });
 
   document
     .querySelectorAll<HTMLElement>('[data-view]')
