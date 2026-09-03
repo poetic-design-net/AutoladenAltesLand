@@ -1,7 +1,24 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { ArrowRight01Icon, ArrowRight02Icon, BubbleChatIcon, Call02Icon, Cancel01Icon, Car03Icon, ShieldCheckIcon, SlidersHorizontalIcon, SteeringIcon, RefreshIcon, CheckmarkBadge01Icon, Car05Icon, Sent02Icon, Tick02Icon, WhatsappIcon } from '@hugeicons/core-free-icons';
+import {
+  ArrowRight01Icon,
+  ArrowRight02Icon,
+  BubbleChatIcon,
+  Call02Icon,
+  Cancel01Icon,
+  Car03Icon,
+  ShieldCheckIcon,
+  SlidersHorizontalIcon,
+  SteeringIcon,
+  RefreshIcon,
+  CheckmarkBadge01Icon,
+  Car05Icon,
+  Sent02Icon,
+  Tick02Icon,
+  WhatsappIcon,
+  Menu01Icon,
+} from '@hugeicons/core-free-icons';
 import { contactLinks, getContent } from '../lib/content';
 import { getFeaturedVehicles } from '../lib/vehicles';
 
@@ -41,242 +58,283 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       </span>
     </header>
 
-    <div class="console">
-      <div class="hero-row">
-      <!-- ------------------------- Alex (Spalte 1) ------------------------ -->
-      <button class="alex" type="button" data-view="alex" aria-label={page.hero.moreLabel}>
-        <span class="alex-pic"
-          ><img src={page.about.image} alt={page.about.imageAlt} width="1600" height="1067" /></span
-        >
-      </button>
+    <main id="start" tabindex="-1">
+      <div class="console">
+        <div class="hero-row">
+          <!-- ------------------------- Alex (Spalte 1) ------------------------ -->
+          <div class="alex">
+            <span class="alex-pic"
+              ><img
+                src={page.about.image}
+                alt={page.about.imageAlt}
+                width="1600"
+                height="1067"
+              /></span
+            >
+          </div>
 
-      <!-- ------------------------- Mitte (Spalte 2) ----------------------- -->
-      <main class="mid">
-        <span class="live"><span class="dot"></span>{page.hero.availability}</span>
-        <h1>{page.hero.headline}<br /><span class="a">{page.hero.headlineAccent}</span></h1>
-        <blockquote class="sub">
-          <p>{page.hero.quote}</p>
-        </blockquote>
+          <!-- ------------------------- Mitte (Spalte 2) ----------------------- -->
+          <div class="mid">
+            <span class="hero-label">{page.hero.eyebrow}</span>
+            <h1>{page.hero.headline}<br /><span class="a">{page.hero.headlineAccent}</span></h1>
+            <blockquote class="sub">
+              <p>{page.hero.quote}</p>
+            </blockquote>
 
-        <div class="alex-txt">
-          <strong class="alex-n">{page.hero.personTitle}</strong>
-          <span class="alex-r">{page.hero.personIntro}</span>
-          <button class="alex-more" type="button" data-view="alex">
-            {page.hero.moreLabel}
-            <Icon icon={ArrowRight02Icon} />
-          </button>
-        </div>
+            <button class="primary hero-primary" type="button" data-view="ask">
+              {page.hero.ctaLabel}
+              <span class="go"><Icon icon={ArrowRight02Icon} /></span>
+            </button>
 
-        <div class="acts">
-          {
-            telHref ? (
-              <a class="act" href={telHref}>
-                <Icon icon={Call02Icon} />
-                {page.hero.phoneLabel}
-              </a>
-            ) : (
-              <button class="act" type="button" data-view="ask">
-                <Icon icon={Call02Icon} />
-                {page.hero.phoneLabel}
-              </button>
-            )
-          }
-          {
-            waHref ? (
-              <a class="act" href={waHref} target="_blank" rel="noopener">
-                <Icon icon={WhatsappIcon} />
-                {page.hero.whatsappLabel}
-              </a>
-            ) : (
-              <button class="act" type="button" data-view="ask">
-                <Icon icon={WhatsappIcon} />
-                {page.hero.whatsappLabel}
-              </button>
-            )
-          }
-        </div>
-
-        <button class="primary hero-primary" type="button" data-view="ask">
-          {page.hero.ctaLabel}
-          <span class="go"
-            ><Icon icon={ArrowRight02Icon} /></span
-          >
-        </button>
-      </main>
-      </div>
-
-      <!-- --------------------- Angebote (eigene Reihe) -------------------- -->
-      <section class="panel">
-        <div class="panel-head">
-          <h2>{page.offers.heading}</h2>
-          <button class="panel-more" type="button" data-view="cars">
-            {page.offers.allLabel}
-            <Icon icon={ArrowRight02Icon} />
-          </button>
-        </div>
-
-        <!-- Desktop: drei Karten nebeneinander -->
-        <div class="offers">
-          {
-            vehicles.map((v) => (
-              <a class="ocard" href={`/fahrzeuge/${v.id}`}>
-                <span class="ocard-pic" style={`background-image:url(${v.image})`} role="img" aria-label={v.alt} />
-                <span class="ocard-txt">
-                  <span class="t">{v.name}</span>
-                  <span class="s">
-                    <span class={`dot tone-${v.tone}`} />
-                    {v.status}
-                  </span>
-                  <span class="prow">
-                    {v.price.old && <span class="p-old">{v.price.old}</span>}
-                    <span class="p-new">{v.price.value}</span>
-                    <span class="p-unit">{page.offers.priceLabel}</span>
-                  </span>
-                </span>
-                <span class="ch">
-                  <Icon icon={ArrowRight01Icon} />
-                </span>
-              </a>
-            ))
-          }
-        </div>
-
-        <!-- Mobil: Streifen -->
-        <div class="strip">
-          {
-            vehicles.map((v) => (
-              <a class="offer" href={`/fahrzeuge/${v.id}`}>
-                <span class="offer-media">
-                  <span class="offer-img" style={`background-image:url(${v.image})`} role="img" aria-label={v.alt} />
-                  <span class="offer-fade" />
-                  <span class={`pin tone-${v.tone}`} />
-                </span>
-                <span class="offer-body">
-                  <span class="offer-name">{v.name}</span>
-                  <span class="prow">
-                    {v.price.old && <span class="p-old">{v.price.old}</span>}
-                    <span class="p-new">{v.price.value}</span>
-                  </span>
-                </span>
-              </a>
-            ))
-          }
-        </div>
-
-        <p class="tail">{site.priceNote}</p>
-      </section>
-    </div>
-
-    <!-- ============================ ABLAUF ============================ -->
-    <section class="proc" id="ablauf" aria-labelledby="proc-title">
-      <div class="proc-stage">
-        <div class="proc-head">
-          <h2 id="proc-title">{page.process.heading}</h2>
-          <p>{page.process.intro}</p>
-        </div>
-
-        <div class="route" id="route">
-          <svg class="road" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
-            <path class="road-base" d={road} />
-            <path class="road-dash" d={road} />
-            <path class="road-draw" d={road} pathLength="1" />
-          </svg>
-          <ol class="steps">
             {
-              steps.map((st, i) => (
-                <li class="step" style={`--x:${st.x}%;--y:${st.y};--i:${i}`}>
-                  <span class="stop" aria-hidden="true">
-                    <Icon icon={st.icon} />
+              waHref ? (
+                <a class="hero-whatsapp" href={waHref} target="_blank" rel="noopener">
+                  <Icon icon={WhatsappIcon} />
+                  Oder direkt per {page.hero.whatsappLabel}
+                </a>
+              ) : (
+                <button class="hero-whatsapp" type="button" data-view="ask">
+                  <Icon icon={WhatsappIcon} />
+                  {page.hero.whatsappLabel}
+                </button>
+              )
+            }
+          </div>
+        </div>
+
+        <section class="intro" id="alex" aria-labelledby="intro-title" tabindex="-1">
+          <div class="intro-heading">
+            <span class="live"><span class="dot"></span>{page.hero.availability}</span>
+            <h2 id="intro-title">{page.hero.personTitle}</h2>
+          </div>
+          <div class="intro-copy">
+            <div class="intro-story">
+              {page.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+            <div class="intro-detail">
+              <h3>{page.about.ruleHeading}</h3>
+              {page.about.ruleParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+              <p class="intro-emphasis">{page.about.ruleEmphasis}</p>
+            </div>
+          </div>
+          <ul class="intro-promises">
+            <li><Icon icon={BubbleChatIcon} /><span>Direkt mit Alex sprechen</span></li>
+            <li><Icon icon={ShieldCheckIcon} /><span>Markenunabhängig beraten</span></li>
+            <li><Icon icon={SteeringIcon} /><span>Bis zur Übergabe an deiner Seite</span></li>
+          </ul>
+          <div class="intro-links">
+            <button class="alex-more" type="button" data-view="alex">
+              {page.hero.moreLabel}<Icon icon={ArrowRight02Icon} />
+            </button>
+            {
+              telHref && (
+                <a class="intro-phone" href={telHref}>
+                  <Icon icon={Call02Icon} />
+                  {site.phone}
+                </a>
+              )
+            }
+          </div>
+        </section>
+
+        <!-- --------------------- Angebote (eigene Reihe) -------------------- -->
+        <section class="panel" id="fahrzeuge" aria-labelledby="offers-title" tabindex="-1">
+          <div class="panel-head">
+            <div>
+              <h2 id="offers-title">{page.offers.heading}</h2>
+              <p>{page.offers.intro}</p>
+            </div>
+            <button class="panel-more" type="button" data-view="ask">
+              {page.offers.ctaLabel}
+              <Icon icon={ArrowRight02Icon} />
+            </button>
+          </div>
+
+          <!-- Desktop: drei Karten nebeneinander -->
+          <div class="offers">
+            {
+              vehicles.map((v) => (
+                <a class="ocard" href={`/fahrzeuge/${v.id}`}>
+                  <img
+                    class="ocard-pic"
+                    src={v.image}
+                    alt={v.alt}
+                    width="640"
+                    height="400"
+                    loading="lazy"
+                  />
+                  <span class="ocard-txt">
+                    <span class="t">{v.name}</span>
+                    <span class="s">
+                      <span class={`dot tone-${v.tone}`} />
+                      {v.status}
+                    </span>
+                    <span class="prow">
+                      {v.price.old && <span class="p-old">{v.price.old}</span>}
+                      <span class="p-new">{v.price.value}</span>
+                      <span class="p-unit">{page.offers.priceLabel}</span>
+                    </span>
                   </span>
-                  <span class="num" aria-hidden="true">0{i + 1}</span>
-                  <h3>{st.title}</h3>
-                  <p>{st.text}</p>
-                </li>
+                </a>
               ))
             }
-          </ol>
-        </div>
+          </div>
 
-        <div class="proc-cta">
-          <button class="primary" type="button" data-view="ask">
-            {page.process.ctaLabel}
-            <span class="go"><Icon icon={ArrowRight02Icon} /></span>
-          </button>
-          <p class="proc-fine">{page.process.finePrint}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== LEASING & FINANZIERUNG ===================== -->
-    <section class="fin" id="finanzierung" aria-labelledby="fin-title">
-      <div class="fin-head" data-reveal>
-        <h2 id="fin-title">{page.finance.heading}</h2>
-        <p>{page.finance.intro}</p>
+          <p class="tail">{site.priceNote}</p>
+        </section>
       </div>
 
-      <div class="fork" data-reveal>
-        <span class="fork-car" aria-hidden="true"><Icon icon={Car05Icon} /></span>
-        <svg class="fork-lines" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M500 0 V22 C500 60 250 40 250 90" />
-          <path d="M500 0 V22 C500 60 750 40 750 90" />
-        </svg>
-      </div>
+      <!-- ============================ ABLAUF ============================ -->
+      <section class="proc" id="ablauf" aria-labelledby="proc-title" tabindex="-1">
+        <div class="proc-stage">
+          <div class="proc-head">
+            <h2 id="proc-title">{page.process.heading}</h2>
+            <p>{page.process.intro}</p>
+          </div>
 
-      <div class="seg fin-tabs" role="tablist" aria-label={page.finance.heading} data-reveal>
-        {
-          ways.map((w, i) => (
-            <button class="seg-b" type="button" role="tab" id={`tab-${w.id}`} aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`way-${w.id}`} data-way={w.id}>
-              {w.title}
-            </button>
-          ))
-        }
-      </div>
-
-      <div class="ways" data-reveal>
-        {
-          ways.map((w, i) => (
-            <article class="way" id={`way-${w.id}`} role="tabpanel" aria-labelledby={`tab-${w.id}`} data-way={w.id} data-active={i === 0 ? '1' : '0'}>
-              <span class="way-icon" aria-hidden="true"><Icon icon={w.icon} /></span>
-              <span class="way-tag">{w.tag}</span>
-              <h3>{w.title}</h3>
-              <p class="way-intro">{w.intro}</p>
-              <ul class="way-pros">
-                {w.pros.map((x) => (
-                  <li>
-                    <Icon icon={Tick02Icon} />
-                    {x}
+          <div class="route" id="route">
+            <svg class="road" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+              <path class="road-base" d={road}></path>
+              <path class="road-dash" d={road}></path>
+              <path class="road-draw" d={road} pathLength="1"></path>
+            </svg>
+            <ol class="steps">
+              {
+                steps.map((st, i) => (
+                  <li class="step" style={`--x:${st.x}%;--y:${st.y};--i:${i}`}>
+                    <span class="stop" aria-hidden="true">
+                      <Icon icon={st.icon} />
+                    </span>
+                    <span class="num" aria-hidden="true">
+                      0{i + 1}
+                    </span>
+                    <h3>{st.title}</h3>
+                    <p>{st.text}</p>
                   </li>
-                ))}
-              </ul>
-              <p class="way-fit">{w.fit}</p>
-            </article>
-          ))
-        }
-        <span class="oder" aria-hidden="true">{page.finance.comparisonLabel}</span>
-      </div>
+                ))
+              }
+            </ol>
+          </div>
 
-      <div class="fin-help" data-reveal>
-        <div>
-          <h3>{page.finance.helpHeading}</h3>
-          <p>{page.finance.helpText}</p>
+          <div class="proc-cta">
+            <button class="primary" type="button" data-view="ask">
+              {page.process.ctaLabel}
+              <span class="go"><Icon icon={ArrowRight02Icon} /></span>
+            </button>
+            <p class="proc-fine">{page.process.finePrint}</p>
+          </div>
         </div>
-        <div class="fin-cta">
-          <button class="primary" type="button" data-view="ask">
-            {page.finance.ctaLabel}
-            <span class="go"><Icon icon={ArrowRight02Icon} /></span>
-          </button>
-          <span class="proc-fine">{page.finance.finePrint}</span>
-        </div>
-      </div>
+      </section>
 
-      <p class="fin-legal">{page.finance.legal}</p>
-    </section>
+      <!-- ===================== LEASING & FINANZIERUNG ===================== -->
+      <section class="fin" id="finanzierung" aria-labelledby="fin-title" tabindex="-1">
+        <div class="fin-head" data-reveal>
+          <h2 id="fin-title">{page.finance.heading}</h2>
+          <p>{page.finance.intro}</p>
+        </div>
+
+        <div class="fork" data-reveal>
+          <span class="fork-car" aria-hidden="true"><Icon icon={Car05Icon} /></span>
+          <svg
+            class="fork-lines"
+            viewBox="0 0 1000 90"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d="M500 0 V22 C500 60 250 40 250 90"></path>
+            <path d="M500 0 V22 C500 60 750 40 750 90"></path>
+          </svg>
+        </div>
+
+        <div class="seg fin-tabs" role="tablist" aria-label={page.finance.heading} data-reveal>
+          {
+            ways.map((w, i) => (
+              <button
+                class="seg-b"
+                type="button"
+                role="tab"
+                id={`tab-${w.id}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                aria-controls={`way-${w.id}`}
+                data-way={w.id}
+              >
+                {w.title}
+              </button>
+            ))
+          }
+        </div>
+
+        <div class="ways" data-reveal>
+          {
+            ways.map((w, i) => (
+              <article
+                class="way"
+                id={`way-${w.id}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${w.id}`}
+                data-way={w.id}
+                data-active={i === 0 ? '1' : '0'}
+              >
+                <span class="way-icon" aria-hidden="true">
+                  <Icon icon={w.icon} />
+                </span>
+                <span class="way-tag">{w.tag}</span>
+                <h3>{w.title}</h3>
+                <p class="way-intro">{w.intro}</p>
+                <ul class="way-pros">
+                  {w.pros.map((x) => (
+                    <li>
+                      <Icon icon={Tick02Icon} />
+                      {x}
+                    </li>
+                  ))}
+                </ul>
+                <p class="way-fit">{w.fit}</p>
+              </article>
+            ))
+          }
+          <span class="oder" aria-hidden="true">{page.finance.comparisonLabel}</span>
+        </div>
+
+        <div class="fin-help" data-reveal>
+          <div>
+            <h3>{page.finance.helpHeading}</h3>
+            <p>{page.finance.helpText}</p>
+          </div>
+          <div class="fin-cta">
+            <button class="primary" type="button" data-view="ask">
+              {page.finance.ctaLabel}
+              <span class="go"><Icon icon={ArrowRight02Icon} /></span>
+            </button>
+            <span class="proc-fine">{page.finance.finePrint}</span>
+          </div>
+        </div>
+
+        <p class="fin-legal">{page.finance.legal}</p>
+      </section>
+    </main>
+
+    <details class="mobile-nav" id="mobile-nav">
+      <summary><Icon icon={Menu01Icon} /><span>Menü</span></summary>
+      <nav aria-label="Abschnitte der Startseite">
+        <a href="#start">Zum Anfang<Icon icon={ArrowRight02Icon} /></a>
+        <a href="#alex">Über Alex<Icon icon={ArrowRight02Icon} /></a>
+        <a href="#fahrzeuge">Fahrzeuge<Icon icon={ArrowRight02Icon} /></a>
+        <a href="#ablauf">So läuft’s ab<Icon icon={ArrowRight02Icon} /></a>
+        <a href="#finanzierung">Leasing & Finanzierung<Icon icon={ArrowRight02Icon} /></a>
+        <button type="button" data-view="ask"
+          >Mit Alex sprechen<Icon icon={BubbleChatIcon} /></button
+        >
+      </nav>
+    </details>
 
     <footer class="foot">
       <span>
-        {page.footer.phonePrefix} {site.phone ? site.phone : <span class="ph">[Nummer eintragen]</span>} · {page.footer.emailPrefix} {
-          site.email ? site.email : <span class="ph">[Adresse eintragen]</span>
+        {page.footer.phonePrefix}
+        {site.phone ? site.phone : <span class="ph">[Nummer eintragen]</span>} · {
+          page.footer.emailPrefix
         }
+        {site.email ? site.email : <span class="ph">[Adresse eintragen]</span>}
       </span>
       <span class="links">
         <a href="/impressum">{page.footer.legalLabel}</a>
@@ -298,7 +356,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     data-send-error-suffix={page.form.sendErrorSuffix}
   >
     <!-- Alex: der ganze Text -->
-    <section class="sheet" id="sheet-alex" role="dialog" aria-modal="true" aria-labelledby="alex-title" hidden>
+    <section
+      class="sheet"
+      id="sheet-alex"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="alex-title"
+      hidden
+    >
       <div class="grab"></div>
       <div class="sh-head">
         <div>
@@ -332,7 +397,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     </section>
 
     <!-- Angebote -->
-    <section class="sheet" id="sheet-cars" role="dialog" aria-modal="true" aria-labelledby="cars-title" hidden>
+    <section
+      class="sheet"
+      id="sheet-cars"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cars-title"
+      hidden
+    >
       <div class="grab"></div>
       <div class="sh-head">
         <div>
@@ -346,8 +418,19 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       <div class="sh-body">
         {
           vehicles.map((v) => (
-            <a class="vrow" href={`/fahrzeuge/${v.id}`} data-id={v.id} data-vehicle={v.name} data-topic={v.topic}>
-              <span class="pic" style={`background-image:url(${v.image})`} role="img" aria-label={v.alt} />
+            <a
+              class="vrow"
+              href={`/fahrzeuge/${v.id}`}
+              data-id={v.id}
+              data-vehicle={v.name}
+              data-topic={v.topic}
+            >
+              <span
+                class="pic"
+                style={`background-image:url(${v.image})`}
+                role="img"
+                aria-label={v.alt}
+              />
               <span class="vrow-txt">
                 <span class="t">{v.name}</span>
                 <span class="s">
@@ -371,7 +454,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     </section>
 
     <!-- Anfrage -->
-    <section class="sheet" id="sheet-ask" role="dialog" aria-modal="true" aria-labelledby="ask-title" hidden>
+    <section
+      class="sheet"
+      id="sheet-ask"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ask-title"
+      hidden
+    >
       <div class="grab"></div>
       <div class="sh-head">
         <div>
@@ -387,7 +477,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
         <div class="ctx" id="ctx" hidden>
           <Icon icon={Car03Icon} />
           <span id="ctx-name"></span>
-          <button class="ctx-x" type="button" aria-label={page.form.removeContextLabel} id="ctx-clear">
+          <button
+            class="ctx-x"
+            type="button"
+            aria-label={page.form.removeContextLabel}
+            id="ctx-clear"
+          >
             <Icon icon={Cancel01Icon} size={14} />
           </button>
         </div>
@@ -397,7 +492,13 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           <div class="chips" role="radiogroup" aria-labelledby="lbl-topic" id="chips">
             {
               page.form.topics.map((t, i) => (
-                <button class="chip" type="button" role="radio" aria-checked={i === 0} data-val={t.id}>
+                <button
+                  class="chip"
+                  type="button"
+                  role="radio"
+                  aria-checked={i === 0}
+                  data-val={t.id}
+                >
                   {t.label}
                 </button>
               ))
@@ -421,13 +522,28 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
         <div class="field">
           <label class="lbl" for="a-num" id="reach-label">{page.form.phoneLabel}</label>
-          <input class="inp" id="a-num" name="reach" type="tel" autocomplete="tel" required placeholder={page.form.phonePlaceholder} />
+          <input
+            class="inp"
+            id="a-num"
+            name="reach"
+            type="tel"
+            autocomplete="tel"
+            required
+            placeholder={page.form.phonePlaceholder}
+          />
           <p class="err" id="err-reach" hidden>{page.form.missingContactError}</p>
         </div>
 
         <div class="field">
-          <label class="lbl" for="a-msg">{page.form.messageLabel} <span class="opt">{page.form.optionalLabel}</span></label>
-          <textarea class="inp" id="a-msg" name="message" rows="2" placeholder={page.form.messagePlaceholder}></textarea>
+          <label class="lbl" for="a-msg"
+            >{page.form.messageLabel} <span class="opt">{page.form.optionalLabel}</span></label
+          >
+          <textarea
+            class="inp"
+            id="a-msg"
+            name="message"
+            rows="2"
+            placeholder={page.form.messagePlaceholder}></textarea>
         </div>
 
         <button class="send" type="submit" id="submit">
@@ -439,9 +555,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       </form>
 
       <div class="done" id="done" hidden>
-        <span class="ring"
-          ><Icon icon={Tick02Icon} /></span
-        >
+        <span class="ring"><Icon icon={Tick02Icon} /></span>
         <h3>{page.form.successTitle}</h3>
         <p>{page.form.successText}</p>
         <button class="send" type="button" data-close>{page.form.doneLabel}</button>
@@ -515,38 +629,39 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     color: var(--ink-2);
   }
 
-  /* -------------------------------- Bühne -------------------------------- */
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+  main,
+  section[id] {
+    scroll-margin-top: 24px;
+  }
+  .mobile-nav {
+    display: none;
+  }
+
+  /* Hero: ein Einstieg, eine Hauptaktion */
   .console {
     position: relative;
-    flex: 1;
     width: 100%;
     max-width: 1240px;
-    margin: 16px auto 0;
+    margin: 40px auto 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    min-height: 0;
+    gap: 72px;
   }
   .hero-row {
     display: grid;
-    grid-template-columns: 525px minmax(0, 1fr);
-    gap: 53px;
-    min-height: 460px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: center;
   }
-
-  /* Alex */
   .alex {
     position: relative;
-    display: flex;
-    border-radius: 22px;
+    height: clamp(460px, 43vw, 580px);
+    border-radius: 16px;
     overflow: hidden;
     background: var(--surface-2);
-    padding: 0;
-    box-shadow: none;
-    transition: transform 0.2s var(--ease);
-  }
-  .alex:hover {
-    transform: translateY(-2px);
   }
   .alex-pic {
     position: absolute;
@@ -556,95 +671,27 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: left 50%;
-    transform: scale(1.35);
+    object-position: left center;
+    transform: scale(1.2);
     transform-origin: 50% 23%;
   }
-  .alex-pic::after {
-    display: none;
-  }
-  .alex-txt {
-    margin-top: 26px;
+  .mid {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
-  .live {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    height: 28px;
-    padding: 0 13px 0 11px;
-    border-radius: 999px;
-    background: var(--surface);
-    box-shadow: inset 0 0 0 1px rgba(0, 153, 102, 0.16), 0 3px 10px rgba(6, 26, 48, 0.04);
-    font-size: 11.5px;
-    font-weight: 500;
-    color: #31846c;
-  }
-  .alex-n {
-    font-size: 16.5px;
+  .hero-label {
+    font-size: 11px;
+    line-height: 1.5;
     font-weight: 600;
-    line-height: 1.3;
-    letter-spacing: -0.018em;
-  }
-  .alex-r {
-    margin-top: 3px;
-    font-size: 13.5px;
-    line-height: 1.4;
-    color: var(--ink-2);
-  }
-  .alex-more {
-    margin-top: 15px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    height: auto;
-    padding: 0;
-    font-size: 12.5px;
-    font-weight: 500;
-    color: var(--accent-text);
-    transition: color 0.16s var(--ease);
-  }
-  .alex-more:hover {
-    color: var(--accent-hi);
-  }
-  .alex-more .ic {
-    width: 16px;
-    height: 16px;
-  }
-
-  /* Mitte */
-  .mid {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 6px 0;
-    max-width: none;
-  }
-  .eyebrow {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    height: 34px;
-    padding: 0 15px 0 12px;
-    border-radius: 999px;
-    background: rgba(0, 51, 102, 0.08);
-    box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.2);
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--accent);
-  }
-  .eyebrow .ic {
-    width: 15px;
-    height: 15px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #247257;
   }
   h1 {
-    margin-top: 22px;
-    font-size: clamp(34px, 3.05vw, 40px);
-    line-height: 1.06;
+    margin-top: 24px;
+    font-size: clamp(36px, 3.5vw, 52px);
+    line-height: 1.08;
     font-weight: 600;
     letter-spacing: -0.04em;
   }
@@ -652,63 +699,144 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     color: var(--accent-text);
   }
   .sub {
-    position: relative;
-    margin-top: 20px;
-    margin-inline: 0;
-    max-width: 540px;
-    padding: 12px 52px 12px 18px;
-    border-left: 1px solid var(--green);
-    border-radius: 0 12px 12px 0;
-    background: rgba(255, 255, 255, 0.72);
-    overflow: hidden;
-  }
-  .sub::before {
-    content: open-quote;
-    position: absolute;
-    top: -8px;
-    right: 14px;
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 58px;
-    line-height: 1;
-    color: rgba(0, 51, 102, 0.14);
+    margin: 28px 0 0;
+    max-width: 44ch;
   }
   .sub p {
-    position: relative;
     font-size: 18px;
-    line-height: 1.42;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .hero-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    margin-top: 16px;
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: -0.014em;
+    color: var(--accent-text);
+  }
+  .hero-whatsapp:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .hero-whatsapp .ic {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Alex: persönliche Vorstellung und konkrete Hilfe */
+  .intro {
+    padding: 48px;
+    background: #edf1f3;
+    border-radius: 16px;
+  }
+  .intro-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .intro h2 {
+    font-size: clamp(28px, 3vw, 36px);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+  }
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 28px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 12px;
+    font-weight: 500;
+    color: #247257;
+  }
+  .intro-copy {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    margin-top: 24px;
+  }
+  .intro-copy p {
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .intro-copy p + p {
+    margin-top: 16px;
+  }
+  .intro-story p:first-child {
+    font-size: 20px;
+    line-height: 1.55;
     color: var(--ink);
   }
-  .acts {
-    margin-top: 28px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  .intro-detail {
+    padding-left: 32px;
+    border-left: 1px solid var(--line);
   }
-  .act {
+  .intro-detail h3 {
+    margin-bottom: 12px;
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 600;
+  }
+  .intro-copy .intro-emphasis {
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .intro-promises {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 36px;
+    list-style: none;
+  }
+  .intro-promises li {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--accent);
+  }
+  .intro-promises .ic {
+    width: 26px;
+    height: 26px;
+    flex: none;
+  }
+  .intro-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .alex-more,
+  .intro-phone {
+    display: inline-flex;
+    align-items: center;
     gap: 10px;
-    height: 52px;
-    border-radius: 12px;
-    background: var(--surface);
-    color: var(--ink);
-    box-shadow: inset 0 0 0 1px var(--line);
-    font-size: 14.5px;
+    min-height: 44px;
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: -0.014em;
-    transition: background 0.16s var(--ease), transform 0.16s var(--ease);
+    color: var(--accent-text);
   }
-  .act:hover {
-    background: var(--surface-2);
-    transform: translateY(-1px);
+  .alex-more:hover,
+  .intro-phone:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
-  .act .ic {
-    width: 20px;
-    height: 20px;
-    color: var(--ink-2);
+  .alex-more .ic,
+  .intro-phone .ic {
+    width: 18px;
+    height: 18px;
   }
   .primary {
     margin-top: 12px;
@@ -724,8 +852,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     font-size: 16.5px;
     font-weight: 600;
     letter-spacing: -0.016em;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 16px 30px -14px rgba(0, 51, 102, 0.55);
-    transition: background 0.16s var(--ease), transform 0.16s var(--ease);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 16px 30px -14px rgba(0, 51, 102, 0.55);
+    transition:
+      background 0.16s var(--ease),
+      transform 0.16s var(--ease);
   }
   .primary:hover {
     background: var(--accent-deep);
@@ -741,25 +873,19 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
   }
   .hero-primary {
-    margin-top: 12px;
-    height: 56px;
-    padding: 0 12px 0 20px;
+    margin-top: 36px;
+    width: 100%;
+    max-width: 448px;
+    height: 60px;
+    padding: 0 16px 0 24px;
     border-radius: 12px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    box-shadow: none;
   }
   .hero-primary .go {
-    width: 32px;
-    height: 32px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.13);
-  }
-  .note {
-    margin-top: 18px;
-    font-size: 13px;
-    color: var(--ink-3);
+    width: 36px;
+    height: 36px;
   }
 
   /* Angebote */
@@ -768,48 +894,61 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   }
   .panel-head {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-    padding: 0 2px 0 4px;
+    gap: 32px;
   }
   .panel h2 {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-  .panel-more {
-    display: none;
-    align-items: center;
-    gap: 5px;
-    font-size: 12.5px;
+    font-size: 32px;
     font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+  }
+  .panel-head p {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 1.5;
     color: var(--ink-2);
   }
+  .panel-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent-text);
+  }
+  .panel-more:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
   .panel-more .ic {
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
+    flex: none;
   }
   .offers {
-    margin-top: 16px;
+    margin-top: 28px;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: 24px;
   }
   .ocard {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    min-height: 91px;
-    padding: 8px 10px;
-    border-radius: 12px;
+    flex-direction: column;
+    padding: 14px;
+    border-radius: 16px;
     background: var(--surface);
     box-shadow: inset 0 0 0 1px var(--line);
-    transition: background 0.18s var(--ease), transform 0.18s var(--ease);
+    transition:
+      transform 0.18s var(--ease),
+      box-shadow 0.18s var(--ease);
   }
   .ocard,
-  .offer,
+  .vrow {
+    color: var(--ink);
+  }
   .vrow {
     color: var(--ink);
   }
@@ -860,40 +999,49 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     color: var(--ink-3);
   }
   .ocard:hover {
-    background: var(--surface-2);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: inset 0 0 0 1px var(--accent-hi);
   }
   .ocard-pic {
-    width: 108px;
-    height: 75px;
-    border-radius: 9px;
-    background-size: cover;
-    background-position: 50% 50%;
-    flex: none;
-    box-shadow: inset 0 0 0 1px var(--line);
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #fff;
   }
   .ocard-txt {
     min-width: 0;
-    flex: 1;
+    padding: 16px 6px 10px;
   }
   .ocard .t {
     display: block;
-    font-size: 13px;
+    font-size: 17px;
     font-weight: 500;
     letter-spacing: -0.018em;
-    line-height: 1.25;
+    line-height: 1.3;
   }
   .ocard .s {
-    margin-top: 5px;
+    margin-top: 10px;
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    font-size: 10.5px;
+    gap: 8px;
+    font-size: 12px;
     color: var(--ink-2);
   }
-  .ocard .ch {
-    color: var(--ink-3);
-    flex: none;
+  .ocard .prow {
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .ocard .p-new {
+    font-size: 22px;
+  }
+  .ocard .p-old {
+    font-size: 16px;
+  }
+  .ocard .p-unit {
+    font-size: 11px;
   }
   .tone-blue {
     background: var(--accent);
@@ -928,14 +1076,10 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     color: var(--ink-2);
   }
   .panel .tail {
-    margin-top: 12px;
-    padding: 0 4px;
-    font-size: 10px;
+    margin-top: 16px;
+    font-size: 12px;
     line-height: 1.5;
     color: var(--ink-3);
-  }
-  .strip {
-    display: none;
   }
 
   /* -------------------------------- Ablauf ------------------------------- */
@@ -996,7 +1140,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     stroke-width: 1.5;
     stroke-dasharray: 6 8;
   }
-  .road-draw {
+  .road .road-draw {
+    /* Keep normalized dash lengths tied to the scaled path, not screen pixels. */
+    vector-effect: none;
     stroke: var(--accent);
     stroke-width: 2;
     stroke-dasharray: 1;
@@ -1012,11 +1158,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     position: relative;
     padding: 0 8px;
     text-align: center;
-    opacity: 0.48;
-    transition: opacity 0.24s var(--ease);
-  }
-  .step.in {
-    opacity: 1;
   }
   .stop {
     position: absolute;
@@ -1029,9 +1170,13 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     place-items: center;
     border-radius: 999px;
     background: var(--surface);
-    color: var(--ink-3);
-    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
-    transition: color 0.2s var(--ease), background 0.2s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    color: var(--accent);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--sh-soft);
+    transition:
+      transform 0.25s var(--ease),
+      box-shadow 0.25s var(--ease);
   }
   .stop .ic {
     width: 21px;
@@ -1039,12 +1184,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   }
   .step:hover .stop {
     transform: translate(-50%, -50%) scale(1.08);
-    box-shadow: inset 0 0 0 1.5px var(--accent-hi), var(--sh-lift);
-  }
-  .step.in .stop {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 0 5px var(--green-ring), 0 12px 26px -12px rgba(0, 51, 102, 0.52);
+    box-shadow:
+      inset 0 0 0 1.5px var(--accent-hi),
+      var(--sh-lift);
   }
   .num {
     display: block;
@@ -1055,10 +1197,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     transition: color 0.25s var(--ease);
   }
   .step:hover .num {
-    color: var(--accent);
-  }
-  .step.in .num,
-  .step.in h3 {
     color: var(--accent);
   }
   .step h3 {
@@ -1078,14 +1216,23 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   .step:last-child .stop {
     width: 58px;
     height: 58px;
+    background: var(--accent);
+    color: #fff;
+    box-shadow:
+      0 0 0 7px var(--green-ring),
+      0 16px 30px -12px rgba(0, 51, 102, 0.6);
   }
   .step:last-child .stop .ic {
     width: 24px;
     height: 24px;
   }
-  .step:last-child.in .stop,
   .step:last-child:hover .stop {
-    box-shadow: 0 0 0 9px var(--green-ring), 0 20px 34px -12px rgba(0, 51, 102, 0.7);
+    box-shadow:
+      0 0 0 9px var(--green-ring),
+      0 20px 34px -12px rgba(0, 51, 102, 0.7);
+  }
+  .step:last-child h3 {
+    color: var(--accent);
   }
 
   .proc-cta {
@@ -1116,16 +1263,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     }
   }
 
-  @media (min-width: 901px) and (min-height: 700px) {
-    .proc {
-      min-height: calc(100vh + 420px);
-    }
-    .proc-stage {
-      position: sticky;
-      top: 32px;
-    }
-  }
-
   /* Mobil & Tablet: vertikale Route */
   @media (max-width: 900px) {
     .proc {
@@ -1150,15 +1287,15 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       content: '';
       position: absolute;
       left: 23px;
-      top: 26px;
-      bottom: 26px;
+      top: 24px;
+      height: var(--route-span, calc(100% - 48px));
       width: 0;
       border-left: 1.5px dashed var(--line);
     }
     .steps::after {
       border-left: 2px solid var(--accent);
-      bottom: auto;
-      height: calc(var(--p) * (100% - 52px));
+      transform: scaleY(var(--p));
+      transform-origin: top;
     }
     .step {
       display: grid;
@@ -1224,13 +1361,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       transform: none;
       transition: none;
     }
-    .step .stop {
-      background: var(--accent);
-      color: #fff;
-    }
-    .step .num,
-    .step h3 {
-      color: var(--accent);
+    .stop {
+      transition: none;
     }
   }
 
@@ -1246,7 +1378,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   [data-reveal] {
     opacity: 0;
     transform: translateY(14px);
-    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    transition:
+      opacity 0.7s var(--ease),
+      transform 0.7s var(--ease);
   }
   [data-reveal].in {
     opacity: 1;
@@ -1289,7 +1423,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     border-radius: 999px;
     background: var(--accent);
     color: #fff;
-    box-shadow: 0 0 0 7px var(--green-ring), 0 16px 30px -12px rgba(0, 51, 102, 0.6);
+    box-shadow:
+      0 0 0 7px var(--green-ring),
+      0 16px 30px -12px rgba(0, 51, 102, 0.6);
     z-index: 1;
   }
   .fork-car .ic {
@@ -1320,7 +1456,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     background: var(--surface);
     color: var(--ink);
     font-weight: 600;
-    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--sh-soft);
   }
 
   /* Eine Fläche, zwei Wege */
@@ -1330,7 +1468,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     grid-template-columns: 1fr 1fr;
     border-radius: 30px;
     background: var(--surface);
-    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--sh-soft);
     transition-delay: 0.2s;
   }
   .way {
@@ -1628,10 +1768,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     border-radius: 30px;
     background: var(--sheet);
     padding-bottom: 26px;
-    box-shadow: 0 0 0 1px var(--line), 0 50px 90px -34px rgba(6, 26, 48, 0.4);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 50px 90px -34px rgba(6, 26, 48, 0.4);
     transform: translateY(12px) scale(0.98);
     opacity: 0;
-    transition: transform 0.22s var(--ease), opacity 0.18s var(--ease);
+    transition:
+      transform 0.22s var(--ease),
+      opacity 0.18s var(--ease);
   }
   .ovl[data-open='1'] .sheet {
     transform: none;
@@ -1799,7 +1943,10 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     font-size: 14px;
     font-weight: 500;
     color: var(--ink-2);
-    transition: background 0.16s var(--ease), color 0.16s var(--ease), box-shadow 0.16s var(--ease);
+    transition:
+      background 0.16s var(--ease),
+      color 0.16s var(--ease),
+      box-shadow 0.16s var(--ease);
   }
   .chip:hover {
     color: var(--ink);
@@ -1830,7 +1977,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     font-size: 14px;
     font-weight: 500;
     color: var(--ink-2);
-    transition: background 0.16s var(--ease), color 0.16s var(--ease);
+    transition:
+      background 0.16s var(--ease),
+      color 0.16s var(--ease);
   }
   .seg-b .ic {
     width: 17px;
@@ -1843,7 +1992,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     background: var(--surface);
     color: var(--ink);
     font-weight: 600;
-    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--sh-soft);
   }
   .inp {
     margin-top: 10px;
@@ -1896,8 +2047,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     font-size: 16px;
     font-weight: 600;
     letter-spacing: -0.014em;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 12px 26px -12px rgba(0, 51, 102, 0.55);
-    transition: background 0.16s var(--ease), opacity 0.16s var(--ease);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 12px 26px -12px rgba(0, 51, 102, 0.55);
+    transition:
+      background 0.16s var(--ease),
+      opacity 0.16s var(--ease);
   }
   .send:hover {
     background: var(--accent-deep);
@@ -1949,291 +2104,236 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   /* ------------------------------ Responsive ----------------------------- */
   @media (max-width: 1100px) {
     .hero-row {
-      grid-template-columns: minmax(300px, 38%) minmax(0, 1fr);
+      gap: 40px;
+    }
+    .alex {
+      height: 480px;
+    }
+    .intro {
+      padding: 36px;
+    }
+    .intro-copy {
       gap: 32px;
     }
-    .mid {
-      padding: 0 0 0 16px;
+    .intro-detail {
+      padding-left: 24px;
     }
     .offers {
-      gap: 12px;
+      gap: 16px;
     }
-    .ocard-pic {
-      width: 92px;
-      height: 80px;
+    .ocard {
+      padding: 10px;
+    }
+    .ocard .t {
+      font-size: 16px;
     }
   }
 
-  @media (max-width: 900px) {
-    .offers {
-      grid-template-columns: 1fr;
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
     }
-    .ocard .ch {
-      margin-left: auto;
+    .ocard,
+    .primary {
+      transition: none;
     }
   }
 
   @media (max-width: 760px) {
     .app {
-      padding: 0 0 14px;
+      padding: 16px 20px calc(100px + env(safe-area-inset-bottom, 0px));
     }
     .bar {
-      height: 68px;
-      padding: 0 20px;
-      gap: 11px;
+      height: 56px;
+      gap: 12px;
     }
     .logo {
       width: 56px;
       height: 56px;
     }
     .bar-name {
-      font-size: 13px;
+      font-size: clamp(15px, 4.6vw, 19px);
     }
-    .bar-sub {
-      font-size: 10px;
-    }
-    .live-top {
-      display: none;
-    }
-
     .console {
-      margin-top: 8px;
-      gap: 0;
+      margin-top: 32px;
+      gap: 48px;
     }
     .hero-row {
       display: flex;
       flex-direction: column;
-      gap: 0;
-      height: auto;
-      min-height: 0;
+      align-items: stretch;
+      gap: 28px;
     }
-
-    /* Reihenfolge mobil: Aussage, Person, Handlung, Angebote.
-       .mid wird aufgelöst, damit die Alex-Karte dazwischenpasst. */
     .mid {
-      display: contents;
+      order: -1;
     }
-    .mid h1,
-    .mid .sub,
-    .mid .acts,
-    .mid .primary {
-      margin-inline: 20px;
-    }
-    .mid .live {
-      order: 0;
-      align-self: flex-start;
-      margin-left: 20px;
-    }
-    .mid h1 {
-      order: 1;
-    }
-    .mid .sub {
-      order: 2;
-      max-width: none;
-    }
-    .mid .alex-txt {
-      order: 4;
-      margin: 16px 20px 0;
-    }
-    .mid .acts {
-      order: 5;
-    }
-    .mid .primary {
-      order: 6;
-    }
-    .eyebrow {
-      display: none;
+    .hero-label {
+      font-size: 10.5px;
     }
     h1 {
       margin-top: 16px;
-      font-size: 29px;
+      font-size: clamp(28px, 8.6vw, 36px);
       line-height: 1.1;
-      letter-spacing: -0.036em;
     }
     .sub {
-      margin-top: 14px;
-      max-width: none;
-      padding: 1px 0 1px 12px;
-      border-radius: 0;
+      margin-top: 20px;
     }
     .sub p {
       font-size: 16.5px;
     }
-    .acts {
-      margin-top: 14px;
-      gap: 10px;
-    }
-    .act {
-      height: 60px;
-      border-radius: 20px;
-      font-size: 15.5px;
-      gap: 9px;
-    }
-    .primary {
-      margin-top: 8px;
-      height: 60px;
-      font-size: 16px;
-      padding: 0 12px 0 22px;
-    }
     .hero-primary {
-      height: 54px;
-      border-radius: 12px;
+      margin-top: 28px;
+      max-width: none;
+      height: 56px;
       font-size: 15px;
+      padding-inline: 20px 12px;
     }
-    .note {
-      display: none;
-    }
-
-    .alex {
-      order: 3;
-      margin: 14px 20px 0;
-      height: 280px;
-      border-radius: 22px;
-      background: var(--surface-2);
-      box-shadow: none;
-    }
-    .alex-txt {
-      padding: 0;
-      color: var(--ink);
-    }
-    .alex-r {
-      color: var(--ink-2);
-    }
-    .live {
-      height: 26px;
-      font-size: 10.5px;
-      padding: 0 11px 0 9px;
-    }
-    .alex-n {
-      font-size: 19px;
-      letter-spacing: -0.028em;
-    }
-    .alex-r {
-      margin-top: 6px;
-      font-size: 12.5px;
-      line-height: 1.4;
-    }
-    .alex-more {
+    .hero-whatsapp {
       margin-top: 12px;
-      height: auto;
-      padding: 0;
-      background: none;
-      box-shadow: none;
-      color: var(--accent-text);
-      font-size: 12.5px;
     }
-    .alex-more .ic {
-      width: 14px;
-      height: 14px;
-    }
-    .alex-pic {
-      position: absolute;
-      inset: 0;
-      width: auto;
+    .alex {
+      height: 360px;
     }
     .alex-pic img {
-      position: absolute;
-      inset: 0;
-      object-position: 50% 32%;
+      object-position: left center;
     }
-    .alex-pic::after {
-      display: none;
+    .intro {
+      padding: 28px 24px;
     }
-
-    /* Angebote als Streifen */
-    .panel {
-      margin-top: 18px;
+    .intro h2 {
+      font-size: 28px;
+    }
+    .intro-copy {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .intro-story p:first-child {
+      font-size: 18px;
+    }
+    .intro-detail {
+      padding: 24px 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+    .intro-promises {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .intro-promises li {
+      font-size: 14px;
+    }
+    .intro-links {
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+      padding-top: 16px;
     }
     .panel-head {
-      padding: 0 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
     }
-    .panel-more {
-      display: inline-flex;
+    .panel h2 {
+      font-size: 28px;
+    }
+    .panel-head p {
+      font-size: 15px;
     }
     .offers {
-      display: none;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 20px;
     }
-    .strip {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-      padding: 0 20px 4px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-padding-left: 20px;
-      scrollbar-width: none;
+    .ocard {
+      padding: 12px;
     }
-    .strip::-webkit-scrollbar {
-      display: none;
-    }
-    .offer {
-      flex: none;
-      width: 172px;
-      scroll-snap-align: start;
-      border-radius: 20px;
-      overflow: hidden;
-      background: var(--surface);
-      box-shadow: inset 0 0 0 1px var(--line);
-      transition: background 0.2s var(--ease);
-    }
-    .offer:hover {
-      background: var(--surface-2);
-    }
-    .offer-media {
-      display: block;
-      position: relative;
-      height: 92px;
-    }
-    .offer-img {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: 50% 50%;
-    }
-    .offer-fade {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, var(--surface) 2%, rgba(255, 255, 255, 0) 62%);
-    }
-    .pin {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--green);
-    }
-    .offer-body {
-      display: block;
-      padding: 2px 12px 12px;
-    }
-    .offer-name {
-      display: block;
-      font-size: 12.5px;
-      font-weight: 600;
-      line-height: 1.25;
-      letter-spacing: -0.012em;
-      min-height: 32px;
-    }
-    .offer .p-new {
-      font-size: 16px;
-    }
-    .offer .p-old {
-      font-size: 11px;
-    }
-    .offer .p-unit {
-      font-size: 10.5px;
+    .ocard .t {
+      font-size: 18px;
     }
     .panel .tail {
-      margin: 10px 20px 0;
-      padding: 0;
-      font-size: 11px;
+      font-size: 12px;
+    }
+    .proc,
+    .fin {
+      margin: 64px auto 0;
+      width: 100%;
+    }
+    .mobile-nav {
+      display: block;
+      position: fixed;
+      right: 20px;
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      z-index: 50;
+    }
+    .mobile-nav summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      box-shadow: 0 6px 20px rgba(0, 51, 102, 0.22);
+      list-style: none;
+    }
+    .mobile-nav summary::-webkit-details-marker {
+      display: none;
+    }
+    .mobile-nav summary .ic {
+      width: 22px;
+      height: 22px;
+    }
+    .mobile-nav[open] summary {
+      background: var(--accent-deep);
+    }
+    .mobile-nav nav {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      right: 0;
+      width: min(320px, calc(100vw - 40px));
+      max-height: min(72dvh, 480px);
+      overflow-y: auto;
+      padding: 12px;
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: 0 12px 40px rgba(0, 26, 51, 0.18);
+    }
+    .mobile-nav nav a,
+    .mobile-nav nav button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      min-height: 48px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: left;
+      color: var(--ink);
+    }
+    .mobile-nav nav a:hover {
+      background: var(--surface-2);
+    }
+    .mobile-nav nav button {
+      margin-top: 8px;
+      background: var(--accent);
+      color: #fff;
+    }
+    .mobile-nav nav .ic {
+      width: 18px;
+      height: 18px;
+      flex: none;
     }
 
     .foot {
       margin-top: 12px;
-      padding: 0 20px;
+      padding: 0;
       height: auto;
       flex-direction: column;
       align-items: flex-start;
@@ -2279,6 +2379,27 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 </style>
 
 <script>
+  const mobileNav = document.getElementById('mobile-nav') as HTMLDetailsElement;
+  mobileNav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileNav.open = false;
+      document.querySelector<HTMLElement>(link.hash)?.focus({ preventScroll: true });
+    });
+  });
+  mobileNav.querySelector('button')?.addEventListener('click', () => {
+    mobileNav.open = false;
+    mobileNav.querySelector('summary')?.focus();
+  });
+  document.addEventListener('pointerdown', (event) => {
+    if (!mobileNav.contains(event.target as Node)) mobileNav.open = false;
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileNav.open) {
+      mobileNav.open = false;
+      mobileNav.querySelector('summary')?.focus();
+    }
+  });
+
   const ovl = document.getElementById('ovl')!;
   const sheets: Record<string, HTMLElement> = {
     alex: document.getElementById('sheet-alex')!,
@@ -2331,10 +2452,16 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     lastFocused?.focus();
   }
 
-  document.querySelectorAll<HTMLElement>('[data-view]').forEach((el) =>
-    el.addEventListener('click', () => open(el.dataset.view!, el.dataset.vehicle, el.dataset.topic))
-  );
-  document.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => el.addEventListener('click', close));
+  document
+    .querySelectorAll<HTMLElement>('[data-view]')
+    .forEach((el) =>
+      el.addEventListener('click', () =>
+        open(el.dataset.view!, el.dataset.vehicle, el.dataset.topic)
+      )
+    );
+  document
+    .querySelectorAll<HTMLElement>('[data-close]')
+    .forEach((el) => el.addEventListener('click', close));
   ovl.addEventListener('click', (e) => {
     if (e.target === ovl) close();
   });
@@ -2375,9 +2502,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       .querySelectorAll<HTMLElement>('.chip')
       .forEach((c) => c.setAttribute('aria-checked', String(c.dataset.val === val)));
   }
-  chipGroup.querySelectorAll<HTMLElement>('.chip').forEach((c) =>
-    c.addEventListener('click', () => setTopic(c.dataset.val!))
-  );
+  chipGroup
+    .querySelectorAll<HTMLElement>('.chip')
+    .forEach((c) => c.addEventListener('click', () => setTopic(c.dataset.val!)));
 
   const segGroup = document.getElementById('seg')!;
   segGroup.querySelectorAll<HTMLElement>('.seg-b').forEach((b) =>
@@ -2386,7 +2513,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       segGroup
         .querySelectorAll<HTMLElement>('.seg-b')
         .forEach((x) => x.setAttribute('aria-checked', String(x === b)));
-      reachLabel.textContent = channel === 'wa' ? ovl.dataset.whatsappLabel! : ovl.dataset.phoneLabel!;
+      reachLabel.textContent =
+        channel === 'wa' ? ovl.dataset.whatsappLabel! : ovl.dataset.phoneLabel!;
     })
   );
 
@@ -2423,7 +2551,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Senden fehlgeschlagen');
+      if (!res.ok)
+        throw new Error((await res.json().catch(() => ({}))).error || 'Senden fehlgeschlagen');
       form.hidden = true;
       done.hidden = false;
     } catch (err) {
@@ -2435,47 +2564,25 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     }
   });
 
-  /* Ablauf: Die Route wird während der Scroll-Etappe wirklich "abgefahren". */
+  /* Ablauf: Nur die Linie folgt dem Scrollen; die Section bleibt im normalen Seitenfluss. */
   const route = document.getElementById('route');
   if (route) {
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const stepsEl = route.querySelectorAll<HTMLElement>('.step');
-    const section = route.closest<HTMLElement>('.proc')!;
-    const stage = section.querySelector<HTMLElement>('.proc-stage')!;
-    const stickyJourney = matchMedia('(min-width: 901px) and (min-height: 700px)');
-
-    if (reduce) {
-      route.style.setProperty('--p', '1');
-      stepsEl.forEach((el) => el.classList.add('in'));
-    } else {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const stops = route.querySelectorAll<HTMLElement>('.stop');
+    if (stops.length) {
       let frame = 0;
 
       const draw = () => {
         frame = 0;
         const vh = innerHeight;
-        const scrollTop = scrollY;
-        let start: number;
-        let end: number;
-
-        if (stickyJourney.matches) {
-          const sectionRect = section.getBoundingClientRect();
-          const sectionTop = scrollTop + sectionRect.top;
-          const stickyTop = 32;
-          start = sectionTop - stickyTop;
-          end = sectionTop + section.offsetHeight - stage.offsetHeight - stickyTop;
-        } else {
-          const routeRect = route.getBoundingClientRect();
-          const routeTop = scrollTop + routeRect.top;
-          start = routeTop - vh * 0.72;
-          end = routeTop + route.offsetHeight - vh * 0.35;
-        }
-
-        const p = Math.min(1, Math.max(0, (scrollTop - start) / Math.max(1, end - start)));
+        const first = stops[0].getBoundingClientRect();
+        const last = stops[stops.length - 1].getBoundingClientRect();
+        const start = first.top + first.height / 2;
+        const end = last.top + last.height / 2;
+        const travel = Math.max(1, end - start + vh * 0.5);
+        const p = reduce.matches ? 1 : Math.min(1, Math.max(0, (vh * 0.85 - start) / travel));
+        route.style.setProperty('--route-span', `${Math.max(0, end - start)}px`);
         route.style.setProperty('--p', p.toFixed(3));
-        stepsEl.forEach((el, index) => {
-          const threshold = stepsEl.length > 1 ? index / (stepsEl.length - 1) : 0;
-          el.classList.toggle('in', p + 0.01 >= threshold);
-        });
       };
 
       const queueDraw = () => {
@@ -2484,8 +2591,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
       addEventListener('scroll', queueDraw, { passive: true });
       addEventListener('resize', queueDraw);
-      stickyJourney.addEventListener('change', queueDraw);
-      new ResizeObserver(queueDraw).observe(stage);
+      reduce.addEventListener('change', queueDraw);
+      new ResizeObserver(queueDraw).observe(route);
       draw();
     }
   }
@@ -2519,6 +2626,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
   /* Von der Detailseite: ?anfrage=<id> öffnet das Formular vorbelegt */
   const wanted = new URLSearchParams(location.search).get('anfrage');
-  const pre = wanted && document.querySelector<HTMLElement>(`.vrow[data-id="${CSS.escape(wanted)}"]`);
+  const pre =
+    wanted && document.querySelector<HTMLElement>(`.vrow[data-id="${CSS.escape(wanted)}"]`);
   if (pre) open('ask', pre.dataset.vehicle, pre.dataset.topic);
 </script>

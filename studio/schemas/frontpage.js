@@ -38,6 +38,7 @@ export default {
       type: 'object',
       group: 'hero',
       fields: [
+        { name: 'eyebrow', title: 'Hinweis über der Hauptüberschrift', type: 'string' },
         requiredString('availability', 'Erreichbarkeits-Hinweis'),
         requiredString('personTitle', 'Persönliche Überschrift'),
         requiredText('personIntro', 'Persönlicher Kurztext', 2),
@@ -65,6 +66,8 @@ export default {
       group: 'offers',
       fields: [
         requiredString('heading', 'Überschrift'),
+        { name: 'intro', title: 'Einleitung auf der Startseite', type: 'string' },
+        { name: 'ctaLabel', title: 'Button zur Beratung', type: 'string' },
         requiredString('allLabel', 'Button „Alle ansehen“'),
         requiredString('sheetSubtitle', 'Untertitel in der Fahrzeugübersicht'),
         requiredString('priceLabel', 'Preisbezeichnung'),

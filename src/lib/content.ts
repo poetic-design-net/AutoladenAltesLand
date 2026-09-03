@@ -27,6 +27,7 @@ export const fallbackFrontpage = {
   seoDescription:
     'Ein Ansprechpartner für dein Fahrzeug. Markenunabhängig, für Unternehmen und Privatkunden. Anrufen, WhatsApp oder Anfrage mit drei Angaben.',
   hero: {
+    eyebrow: 'Persönlich statt Verkaufstheater',
     availability: 'Persönlich erreichbar',
     personTitle: 'Moin, ich bin Alex.',
     personIntro: 'Persönlich, direkt und ohne großes Verkaufstheater.',
@@ -42,6 +43,8 @@ export const fallbackFrontpage = {
   },
   offers: {
     heading: 'Was gerade geht',
+    intro: 'Ein paar Beispiele. Dein Wunschfahrzeug finden wir gemeinsam.',
+    ctaLabel: 'Alle Möglichkeiten besprechen',
     allLabel: 'alle ansehen',
     sheetSubtitle: 'Beispiele – kein Bestand, kein Katalog.',
     priceLabel: 'Kaufpreis',
