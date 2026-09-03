@@ -169,39 +169,41 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
     <!-- ============================ ABLAUF ============================ -->
     <section class="proc" id="ablauf" aria-labelledby="proc-title">
-      <div class="proc-head">
-        <h2 id="proc-title">{page.process.heading}</h2>
-        <p>{page.process.intro}</p>
-      </div>
+      <div class="proc-stage">
+        <div class="proc-head">
+          <h2 id="proc-title">{page.process.heading}</h2>
+          <p>{page.process.intro}</p>
+        </div>
 
-      <div class="route" id="route">
-        <svg class="road" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
-          <path class="road-base" d={road} />
-          <path class="road-dash" d={road} />
-          <path class="road-draw" d={road} pathLength="1" />
-        </svg>
-        <ol class="steps">
-          {
-            steps.map((st, i) => (
-              <li class="step" style={`--x:${st.x}%;--y:${st.y};--i:${i}`}>
-                <span class="stop" aria-hidden="true">
-                  <Icon icon={st.icon} />
-                </span>
-                <span class="num" aria-hidden="true">0{i + 1}</span>
-                <h3>{st.title}</h3>
-                <p>{st.text}</p>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
+        <div class="route" id="route">
+          <svg class="road" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+            <path class="road-base" d={road} />
+            <path class="road-dash" d={road} />
+            <path class="road-draw" d={road} pathLength="1" />
+          </svg>
+          <ol class="steps">
+            {
+              steps.map((st, i) => (
+                <li class="step" style={`--x:${st.x}%;--y:${st.y};--i:${i}`}>
+                  <span class="stop" aria-hidden="true">
+                    <Icon icon={st.icon} />
+                  </span>
+                  <span class="num" aria-hidden="true">0{i + 1}</span>
+                  <h3>{st.title}</h3>
+                  <p>{st.text}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
 
-      <div class="proc-cta">
-        <button class="primary" type="button" data-view="ask">
-          {page.process.ctaLabel}
-          <span class="go"><Icon icon={ArrowRight02Icon} /></span>
-        </button>
-        <p class="proc-fine">{page.process.finePrint}</p>
+        <div class="proc-cta">
+          <button class="primary" type="button" data-view="ask">
+            {page.process.ctaLabel}
+            <span class="go"><Icon icon={ArrowRight02Icon} /></span>
+          </button>
+          <p class="proc-fine">{page.process.finePrint}</p>
+        </div>
       </div>
     </section>
 
@@ -458,7 +460,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-x: clip;
     padding: 24px 40px 26px;
   }
   .app::before {
@@ -473,16 +475,16 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     position: relative;
     flex: none;
     width: 100%;
-    max-width: 1150px;
+    max-width: 1240px;
     margin-inline: auto;
-    height: 54px;
+    height: 68px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
   }
   .logo {
-    width: 54px;
-    height: 54px;
+    width: 68px;
+    height: 68px;
     flex: none;
     object-fit: contain;
   }
@@ -518,8 +520,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     position: relative;
     flex: 1;
     width: 100%;
-    max-width: 1150px;
-    margin: 14px auto 0;
+    max-width: 1240px;
+    margin: 16px auto 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -527,10 +529,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   }
   .hero-row {
     display: grid;
-    grid-template-columns: 525px 460px;
+    grid-template-columns: 525px minmax(0, 1fr);
     gap: 53px;
-    justify-content: start;
-    height: 430px;
+    min-height: 460px;
   }
 
   /* Alex */
@@ -563,7 +564,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     display: none;
   }
   .alex-txt {
-    margin-top: 23px;
+    margin-top: 26px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -619,7 +620,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 5px 0 0;
+    padding: 6px 0;
     max-width: none;
   }
   .eyebrow {
@@ -652,39 +653,50 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   }
   .sub {
     position: relative;
-    margin-top: 17px;
+    margin-top: 20px;
     margin-inline: 0;
-    max-width: 430px;
-    padding: 1px 0 1px 12px;
-    border-left: 2px solid var(--green);
+    max-width: 540px;
+    padding: 12px 52px 12px 18px;
+    border-left: 1px solid var(--green);
+    border-radius: 0 12px 12px 0;
+    background: rgba(255, 255, 255, 0.72);
+    overflow: hidden;
   }
   .sub::before {
-    display: none;
+    content: open-quote;
+    position: absolute;
+    top: -8px;
+    right: 14px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 58px;
+    line-height: 1;
+    color: rgba(0, 51, 102, 0.14);
   }
   .sub p {
-    font-size: 15px;
-    line-height: 1.35;
-    font-weight: 400;
+    position: relative;
+    font-size: 18px;
+    line-height: 1.42;
+    font-weight: 500;
     letter-spacing: -0.014em;
     color: var(--ink);
   }
   .acts {
-    margin-top: 25px;
+    margin-top: 28px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
   }
   .act {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    height: 40px;
-    border-radius: 7px;
-    background: transparent;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--surface);
     color: var(--ink);
     box-shadow: inset 0 0 0 1px var(--line);
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 500;
     letter-spacing: -0.014em;
     transition: background 0.16s var(--ease), transform 0.16s var(--ease);
@@ -694,6 +706,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     transform: translateY(-1px);
   }
   .act .ic {
+    width: 20px;
+    height: 20px;
     color: var(--ink-2);
   }
   .primary {
@@ -727,20 +741,20 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
   }
   .hero-primary {
-    margin-top: 10px;
-    height: 42px;
-    padding: 0 14px 0 18px;
-    border-radius: 7px;
-    font-size: 13.5px;
-    font-weight: 500;
+    margin-top: 12px;
+    height: 56px;
+    padding: 0 12px 0 20px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
   .hero-primary .go {
-    width: auto;
-    height: auto;
-    border-radius: 0;
-    background: none;
-    box-shadow: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.13);
   }
   .note {
     margin-top: 18px;
@@ -789,8 +803,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     gap: 12px;
     min-height: 91px;
     padding: 8px 10px;
-    border-radius: 10px;
-    background: transparent;
+    border-radius: 12px;
+    background: var(--surface);
     box-shadow: inset 0 0 0 1px var(--line);
     transition: background 0.18s var(--ease), transform 0.18s var(--ease);
   }
@@ -933,6 +947,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     padding-top: 64px;
     border-top: 1px solid var(--line);
   }
+  .proc-stage {
+    position: relative;
+  }
   .proc-head {
     max-width: 560px;
   }
@@ -984,7 +1001,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     stroke-width: 2;
     stroke-dasharray: 1;
     stroke-dashoffset: calc(1 - var(--p));
-    transition: stroke-dashoffset 0.25s linear;
   }
 
   .steps {
@@ -996,14 +1012,11 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     position: relative;
     padding: 0 8px;
     text-align: center;
-    opacity: 0;
-    transform: translateY(14px);
-    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-    transition-delay: calc(var(--i) * 110ms + 120ms);
+    opacity: 0.48;
+    transition: opacity 0.24s var(--ease);
   }
   .step.in {
     opacity: 1;
-    transform: none;
   }
   .stop {
     position: absolute;
@@ -1016,9 +1029,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     place-items: center;
     border-radius: 999px;
     background: var(--surface);
-    color: var(--accent);
+    color: var(--ink-3);
     box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
-    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+    transition: color 0.2s var(--ease), background 0.2s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
   }
   .stop .ic {
     width: 21px;
@@ -1027,6 +1040,11 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   .step:hover .stop {
     transform: translate(-50%, -50%) scale(1.08);
     box-shadow: inset 0 0 0 1.5px var(--accent-hi), var(--sh-lift);
+  }
+  .step.in .stop {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 0 5px var(--green-ring), 0 12px 26px -12px rgba(0, 51, 102, 0.52);
   }
   .num {
     display: block;
@@ -1037,6 +1055,10 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     transition: color 0.25s var(--ease);
   }
   .step:hover .num {
+    color: var(--accent);
+  }
+  .step.in .num,
+  .step.in h3 {
     color: var(--accent);
   }
   .step h3 {
@@ -1056,19 +1078,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   .step:last-child .stop {
     width: 58px;
     height: 58px;
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 0 7px var(--green-ring), 0 16px 30px -12px rgba(0, 51, 102, 0.6);
   }
   .step:last-child .stop .ic {
     width: 24px;
     height: 24px;
   }
+  .step:last-child.in .stop,
   .step:last-child:hover .stop {
     box-shadow: 0 0 0 9px var(--green-ring), 0 20px 34px -12px rgba(0, 51, 102, 0.7);
-  }
-  .step:last-child h3 {
-    color: var(--accent);
   }
 
   .proc-cta {
@@ -1096,6 +1113,16 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     }
     .step h3 {
       font-size: 15px;
+    }
+  }
+
+  @media (min-width: 901px) and (min-height: 700px) {
+    .proc {
+      min-height: calc(100vh + 420px);
+    }
+    .proc-stage {
+      position: sticky;
+      top: 32px;
     }
   }
 
@@ -1132,7 +1159,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       border-left: 2px solid var(--accent);
       bottom: auto;
       height: calc(var(--p) * (100% - 52px));
-      transition: height 0.25s linear;
     }
     .step {
       display: grid;
@@ -1140,7 +1166,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       column-gap: 18px;
       padding: 0;
       text-align: left;
-      transform: translateX(-10px);
+      transform: none;
     }
     .step > :not(.stop) {
       grid-column: 2;
@@ -1197,6 +1223,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       opacity: 1;
       transform: none;
       transition: none;
+    }
+    .step .stop {
+      background: var(--accent);
+      color: #fff;
+    }
+    .step .num,
+    .step h3 {
+      color: var(--accent);
     }
   }
 
@@ -1279,7 +1313,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     opacity: 0.55;
   }
 
-  .fin-tabs {
+  .seg.fin-tabs {
     display: none;
   }
   .fin-tabs .seg-b[aria-selected='true'] {
@@ -1465,7 +1499,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     .fork {
       display: none;
     }
-    .fin-tabs {
+    .seg.fin-tabs {
       display: grid;
       margin-top: 24px;
     }
@@ -1915,8 +1949,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   /* ------------------------------ Responsive ----------------------------- */
   @media (max-width: 1100px) {
     .hero-row {
-      grid-template-columns: 330px minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: minmax(300px, 38%) minmax(0, 1fr);
+      gap: 32px;
     }
     .mid {
       padding: 0 0 0 16px;
@@ -1971,6 +2005,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       flex-direction: column;
       gap: 0;
       height: auto;
+      min-height: 0;
     }
 
     /* Reihenfolge mobil: Aussage, Person, Handlung, Angebote.
@@ -2400,33 +2435,57 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     }
   });
 
-  /* Ablauf: Route zeichnet sich beim Scrollen, Schritte blenden nacheinander ein */
+  /* Ablauf: Die Route wird während der Scroll-Etappe wirklich "abgefahren". */
   const route = document.getElementById('route');
   if (route) {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const stepsEl = route.querySelectorAll<HTMLElement>('.step');
+    const section = route.closest<HTMLElement>('.proc')!;
+    const stage = section.querySelector<HTMLElement>('.proc-stage')!;
+    const stickyJourney = matchMedia('(min-width: 901px) and (min-height: 700px)');
+
     if (reduce) {
+      route.style.setProperty('--p', '1');
       stepsEl.forEach((el) => el.classList.add('in'));
     } else {
-      new IntersectionObserver(
-        (entries, io) =>
-          entries.forEach((e) => {
-            if (e.isIntersecting) {
-              stepsEl.forEach((el) => el.classList.add('in'));
-              io.disconnect();
-            }
-          }),
-        { threshold: 0.2 }
-      ).observe(route);
+      let frame = 0;
+
       const draw = () => {
-        const r = route.getBoundingClientRect();
+        frame = 0;
         const vh = innerHeight;
-        // 0 wenn die Route unten ins Bild kommt, 1 wenn sie ~zwei Drittel hoch steht
-        const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.55 + r.height * 0.35)));
+        const scrollTop = scrollY;
+        let start: number;
+        let end: number;
+
+        if (stickyJourney.matches) {
+          const sectionRect = section.getBoundingClientRect();
+          const sectionTop = scrollTop + sectionRect.top;
+          const stickyTop = 32;
+          start = sectionTop - stickyTop;
+          end = sectionTop + section.offsetHeight - stage.offsetHeight - stickyTop;
+        } else {
+          const routeRect = route.getBoundingClientRect();
+          const routeTop = scrollTop + routeRect.top;
+          start = routeTop - vh * 0.72;
+          end = routeTop + route.offsetHeight - vh * 0.35;
+        }
+
+        const p = Math.min(1, Math.max(0, (scrollTop - start) / Math.max(1, end - start)));
         route.style.setProperty('--p', p.toFixed(3));
+        stepsEl.forEach((el, index) => {
+          const threshold = stepsEl.length > 1 ? index / (stepsEl.length - 1) : 0;
+          el.classList.toggle('in', p + 0.01 >= threshold);
+        });
       };
-      addEventListener('scroll', draw, { passive: true });
-      addEventListener('resize', draw);
+
+      const queueDraw = () => {
+        if (!frame) frame = requestAnimationFrame(draw);
+      };
+
+      addEventListener('scroll', queueDraw, { passive: true });
+      addEventListener('resize', queueDraw);
+      stickyJourney.addEventListener('change', queueDraw);
+      new ResizeObserver(queueDraw).observe(stage);
       draw();
     }
   }
