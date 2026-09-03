@@ -44,27 +44,28 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     <div class="console">
       <div class="hero-row">
       <!-- ------------------------- Alex (Spalte 1) ------------------------ -->
-      <button class="alex" type="button" data-view="alex">
-        <span class="alex-txt">
-          <span class="live"><span class="dot"></span>{page.hero.availability}</span>
-          <span class="alex-n">{page.hero.personTitle}</span>
-          <span class="alex-r">{page.hero.personIntro}</span>
-          <span class="alex-more">
-            {page.hero.moreLabel}
-            <Icon icon={ArrowRight02Icon} />
-          </span>
-        </span>
+      <button class="alex" type="button" data-view="alex" aria-label={page.hero.moreLabel}>
         <span class="alex-pic"
-          ><img src={page.hero.portrait} alt={page.hero.portraitAlt} width="960" height="1440" /></span
+          ><img src={page.about.image} alt={page.about.imageAlt} width="1600" height="1067" /></span
         >
       </button>
 
       <!-- ------------------------- Mitte (Spalte 2) ----------------------- -->
       <main class="mid">
+        <span class="live"><span class="dot"></span>{page.hero.availability}</span>
         <h1>{page.hero.headline}<br /><span class="a">{page.hero.headlineAccent}</span></h1>
         <blockquote class="sub">
           <p>{page.hero.quote}</p>
         </blockquote>
+
+        <div class="alex-txt">
+          <strong class="alex-n">{page.hero.personTitle}</strong>
+          <span class="alex-r">{page.hero.personIntro}</span>
+          <button class="alex-more" type="button" data-view="alex">
+            {page.hero.moreLabel}
+            <Icon icon={ArrowRight02Icon} />
+          </button>
+        </div>
 
         <div class="acts">
           {
@@ -95,7 +96,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           }
         </div>
 
-        <button class="primary" type="button" data-view="ask">
+        <button class="primary hero-primary" type="button" data-view="ask">
           {page.hero.ctaLabel}
           <span class="go"
             ><Icon icon={ArrowRight02Icon} /></span
@@ -458,27 +459,13 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    padding: 32px 40px;
+    padding: 24px 40px 26px;
   }
   .app::before {
-    content: '';
-    position: absolute;
-    top: -300px;
-    right: -180px;
-    width: 820px;
-    height: 820px;
-    background: radial-gradient(circle, rgba(0, 51, 102, 0.12), rgba(0, 51, 102, 0) 66%);
-    pointer-events: none;
+    display: none;
   }
   .app::after {
-    content: '';
-    position: absolute;
-    bottom: -340px;
-    left: -200px;
-    width: 760px;
-    height: 760px;
-    background: radial-gradient(circle, rgba(0, 153, 102, 0.1), rgba(0, 153, 102, 0) 66%);
-    pointer-events: none;
+    display: none;
   }
 
   /* --------------------------------- Kopf -------------------------------- */
@@ -486,22 +473,22 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     position: relative;
     flex: none;
     width: 100%;
-    max-width: 1240px;
+    max-width: 1150px;
     margin-inline: auto;
-    height: 84px;
+    height: 54px;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
   }
   .logo {
-    width: 70px;
-    height: 70px;
+    width: 54px;
+    height: 54px;
     flex: none;
     object-fit: contain;
   }
   .bar-name {
     display: block;
-    font-size: 15px;
+    font-size: 24px;
     font-weight: 600;
     letter-spacing: -0.014em;
   }
@@ -531,32 +518,30 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     position: relative;
     flex: 1;
     width: 100%;
-    max-width: 1240px;
-    margin: 26px auto 0;
+    max-width: 1150px;
+    margin: 14px auto 0;
     display: flex;
     flex-direction: column;
-    gap: 26px;
+    gap: 12px;
     min-height: 0;
   }
   .hero-row {
     display: grid;
-    grid-template-columns: 400px minmax(0, 1fr);
-    gap: 32px;
-    flex: 1;
-    min-height: 0;
+    grid-template-columns: 525px 460px;
+    gap: 53px;
+    justify-content: start;
+    height: 430px;
   }
 
   /* Alex */
   .alex {
     position: relative;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    border-radius: 36px;
+    border-radius: 22px;
     overflow: hidden;
-    background: var(--accent-deep);
+    background: var(--surface-2);
     padding: 0;
-    box-shadow: 0 0 0 1px var(--line), 0 40px 70px -34px rgba(6, 26, 48, 0.45);
+    box-shadow: none;
     transition: transform 0.2s var(--ease);
   }
   .alex:hover {
@@ -570,66 +555,59 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 20%;
+    object-position: left 50%;
+    transform: scale(1.35);
+    transform-origin: 50% 23%;
   }
   .alex-pic::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(196deg, rgba(0, 51, 102, 0.3), rgba(0, 40, 79, 0.06) 40%, rgba(0, 40, 79, 0.97));
+    display: none;
   }
   .alex-txt {
-    position: relative;
-    z-index: 1;
-    padding: 26px;
+    margin-top: 23px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    color: #fff;
   }
   .live {
+    align-self: flex-start;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    height: 30px;
-    padding: 0 13px 0 10px;
+    height: 28px;
+    padding: 0 13px 0 11px;
     border-radius: 999px;
-    background: rgba(36, 192, 140, 0.13);
-    box-shadow: inset 0 0 0 1px rgba(36, 192, 140, 0.28);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px rgba(0, 153, 102, 0.16), 0 3px 10px rgba(6, 26, 48, 0.04);
     font-size: 11.5px;
-    font-weight: 600;
-    color: #7fe0bd;
+    font-weight: 500;
+    color: #31846c;
   }
   .alex-n {
-    margin-top: 14px;
-    font-size: 28px;
+    font-size: 16.5px;
     font-weight: 600;
-    letter-spacing: -0.03em;
+    line-height: 1.3;
+    letter-spacing: -0.018em;
   }
   .alex-r {
-    margin-top: 6px;
-    font-size: 14px;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.72);
-    max-width: 300px;
+    margin-top: 3px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
   }
   .alex-more {
-    margin-top: 16px;
+    margin-top: 15px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    height: 40px;
-    padding: 0 14px 0 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #fff;
-    transition: background 0.16s var(--ease);
+    height: auto;
+    padding: 0;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--accent-text);
+    transition: color 0.16s var(--ease);
   }
-  .alex:hover .alex-more {
-    background: rgba(255, 255, 255, 0.2);
+  .alex-more:hover {
+    color: var(--accent-hi);
   }
   .alex-more .ic {
     width: 16px;
@@ -640,9 +618,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   .mid {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 0 8px 0 24px;
-    max-width: 620px;
+    justify-content: flex-start;
+    padding: 5px 0 0;
+    max-width: none;
   }
   .eyebrow {
     align-self: flex-start;
@@ -663,9 +641,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     height: 15px;
   }
   h1 {
-    margin-top: 24px;
-    font-size: clamp(29px, 3.6vw, 50px);
-    line-height: 1.04;
+    margin-top: 22px;
+    font-size: clamp(34px, 3.05vw, 40px);
+    line-height: 1.06;
     font-weight: 600;
     letter-spacing: -0.04em;
   }
@@ -674,48 +652,40 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   }
   .sub {
     position: relative;
-    margin-top: 26px;
-    max-width: 480px;
-    padding: 22px 24px 20px 26px;
-    border-radius: 24px;
-    background: var(--surface);
-    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
-    overflow: hidden;
+    margin-top: 17px;
+    margin-inline: 0;
+    max-width: 430px;
+    padding: 1px 0 1px 12px;
+    border-left: 2px solid var(--green);
   }
   .sub::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    background: linear-gradient(180deg, var(--accent), var(--green));
+    display: none;
   }
   .sub p {
-    font-size: 19px;
-    line-height: 1.45;
-    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.35;
+    font-weight: 400;
     letter-spacing: -0.014em;
     color: var(--ink);
   }
   .acts {
-    margin-top: 34px;
+    margin-top: 25px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
   }
   .act {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    height: 64px;
-    border-radius: 20px;
-    background: var(--surface);
+    height: 40px;
+    border-radius: 7px;
+    background: transparent;
     color: var(--ink);
     box-shadow: inset 0 0 0 1px var(--line);
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     letter-spacing: -0.014em;
     transition: background 0.16s var(--ease), transform 0.16s var(--ease);
   }
@@ -756,6 +726,22 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     background: rgba(255, 255, 255, 0.16);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
   }
+  .hero-primary {
+    margin-top: 10px;
+    height: 42px;
+    padding: 0 14px 0 18px;
+    border-radius: 7px;
+    font-size: 13.5px;
+    font-weight: 500;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  .hero-primary .go {
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
   .note {
     margin-top: 18px;
     font-size: 13px;
@@ -773,8 +759,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     padding: 0 2px 0 4px;
   }
   .panel h2 {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 500;
     letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--ink-3);
@@ -792,18 +778,19 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     height: 14px;
   }
   .offers {
-    margin-top: 14px;
+    margin-top: 16px;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    gap: 20px;
   }
   .ocard {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 12px 14px 12px 12px;
-    border-radius: 22px;
-    background: var(--surface);
+    gap: 12px;
+    min-height: 91px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: transparent;
     box-shadow: inset 0 0 0 1px var(--line);
     transition: background 0.18s var(--ease), transform 0.18s var(--ease);
   }
@@ -863,9 +850,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     transform: translateY(-2px);
   }
   .ocard-pic {
-    width: 112px;
-    height: 92px;
-    border-radius: 16px;
+    width: 108px;
+    height: 75px;
+    border-radius: 9px;
     background-size: cover;
     background-position: 50% 50%;
     flex: none;
@@ -877,8 +864,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   }
   .ocard .t {
     display: block;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     letter-spacing: -0.018em;
     line-height: 1.25;
   }
@@ -887,7 +874,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    font-size: 11.5px;
+    font-size: 10.5px;
     color: var(--ink-2);
   }
   .ocard .ch {
@@ -903,7 +890,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     box-shadow: 0 0 0 3px rgba(139, 149, 158, 0.2);
   }
   .prow {
-    margin-top: 5px;
+    margin-top: 4px;
     display: flex;
     align-items: baseline;
     gap: 6px;
@@ -916,20 +903,20 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     text-decoration-thickness: 1px;
   }
   .p-new {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.026em;
     color: var(--ink);
   }
   .p-unit {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
     color: var(--ink-2);
   }
   .panel .tail {
     margin-top: 12px;
     padding: 0 4px;
-    font-size: 11.5px;
+    font-size: 10px;
     line-height: 1.5;
     color: var(--ink-3);
   }
@@ -1983,6 +1970,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       display: flex;
       flex-direction: column;
       gap: 0;
+      height: auto;
     }
 
     /* Reihenfolge mobil: Aussage, Person, Handlung, Angebote.
@@ -1996,24 +1984,33 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     .mid .primary {
       margin-inline: 20px;
     }
-    .mid h1 {
+    .mid .live {
       order: 0;
+      align-self: flex-start;
+      margin-left: 20px;
+    }
+    .mid h1 {
+      order: 1;
     }
     .mid .sub {
-      order: 1;
+      order: 2;
       max-width: none;
     }
+    .mid .alex-txt {
+      order: 4;
+      margin: 16px 20px 0;
+    }
     .mid .acts {
-      order: 3;
+      order: 5;
     }
     .mid .primary {
-      order: 4;
+      order: 6;
     }
     .eyebrow {
       display: none;
     }
     h1 {
-      margin-top: 0;
+      margin-top: 16px;
       font-size: 29px;
       line-height: 1.1;
       letter-spacing: -0.036em;
@@ -2021,8 +2018,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     .sub {
       margin-top: 14px;
       max-width: none;
-      padding: 18px 18px 16px 20px;
-      border-radius: 20px;
+      padding: 1px 0 1px 12px;
+      border-radius: 0;
     }
     .sub p {
       font-size: 16.5px;
@@ -2043,40 +2040,36 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       font-size: 16px;
       padding: 0 12px 0 22px;
     }
+    .hero-primary {
+      height: 54px;
+      border-radius: 12px;
+      font-size: 15px;
+    }
     .note {
       display: none;
     }
 
     .alex {
-      order: 2;
-      flex-direction: row;
-      justify-content: flex-start;
+      order: 3;
       margin: 14px 20px 0;
-      height: 156px;
-      border-radius: 26px;
-      background: var(--surface);
-      box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -22px rgba(6, 26, 48, 0.3);
+      height: 280px;
+      border-radius: 22px;
+      background: var(--surface-2);
+      box-shadow: none;
     }
     .alex-txt {
-      flex: 1;
-      min-width: 0;
-      padding: 16px 12px 16px 18px;
-      justify-content: flex-start;
+      padding: 0;
       color: var(--ink);
     }
     .alex-r {
       color: var(--ink-2);
     }
     .live {
-      background: var(--green-ring);
-      box-shadow: inset 0 0 0 1px rgba(0, 153, 102, 0.3);
-      color: var(--green);
       height: 26px;
       font-size: 10.5px;
       padding: 0 11px 0 9px;
     }
     .alex-n {
-      margin-top: 12px;
       font-size: 19px;
       letter-spacing: -0.028em;
     }
@@ -2086,7 +2079,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       line-height: 1.4;
     }
     .alex-more {
-      margin-top: auto;
+      margin-top: 12px;
       height: auto;
       padding: 0;
       background: none;
@@ -2099,19 +2092,17 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       height: 14px;
     }
     .alex-pic {
-      position: relative;
-      inset: auto;
-      width: 132px;
-      flex: none;
+      position: absolute;
+      inset: 0;
+      width: auto;
     }
     .alex-pic img {
       position: absolute;
       inset: 0;
-      object-position: 50% 20%;
+      object-position: 50% 32%;
     }
     .alex-pic::after {
-      background: none;
-      box-shadow: inset 28px 0 30px -24px var(--surface);
+      display: none;
     }
 
     /* Angebote als Streifen */
