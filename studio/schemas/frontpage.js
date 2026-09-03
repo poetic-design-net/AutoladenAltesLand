@@ -15,6 +15,50 @@ const requiredText = (name, title, rows = 3, extra = {}) => ({
   ...extra,
 });
 
+const sectionTargets = [
+  { title: 'Über Alex', value: 'alex' },
+  { title: 'Fahrzeuge', value: 'fahrzeuge' },
+  { title: 'Ablauf', value: 'ablauf' },
+  { title: 'Leasing & Finanzierung', value: 'finanzierung' },
+];
+const navigationLinks = (name, title, { footer = false, mobile = false } = {}) => ({
+  name,
+  title,
+  type: 'array',
+  validation: (R) =>
+    mobile
+      ? R.required()
+          .length(4)
+          .custom(
+            (items) =>
+              new Set(items?.map((item) => item.target)).size === 4 ||
+              'Jeder Abschnitt muss genau einmal vorkommen.'
+          )
+      : R.required()
+          .min(1)
+          .max(footer ? 8 : 4),
+  of: [
+    {
+      type: 'object',
+      fields: [
+        requiredString('label', 'Beschriftung'),
+        requiredString('target', 'Ziel', {
+          options: {
+            list: footer
+              ? [
+                  ...sectionTargets,
+                  { title: 'Fragen & Antworten (Dialog)', value: 'faq' },
+                  { title: 'Kontakt (Dialog)', value: 'ask' },
+                ]
+              : sectionTargets,
+          },
+        }),
+      ],
+      preview: { select: { title: 'label', subtitle: 'target' } },
+    },
+  ],
+});
+
 export default {
   name: 'frontpage',
   title: 'Startseite',
@@ -22,7 +66,9 @@ export default {
   groups: [
     { name: 'seo', title: 'SEO' },
     { name: 'hero', title: 'Einstieg', default: true },
+    { name: 'navigation', title: 'Navigation' },
     { name: 'offers', title: 'Fahrzeuge' },
+    { name: 'intro', title: 'Vorstellung & Vorteile' },
     { name: 'process', title: 'Ablauf' },
     { name: 'finance', title: 'Leasing & Finanzierung' },
     { name: 'about', title: 'Über Alex' },
@@ -33,11 +79,48 @@ export default {
     requiredString('seoTitle', 'Seitentitel', { group: 'seo' }),
     requiredText('seoDescription', 'Meta-Beschreibung', 3, { group: 'seo' }),
     {
+      name: 'header',
+      title: 'Desktop-Header',
+      type: 'object',
+      group: 'navigation',
+      fields: [
+        requiredString('navigationLabel', 'Navigationsbezeichnung'),
+        navigationLinks('links', 'Sprunglinks'),
+        requiredString('contactLabel', 'Kontaktbutton'),
+        requiredString('whatsappLabel', 'Barrierefreie WhatsApp-Beschriftung'),
+      ],
+    },
+    {
+      name: 'mobileNavigation',
+      title: 'Mobile Bottom-Navigation',
+      type: 'object',
+      group: 'navigation',
+      description:
+        'Erscheint automatisch nach dem Hero. Beschriftungen und Reihenfolge sind hier änderbar.',
+      fields: [
+        requiredString('label', 'Navigationsbezeichnung'),
+        navigationLinks('links', 'Vier Abschnitte', { mobile: true }),
+      ],
+    },
+    {
       name: 'hero',
       title: 'Einstieg',
       type: 'object',
       group: 'hero',
       fields: [
+        ...['desktopImage', 'mobileImage'].map((name) => ({
+          name,
+          title:
+            name === 'desktopImage' ? 'Hero-Grafik Desktop (16:9)' : 'Hero-Grafik Mobile (9:16)',
+          type: 'image',
+          options: { hotspot: true },
+          validation: (R) => R.required(),
+          description:
+            name === 'desktopImage'
+              ? 'Freie Fläche links für den Text. Die Seite erzeugt WebP-Größen automatisch.'
+              : 'Freie Fläche oben für den Text. Wird bis 760 Pixel Bildschirmbreite verwendet.',
+        })),
+        requiredString('imageAlt', 'Alternativtext der Hero-Grafiken'),
         { name: 'eyebrow', title: 'Hinweis über der Hauptüberschrift', type: 'string' },
         { name: 'aboutLinkLabel', title: 'Link in der kurzen Alex-Leiste', type: 'string' },
         requiredString('availability', 'Erreichbarkeits-Hinweis'),
@@ -57,6 +140,7 @@ export default {
         requiredText('quote', 'Einleitung', 2),
         requiredString('phoneLabel', 'Telefon-Button'),
         requiredString('whatsappLabel', 'WhatsApp-Button'),
+        requiredString('whatsappLinkLabel', 'WhatsApp-Link unter dem Hero-Button'),
         requiredString('ctaLabel', 'Anfrage-Button'),
       ],
     },
@@ -72,6 +156,46 @@ export default {
         requiredString('allLabel', 'Button „Alle ansehen“'),
         requiredString('sheetSubtitle', 'Untertitel in der Fahrzeugübersicht'),
         requiredString('priceLabel', 'Preisbezeichnung'),
+      ],
+    },
+    {
+      name: 'intro',
+      title: 'Vorstellung & Vorteile',
+      type: 'object',
+      group: 'intro',
+      fields: [
+        requiredString('eyebrow', 'Hinweis über der Überschrift'),
+        requiredText('heading', 'Überschrift', 2),
+        requiredText('text', 'Einleitung'),
+        requiredString('promisesLabel', 'Bezeichnung der Vorteilsleiste'),
+        ...['promises', 'benefits'].map((name) => ({
+          name,
+          title: name === 'promises' ? 'Leiste unter dem Hero' : 'Drei Vorteile',
+          type: 'array',
+          validation: (R) => R.length(3),
+          of: [
+            {
+              type: 'object',
+              fields: [
+                requiredString('title', 'Titel'),
+                requiredText('text', 'Text', 2),
+                ...(name === 'benefits'
+                  ? [
+                      requiredString('icon', 'Symbol', {
+                        options: {
+                          list: [
+                            { title: 'Uhr', value: 'clock' },
+                            { title: 'Gespräch', value: 'chat' },
+                            { title: 'Sicherheit', value: 'shield' },
+                          ],
+                        },
+                      }),
+                    ]
+                  : []),
+              ],
+            },
+          ],
+        })),
       ],
     },
     {
@@ -260,10 +384,34 @@ export default {
       type: 'object',
       group: 'footer',
       fields: [
+        requiredText('tagline', 'Persönlicher Abschlusssatz', 2),
+        requiredString('whatsappLabel', 'WhatsApp-Link'),
+        requiredString('navigationLabel', 'Navigationsbezeichnung'),
+        navigationLinks('links', 'Footer-Links', { footer: true }),
         requiredString('phonePrefix', 'Präfix Telefon'),
         requiredString('emailPrefix', 'Präfix E-Mail'),
         requiredString('legalLabel', 'Link Impressum'),
         requiredString('privacyLabel', 'Link Datenschutz'),
+      ],
+    },
+    {
+      name: 'faq',
+      title: 'Fragen & Antworten im Dialog',
+      type: 'object',
+      group: 'footer',
+      fields: [
+        requiredString('title', 'Überschrift'),
+        {
+          name: 'items',
+          title: 'Fragen',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [requiredString('question', 'Frage'), requiredText('answer', 'Antwort')],
+            },
+          ],
+        },
       ],
     },
   ],

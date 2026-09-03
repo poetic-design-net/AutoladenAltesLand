@@ -1,0 +1,310 @@
+{
+  "fallbackSite": {
+    "brandName": "Autoladen Altes Land",
+    "contactName": "Alex",
+    "logo": "/logo.png",
+    "logoAlt": "Autoladen Altes Land",
+    "phone": "+49 175 157 46 46",
+    "whatsapp": "491751574646",
+    "email": "alex@autoladen-altesland.de",
+    "featuredVehicleCount": 3,
+    "priceNote": "Kaufpreise netto zzgl. MwSt. für Gewerbe. Streichpreis ist der reguläre Preis."
+  },
+  "fallbackFrontpage": {
+    "seoTitle": "Autoladen Altes Land – sag Alex, was du brauchst",
+    "seoDescription": "Ein Ansprechpartner für dein Fahrzeug. Markenunabhängig, für Unternehmen und Privatkunden. Anrufen, WhatsApp oder Anfrage mit drei Angaben.",
+    "hero": {
+      "eyebrow": "Persönlich statt Verkaufstheater",
+      "aboutLinkLabel": "Mehr über Alex",
+      "availability": "Persönlich erreichbar",
+      "personTitle": "Moin, ich bin Alex.",
+      "personIntro": "Persönlich, direkt und ohne großes Verkaufstheater.",
+      "moreLabel": "Was das für dich heißt",
+      "portrait": "/alex-tall.webp",
+      "portraitAlt": "Alex vom Autoladen Altes Land",
+      "headline": "Ein Ansprechpartner.",
+      "headlineAccent": "Fertig.",
+      "quote": "Gerade wenn Autos nicht dein Tagesgeschäft sind, musst du auch keins daraus machen.",
+      "phoneLabel": "Anrufen",
+      "whatsappLabel": "WhatsApp",
+      "ctaLabel": "Fahrzeugwunsch besprechen",
+      "desktopImage": "/hero-desktop-1672.webp",
+      "desktopImageSmall": "/hero-desktop-1000.webp",
+      "mobileImage": "/hero-mobile-941.webp",
+      "mobileImageSmall": "/hero-mobile-480.webp",
+      "imageAlt": "Alex vom Autoladen Altes Land",
+      "whatsappLinkLabel": "Oder direkt per WhatsApp"
+    },
+    "offers": {
+      "heading": "Was gerade geht",
+      "intro": "Ein paar Beispiele. Dein Wunschfahrzeug finden wir gemeinsam.",
+      "ctaLabel": "Alle Möglichkeiten besprechen",
+      "allLabel": "alle ansehen",
+      "sheetSubtitle": "Beispiele – kein Bestand, kein Katalog.",
+      "priceLabel": "Kaufpreis"
+    },
+    "intro": {
+      "eyebrow": "Persönlich. Unabhängig. Für dich.",
+      "heading": "Du sagst, was du brauchst.\nAlex findet, was zu dir passt.",
+      "text": "Ich kümmere mich um Angebote, Prüfung, Zulassung, Lieferung und – wenn du möchtest – auch um Leasing oder Finanzierung. Du bekommst alles aus einer Hand und sparst Zeit, Nerven und oft auch Geld.",
+      "promises": [
+        {
+          "title": "Persönlich beraten",
+          "text": "Ein Mensch. Ein Gespräch. Klar und ehrlich."
+        },
+        {
+          "title": "Unabhängig gesucht",
+          "text": "Ich finde, was wirklich zu dir passt."
+        },
+        {
+          "title": "Geprüft geliefert",
+          "text": "Sicher unterwegs von Anfang an."
+        }
+      ],
+      "benefits": [
+        {
+          "title": "Zeit sparen",
+          "text": "Ich übernehme den kompletten Prozess.",
+          "icon": "clock"
+        },
+        {
+          "title": "Bestens beraten",
+          "text": "Klar, verständlich und auf Augenhöhe.",
+          "icon": "chat"
+        },
+        {
+          "title": "Sicher entscheiden",
+          "text": "Geprüfte Fahrzeuge, die zu deinem Bedarf passen.",
+          "icon": "shield"
+        }
+      ],
+      "promisesLabel": "Was du von mir erwarten kannst"
+    },
+    "process": {
+      "heading": "Vom ersten Hallo bis zum ersten Grinsen.",
+      "intro": "Du sagst mir, was du suchst. Ich kümmere mich um Angebote, Prüfung, Zulassung und Lieferung.",
+      "steps": [
+        {
+          "title": "Kontakt aufnehmen",
+          "text": "Schreib mir oder ruf einfach an – ganz ohne Formulare-Marathon."
+        },
+        {
+          "title": "Wünsche klären",
+          "text": "Ich finde mit dir heraus, welches Fahrzeug wirklich zu dir, deinem Alltag und deinem Budget passt."
+        },
+        {
+          "title": "Angebote erhalten",
+          "text": "Du bekommst ausgewählte, nachvollziehbare Angebote – ohne dich selbst durch unzählige Inserate kämpfen zu müssen."
+        },
+        {
+          "title": "Geprüft, zugelassen & geliefert",
+          "text": "Ich prüfe das Fahrzeug, kümmere mich um die Zulassung und bringe es auf Wunsch direkt zu dir."
+        },
+        {
+          "title": "Einsteigen. Losfahren. Grinsen.",
+          "text": "Ab hier musst du nichts mehr entscheiden. Außer vielleicht, wohin die erste Fahrt geht."
+        }
+      ],
+      "ctaLabel": "Fahrzeugwunsch besprechen",
+      "finePrint": "Unverbindlich, persönlich und ohne Verkaufsdruck."
+    },
+    "finance": {
+      "heading": "Dein Auto. Dein Weg.",
+      "intro": "Ob Leasing oder Finanzierung: Gemeinsam finden wir eine Lösung, die zu deinem Budget und deinen Plänen passt – verständlich, transparent und ohne unnötiges Fachchinesisch.",
+      "comparisonLabel": "oder",
+      "ways": [
+        {
+          "id": "leasing",
+          "tag": "Flexibel nutzen",
+          "title": "Leasing",
+          "intro": "Du nutzt das Fahrzeug für einen vereinbarten Zeitraum und zahlst dafür eine planbare monatliche Rate.",
+          "pros": [
+            "Planbare monatliche Kosten",
+            "Flexible Laufzeiten und Kilometerpakete",
+            "Regelmäßig ein aktuelles Fahrzeug fahren",
+            "Keine langfristige Bindung an ein bestimmtes Auto",
+            "Rückgabe des Fahrzeugs am Ende der Laufzeit"
+          ],
+          "fit": "Leasing passt zu dir, wenn du flexibel bleiben, deine Kosten gut planen und regelmäßig ein aktuelles Fahrzeug fahren möchtest."
+        },
+        {
+          "id": "finanzierung",
+          "tag": "Schrittweise besitzen",
+          "title": "Finanzierung",
+          "intro": "Du bezahlst dein Fahrzeug Schritt für Schritt und kannst es nach vollständiger Zahlung dauerhaft behalten.",
+          "pros": [
+            "Flexible Laufzeit und mögliche Anzahlung",
+            "Klassische Raten- oder Schlussratenfinanzierung",
+            "Keine vereinbarte Kilometerbegrenzung",
+            "Das Fahrzeug kann langfristig bei dir bleiben",
+            "Monatliche Rate passend zu deinem finanziellen Rahmen planbar"
+          ],
+          "fit": "Eine Finanzierung passt zu dir, wenn du dein Fahrzeug langfristig behalten und am Ende vollständig besitzen möchtest."
+        }
+      ],
+      "helpHeading": "Noch nicht sicher, was besser zu dir passt?",
+      "helpText": "Kein Problem. Ich erkläre dir beide Möglichkeiten anhand deines Wunschfahrzeugs und rechne mit dir durch, welche Variante für dich sinnvoll ist.",
+      "ctaLabel": "Möglichkeiten besprechen",
+      "finePrint": "Unverbindlich und ohne Finanzierungs-Fachchinesisch.",
+      "legal": "Konkrete Konditionen richten sich unter anderem nach Fahrzeug, Laufzeit, Anzahlung, Fahrleistung, Bonität und Finanzierungspartner. Alle Angebote werden individuell erstellt."
+    },
+    "about": {
+      "title": "Moin, ich bin Alex.",
+      "subtitle": "Ein Ansprechpartner. Fertig.",
+      "image": "/alex.webp",
+      "imageAlt": "Alex vom Autoladen Altes Land",
+      "lead": "Persönlich, direkt und ohne großes Verkaufstheater.",
+      "paragraphs": [
+        "Mir ist lieber, wir sprechen zehn Minuten vernünftig darüber, was du wirklich brauchst, als dass ich dir drei Hochglanzangebote schicke, die am Ende nicht passen.",
+        "Wenn ich weiß, wonach du suchst, kann ich dir meistens ziemlich schnell sagen, was machbar ist."
+      ],
+      "kicker": "Also: Was soll’s werden?",
+      "ruleHeading": "Warum ein Ansprechpartner reicht",
+      "ruleParagraphs": [
+        "Bei mir bist du nicht an eine bestimmte Marke gebunden und musst dich auch nicht selbst durch unzählige Angebote kämpfen.",
+        "Ich suche das Fahrzeug, das zu deinem Bedarf und deinem Budget passt."
+      ],
+      "ruleEmphasis": "Für Unternehmen genauso wie für Privatkunden.",
+      "ctaLabel": "Kurz mit Alex sprechen"
+    },
+    "form": {
+      "title": "Kurz mit Alex sprechen",
+      "subtitle": "Drei Angaben – mehr brauche ich nicht.",
+      "topicLabel": "Worum geht’s?",
+      "topics": [
+        {
+          "id": "firma",
+          "label": "Firmenwagen"
+        },
+        {
+          "id": "transporter",
+          "label": "Transporter"
+        },
+        {
+          "id": "privat",
+          "label": "Privat"
+        },
+        {
+          "id": "offen",
+          "label": "Noch offen"
+        }
+      ],
+      "channelLabel": "Wie erreiche ich dich?",
+      "phoneOption": "Anruf",
+      "whatsappOption": "WhatsApp",
+      "phoneLabel": "Deine Nummer",
+      "whatsappLabel": "Deine WhatsApp-Nummer",
+      "phonePlaceholder": "01xx xxxxxxx",
+      "missingContactError": "Ohne Nummer kann ich mich nicht melden.",
+      "messageLabel": "Kurz dazu",
+      "optionalLabel": "– optional",
+      "messagePlaceholder": "Was ist dir wichtig?",
+      "submitLabel": "An Alex senden",
+      "submittingLabel": "Wird gesendet …",
+      "finePrint": "Geht direkt an Alex – nicht an ein Portal.",
+      "contextPrefix": "Anfrage zu:",
+      "sendErrorSuffix": "– ruf Alex gern direkt an.",
+      "successTitle": "Ist bei Alex.",
+      "successText": "Er schaut, ob er so etwas findet, und meldet sich persönlich bei dir.",
+      "doneLabel": "Fertig",
+      "closeLabel": "Schließen",
+      "removeContextLabel": "Bezug entfernen"
+    },
+    "footer": {
+      "tagline": "Dein nächstes Auto beginnt\nmit einem Gespräch.",
+      "phonePrefix": "Telefon",
+      "emailPrefix": "E-Mail",
+      "legalLabel": "Impressum",
+      "privacyLabel": "Datenschutz",
+      "whatsappLabel": "WhatsApp schreiben",
+      "navigationLabel": "Weitere Navigation",
+      "links": [
+        {
+          "label": "Fahrzeuge",
+          "target": "fahrzeuge"
+        },
+        {
+          "label": "Über Alex",
+          "target": "alex"
+        },
+        {
+          "label": "So läuft’s",
+          "target": "ablauf"
+        },
+        {
+          "label": "Fragen & Antworten",
+          "target": "faq"
+        },
+        {
+          "label": "Leasing & Finanzierung",
+          "target": "finanzierung"
+        },
+        {
+          "label": "Kontakt",
+          "target": "ask"
+        }
+      ]
+    },
+    "faq": {
+      "title": "Fragen & Antworten",
+      "items": [
+        {
+          "question": "Muss ich schon wissen, welches Auto ich möchte?",
+          "answer": "Nein. Ich kläre mit dir, welches Fahrzeug zu dir, deinem Alltag und deinem Budget passt. Du kannst auch mit einer ersten Idee auf mich zukommen."
+        },
+        {
+          "question": "Ist die Beratung an eine bestimmte Marke gebunden?",
+          "answer": "Nein. Ich suche markenunabhängig nach dem Fahrzeug, das zu deinem Bedarf und deinem Budget passt – für Unternehmen genauso wie für Privatkunden."
+        },
+        {
+          "question": "Kümmerst du dich auch um Zulassung und Lieferung?",
+          "answer": "Ja. Ich prüfe das Fahrzeug, kümmere mich um die Zulassung und bringe es auf Wunsch direkt zu dir."
+        },
+        {
+          "question": "Kann ich Leasing oder Finanzierung besprechen?",
+          "answer": "Ja. Ich bespreche beide Möglichkeiten mit dir anhand deines Wunschfahrzeugs. Konkrete Konditionen werden individuell erstellt."
+        }
+      ]
+    },
+    "header": {
+      "navigationLabel": "Hauptnavigation",
+      "links": [
+        {
+          "label": "Fahrzeuge",
+          "target": "fahrzeuge"
+        },
+        {
+          "label": "So läuft’s",
+          "target": "ablauf"
+        },
+        {
+          "label": "Leasing & Finanzierung",
+          "target": "finanzierung"
+        }
+      ],
+      "contactLabel": "Mit Alex sprechen",
+      "whatsappLabel": "Alex auf WhatsApp schreiben"
+    },
+    "mobileNavigation": {
+      "label": "Schnellnavigation",
+      "links": [
+        {
+          "label": "Alex",
+          "target": "alex"
+        },
+        {
+          "label": "Fahrzeuge",
+          "target": "fahrzeuge"
+        },
+        {
+          "label": "Ablauf",
+          "target": "ablauf"
+        },
+        {
+          "label": "Finanzierung",
+          "target": "finanzierung"
+        }
+      ]
+    }
+  }
+}

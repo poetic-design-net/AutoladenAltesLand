@@ -11,7 +11,8 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
-    "migrate": "node seed.js"
+    "migrate": "node seed.js",
+    "sync:homepage": "node sync-homepage.mjs"
   },
   "keywords": [
     "sanity"

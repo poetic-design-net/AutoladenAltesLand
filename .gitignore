@@ -25,3 +25,6 @@ pnpm-debug.log*
 .idea/
 old-static-site/
 .astro/
+
+# Local visual verification captures
+.impeccable/review/
