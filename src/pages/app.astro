@@ -13,7 +13,7 @@ const description =
 <Base
   title={title}
   description={description}
-  theme="dark"
+  theme="light"
   fonts="family=Geist:wght@300..700&family=Manrope:wght@400..700"
 >
   <div class="app">
@@ -333,6 +333,9 @@ const description =
 </Base>
 
 <style>
+  :global(body[data-theme='light']) {
+    --font: 'Geist', 'Manrope', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
   .app {
     position: relative;
     min-height: 100vh;
@@ -349,7 +352,7 @@ const description =
     right: -180px;
     width: 820px;
     height: 820px;
-    background: radial-gradient(circle, rgba(51, 102, 204, 0.2), rgba(51, 102, 204, 0) 66%);
+    background: radial-gradient(circle, rgba(0, 51, 102, 0.12), rgba(0, 51, 102, 0) 66%);
     pointer-events: none;
   }
   .app::after {
@@ -359,7 +362,7 @@ const description =
     left: -200px;
     width: 760px;
     height: 760px;
-    background: radial-gradient(circle, rgba(36, 192, 140, 0.09), rgba(36, 192, 140, 0) 66%);
+    background: radial-gradient(circle, rgba(0, 153, 102, 0.1), rgba(0, 153, 102, 0) 66%);
     pointer-events: none;
   }
 
@@ -402,7 +405,7 @@ const description =
     height: 40px;
     padding: 0 17px 0 13px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface);
     box-shadow: inset 0 0 0 1px var(--line);
     font-size: 13.5px;
     color: var(--ink-2);
@@ -436,9 +439,9 @@ const description =
     justify-content: flex-end;
     border-radius: 36px;
     overflow: hidden;
-    background: #10151a;
+    background: var(--accent-deep);
     padding: 0;
-    box-shadow: 0 0 0 1px var(--line), 0 40px 70px -34px rgba(0, 0, 0, 0.95);
+    box-shadow: 0 0 0 1px var(--line), 0 40px 70px -34px rgba(6, 26, 48, 0.45);
     transition: transform 0.2s var(--ease);
   }
   .alex:hover {
@@ -459,7 +462,7 @@ const description =
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(196deg, rgba(51, 102, 204, 0.3), rgba(13, 16, 19, 0.06) 40%, rgba(13, 16, 19, 0.97));
+    background: linear-gradient(196deg, rgba(0, 51, 102, 0.3), rgba(0, 40, 79, 0.06) 40%, rgba(0, 40, 79, 0.97));
   }
   .alex-txt {
     position: relative;
@@ -468,6 +471,7 @@ const description =
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    color: #fff;
   }
   .live {
     display: inline-flex;
@@ -492,7 +496,7 @@ const description =
     margin-top: 6px;
     font-size: 14px;
     line-height: 1.5;
-    color: var(--ink-2);
+    color: rgba(255, 255, 255, 0.72);
     max-width: 300px;
   }
   .alex-more {
@@ -534,11 +538,11 @@ const description =
     height: 34px;
     padding: 0 15px 0 12px;
     border-radius: 999px;
-    background: rgba(51, 102, 204, 0.16);
-    box-shadow: inset 0 0 0 1px rgba(51, 102, 204, 0.34);
+    background: rgba(0, 51, 102, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.2);
     font-size: 12.5px;
     font-weight: 600;
-    color: #b9d0ff;
+    color: var(--accent);
   }
   .eyebrow .ic {
     width: 15px;
@@ -603,7 +607,7 @@ const description =
     font-size: 16.5px;
     font-weight: 600;
     letter-spacing: -0.016em;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 16px 30px -14px rgba(51, 102, 204, 0.95);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 16px 30px -14px rgba(0, 51, 102, 0.55);
     transition: background 0.16s var(--ease), transform 0.16s var(--ease);
   }
   .primary:hover {
@@ -707,8 +711,8 @@ const description =
     flex: none;
   }
   .tone-blue {
-    background: #5b9bff;
-    box-shadow: 0 0 0 3px rgba(91, 155, 255, 0.2);
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.18);
   }
   .tone-grey {
     background: #8b959e;
@@ -774,7 +778,7 @@ const description =
     color: var(--ink-2);
   }
   .ph {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--surface-2);
     border-radius: 6px;
     padding: 2px 8px;
     color: var(--ink-2);
@@ -788,7 +792,7 @@ const description =
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(4, 6, 8, 0.66);
+    background: rgba(6, 26, 48, 0.45);
     backdrop-filter: blur(5px);
     opacity: 0;
     pointer-events: none;
@@ -805,7 +809,7 @@ const description =
     border-radius: 30px;
     background: var(--sheet);
     padding-bottom: 26px;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.09), 0 50px 90px -34px rgba(0, 0, 0, 0.95);
+    box-shadow: 0 0 0 1px var(--line), 0 50px 90px -34px rgba(6, 26, 48, 0.4);
     transform: translateY(12px) scale(0.98);
     opacity: 0;
     transition: transform 0.22s var(--ease), opacity 0.18s var(--ease);
@@ -840,12 +844,12 @@ const description =
     width: 44px;
     height: 44px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--surface-2);
     color: var(--ink-2);
     flex: none;
   }
   .sh-x:hover {
-    background: rgba(255, 255, 255, 0.11);
+    background: var(--line);
     color: var(--ink);
   }
   .sh-body {
@@ -857,7 +861,7 @@ const description =
     border-radius: 20px;
     overflow: hidden;
     position: relative;
-    background: #10151a;
+    background: var(--accent-deep);
   }
   .band img {
     position: absolute;
@@ -871,7 +875,7 @@ const description =
   .band .duo {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(13, 16, 19, 0.08), rgba(13, 16, 19, 0.7));
+    background: linear-gradient(180deg, rgba(0, 40, 79, 0.08), rgba(0, 40, 79, 0.6));
   }
   .lead {
     margin-top: 18px;
@@ -923,11 +927,11 @@ const description =
     gap: 10px;
     padding: 11px 14px;
     border-radius: 16px;
-    background: rgba(51, 102, 204, 0.14);
-    box-shadow: inset 0 0 0 1px rgba(51, 102, 204, 0.32);
+    background: rgba(0, 51, 102, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.2);
     font-size: 13.5px;
     font-weight: 500;
-    color: #cfe0ff;
+    color: var(--accent);
   }
   .ctx-x {
     margin-left: auto;
@@ -936,12 +940,12 @@ const description =
     width: 26px;
     height: 26px;
     border-radius: 999px;
-    color: #cfe0ff;
+    color: var(--accent);
     opacity: 0.7;
   }
   .ctx-x:hover {
     opacity: 1;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 51, 102, 0.1);
   }
   .field {
     margin-top: 20px;
@@ -972,7 +976,7 @@ const description =
     height: 44px;
     padding: 0 16px;
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface-2);
     box-shadow: inset 0 0 0 1px var(--line);
     font-size: 14px;
     font-weight: 500;
@@ -983,8 +987,8 @@ const description =
     color: var(--ink);
   }
   .chip[aria-checked='true'] {
-    background: rgba(51, 102, 204, 0.2);
-    color: #cfe0ff;
+    background: rgba(0, 51, 102, 0.1);
+    color: var(--accent);
     font-weight: 600;
     box-shadow: inset 0 0 0 1.5px var(--accent-hi);
   }
@@ -995,7 +999,7 @@ const description =
     gap: 6px;
     padding: 5px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--surface-2);
     box-shadow: inset 0 0 0 1px var(--line-soft);
   }
   .seg-b {
@@ -1018,10 +1022,10 @@ const description =
     color: var(--ink);
   }
   .seg-b[aria-checked='true'] {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--surface);
     color: var(--ink);
     font-weight: 600;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
   }
   .inp {
     margin-top: 10px;
@@ -1030,7 +1034,7 @@ const description =
     padding: 0 16px;
     border: 0;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.045);
+    background: var(--surface);
     box-shadow: inset 0 0 0 1px var(--line);
     font-size: 16px;
     color: var(--ink);
@@ -1042,20 +1046,20 @@ const description =
     resize: vertical;
   }
   .inp::placeholder {
-    color: #5f6a73;
+    color: var(--ink-3);
   }
   .inp:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.07);
+    background: var(--surface);
     box-shadow: inset 0 0 0 1.5px var(--accent-hi);
   }
   .inp[aria-invalid='true'] {
-    box-shadow: inset 0 0 0 1.5px #e0736a;
+    box-shadow: inset 0 0 0 1.5px #c8473d;
   }
   .err {
     margin-top: 8px;
     font-size: 12.5px;
-    color: #e0736a;
+    color: #c8473d;
   }
   .err.center {
     text-align: center;
@@ -1074,7 +1078,7 @@ const description =
     font-size: 16px;
     font-weight: 600;
     letter-spacing: -0.014em;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 12px 26px -12px rgba(51, 102, 204, 0.95);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 12px 26px -12px rgba(0, 51, 102, 0.55);
     transition: background 0.16s var(--ease), opacity 0.16s var(--ease);
   }
   .send:hover {
@@ -1104,7 +1108,7 @@ const description =
     width: 62px;
     height: 62px;
     border-radius: 999px;
-    background: rgba(36, 192, 140, 0.14);
+    background: var(--green-ring);
     color: var(--green);
   }
   .ring .ic {
@@ -1250,15 +1254,22 @@ const description =
       height: 156px;
       border-radius: 26px;
       background: var(--surface);
-      box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -22px rgba(0, 0, 0, 0.9);
+      box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -22px rgba(6, 26, 48, 0.3);
     }
     .alex-txt {
       flex: 1;
       min-width: 0;
       padding: 16px 12px 16px 18px;
       justify-content: flex-start;
+      color: var(--ink);
+    }
+    .alex-r {
+      color: var(--ink-2);
     }
     .live {
+      background: var(--green-ring);
+      box-shadow: inset 0 0 0 1px rgba(0, 153, 102, 0.3);
+      color: var(--green);
       height: 26px;
       font-size: 10.5px;
       padding: 0 11px 0 9px;
@@ -1356,7 +1367,7 @@ const description =
     .offer-fade {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, var(--surface) 2%, rgba(23, 28, 33, 0) 62%);
+      background: linear-gradient(to top, var(--surface) 2%, rgba(255, 255, 255, 0) 62%);
     }
     .pin {
       position: absolute;
@@ -1420,7 +1431,7 @@ const description =
       width: 38px;
       height: 4px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.18);
+      background: var(--line);
       margin: 10px auto 0;
     }
     .sh-head {

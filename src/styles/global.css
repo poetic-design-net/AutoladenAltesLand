@@ -119,6 +119,9 @@ body[data-theme='light'] {
   --ink-3: #838d97;
   --accent: #003366;
   --accent-deep: #00284f;
+  --accent-hi: #3366cc;
+  --accent-text: #003366;
+  --sheet: #ffffff;
   --focus: #3366cc;
   --green: #009966;
   --green-ring: rgba(0, 153, 102, 0.16);
