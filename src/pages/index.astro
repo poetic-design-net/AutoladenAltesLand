@@ -1,1233 +1,1588 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { ArrowRight02Icon, BubbleChatIcon, Building03Icon, Call02Icon, Cancel01Icon, Car03Icon, DashboardSquare01Icon, Home01Icon, Mail01Icon, MoreHorizontalIcon, Sent02Icon, Tick02Icon, UserGroupIcon, UserIcon, WhatsappIcon } from '@hugeicons/core-free-icons';
-import { brand, vehicles, priceNote, telHref, waHref, mailHref, contact } from '../data/site';
+import { ArrowRight01Icon, ArrowRight02Icon, BubbleChatIcon, Call02Icon, Cancel01Icon, Car03Icon, ShieldCheckIcon, SlidersHorizontalIcon, SteeringIcon, RefreshIcon, CheckmarkBadge01Icon, Car05Icon, Sent02Icon, Tick02Icon, WhatsappIcon } from '@hugeicons/core-free-icons';
+import { contactLinks, getContent } from '../lib/content';
+import { getFeaturedVehicles } from '../lib/vehicles';
 
-const title = 'Autoladen Altes Land – ein Ansprechpartner für dein Fahrzeug';
-const description =
-  'Markenunabhängige Fahrzeugvermittlung im Alten Land. Alex sucht das Fahrzeug, ' +
-  'das zu deinem Bedarf und deinem Budget passt – für Unternehmen genauso wie für Privatkunden.';
+const [{ site, page }, vehicles] = await Promise.all([getContent(), getFeaturedVehicles()]);
+const { telHref, waHref } = contactLinks(site);
+
+/* Prozess-Route: x = Spaltenmitte in %, y = Anteil der Straßenhöhe (passt zum SVG-Pfad) */
+const stepLayout = [
+  { icon: BubbleChatIcon, x: 10, y: 0.667 },
+  { icon: SlidersHorizontalIcon, x: 30, y: 0.333 },
+  { icon: Car03Icon, x: 50, y: 0.583 },
+  { icon: ShieldCheckIcon, x: 70, y: 0.292 },
+  { icon: SteeringIcon, x: 90, y: 0.625 },
+];
+const steps = page.process.steps.map((step, index) => ({ ...stepLayout[index], ...step }));
+const wayIcons = { leasing: RefreshIcon, finanzierung: CheckmarkBadge01Icon };
+const ways = page.finance.ways.map((way) => ({
+  ...way,
+  icon: wayIcons[way.id as keyof typeof wayIcons] ?? CheckmarkBadge01Icon,
+}));
+const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 75 900 75';
 ---
 
-<Base title={title} description={description} theme="light">
-  <!-- ============================ HEADER ============================ -->
-  <header class="header">
-    <div class="wrap">
-      <a class="brand" href="#top">
-        <img class="logo" src="/logo.png" alt="" width="58" height="58" />
-        <span>
-          <span class="brand-name">{brand.name}</span>
-          <span class="brand-sub">{brand.claim}</span>
+<Base
+  title={page.seoTitle}
+  description={page.seoDescription}
+  ogImage={site.logo}
+  theme="light"
+  fonts="family=Geist:wght@300..700&family=Manrope:wght@400..700"
+>
+  <div class="app">
+    <!-- ============================ KOPF ============================ -->
+    <header class="bar">
+      <img class="logo" src={site.logo} alt={site.logoAlt} width="56" height="56" />
+      <span>
+        <span class="bar-name">{site.brandName}</span>
+      </span>
+    </header>
+
+    <div class="console">
+      <div class="hero-row">
+      <!-- ------------------------- Alex (Spalte 1) ------------------------ -->
+      <button class="alex" type="button" data-view="alex">
+        <span class="alex-txt">
+          <span class="live"><span class="dot"></span>{page.hero.availability}</span>
+          <span class="alex-n">{page.hero.personTitle}</span>
+          <span class="alex-r">{page.hero.personIntro}</span>
+          <span class="alex-more">
+            {page.hero.moreLabel}
+            <Icon icon={ArrowRight02Icon} />
+          </span>
         </span>
-      </a>
-      <button class="status-pill" type="button" data-open-dialog>
-        <img class="status-ava" src="/alex.jpg" alt="" width="24" height="24" />
-        <span class="dot"></span>
-        <span class="status-label">Direkt mit Alex</span>
+        <span class="alex-pic"
+          ><img src={page.hero.portrait} alt={page.hero.portraitAlt} width="960" height="1440" /></span
+        >
       </button>
-    </div>
-  </header>
 
-  <main id="top">
-    <!-- ============================ HERO ============================ -->
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <span class="eyebrow">
-            <Icon icon={DashboardSquare01Icon} />
-            Markenunabhängig vermittelt
-          </span>
-          <h1>Ein Ansprechpartner.<br /><span class="accent">Fertig.</span></h1>
-          <div class="hero-copy">
-            <p class="lead">
-              Gerade wenn Autos nicht dein Tagesgeschäft sind, musst du auch keins daraus machen.
-            </p>
-            <p>
-              Bei mir bist du nicht an eine bestimmte Marke gebunden und musst dich auch nicht selbst durch
-              unzählige Angebote kämpfen.
-            </p>
-            <p>Ich suche das Fahrzeug, das zu deinem Bedarf und deinem Budget passt.</p>
-            <p class="strong">Für Unternehmen genauso wie für Privatkunden.</p>
-          </div>
-          <div class="hero-cta">
-            <button class="btn-primary" type="button" data-open-dialog>
-              <Icon icon={BubbleChatIcon} />
-              Kurz mit Alex sprechen
-            </button>
-            <span class="hero-note">Kein Verkaufstheater.</span>
-          </div>
+      <!-- ------------------------- Mitte (Spalte 2) ----------------------- -->
+      <main class="mid">
+        <h1>{page.hero.headline}<br /><span class="a">{page.hero.headlineAccent}</span></h1>
+        <blockquote class="sub">
+          <p>{page.hero.quote}</p>
+        </blockquote>
+
+        <div class="acts">
+          {
+            telHref ? (
+              <a class="act" href={telHref}>
+                <Icon icon={Call02Icon} />
+                {page.hero.phoneLabel}
+              </a>
+            ) : (
+              <button class="act" type="button" data-view="ask">
+                <Icon icon={Call02Icon} />
+                {page.hero.phoneLabel}
+              </button>
+            )
+          }
+          {
+            waHref ? (
+              <a class="act" href={waHref} target="_blank" rel="noopener">
+                <Icon icon={WhatsappIcon} />
+                {page.hero.whatsappLabel}
+              </a>
+            ) : (
+              <button class="act" type="button" data-view="ask">
+                <Icon icon={WhatsappIcon} />
+                {page.hero.whatsappLabel}
+              </button>
+            )
+          }
         </div>
 
-        <div class="hero-visual">
-          <div class="hv-frame">
-            <img src="/hero.jpg" alt="Ladekabel an einem Elektrofahrzeug" width="1400" height="980" />
-            <div class="hv-wash"></div>
-          </div>
-          <span class="hv-chip hv-a">
-            <Icon icon={DashboardSquare01Icon} />
-            markenunabhängig
-          </span>
-          <span class="hv-chip hv-b">
-            <Icon icon={UserGroupIcon} />
-            privat &amp; gewerblich
-          </span>
-          <div class="hv-card">
-            <img src="/alex.jpg" alt="" width="46" height="46" />
-            <span>
-              <span class="t">Direkt mit Alex</span>
-              <span class="s"><span class="dot"></span>Ein Ansprechpartner, kein Callcenter</span>
-            </span>
-          </div>
-        </div>
+        <button class="primary" type="button" data-view="ask">
+          {page.hero.ctaLabel}
+          <span class="go"
+            ><Icon icon={ArrowRight02Icon} /></span
+          >
+        </button>
+      </main>
       </div>
-    </section>
 
-    <!-- ========================== FAHRZEUGE ========================== -->
-    <section class="vehicles" id="fahrzeuge">
-      <div class="wrap">
-        <div class="sec-head">
-          <h2>Was gerade möglich ist.</h2>
-          <p>
-            Ein kleiner Einblick in aktuelle Fahrzeuge und Kontingente. Verfügbarkeit und Konditionen ändern
-            sich laufend – frag Alex einfach kurz, was gerade möglich ist.
-          </p>
-          <p class="sec-note">{priceNote}</p>
+      <!-- --------------------- Angebote (eigene Reihe) -------------------- -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>{page.offers.heading}</h2>
+          <button class="panel-more" type="button" data-view="cars">
+            {page.offers.allLabel}
+            <Icon icon={ArrowRight02Icon} />
+          </button>
         </div>
 
-        <div class="grid-v">
+        <!-- Desktop: drei Karten nebeneinander -->
+        <div class="offers">
           {
             vehicles.map((v) => (
-              <article class="tile">
-                <div class="tile-media">
-                  <div class="tile-img" style={`background-image:url(${v.image})`} role="img" aria-label={v.alt} />
-                  <span class="chip-status">
+              <a class="ocard" href={`/fahrzeuge/${v.id}`}>
+                <span class="ocard-pic" style={`background-image:url(${v.image})`} role="img" aria-label={v.alt} />
+                <span class="ocard-txt">
+                  <span class="t">{v.name}</span>
+                  <span class="s">
                     <span class={`dot tone-${v.tone}`} />
                     {v.status}
                   </span>
-                </div>
-                <div class="tile-body">
-                  <span class="tile-kicker">{v.kicker}</span>
-                  <h3 class="tile-name">{v.name}</h3>
-                  <ul class="tile-feats">
-                    {v.features.map((f) => (
-                      <li>
-                        <Icon icon={Tick02Icon} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <div class="tile-price">
-                    <span class="p-old">{v.price.old}</span>
-                    <span class="p-new">{v.price.rate}</span>
-                    <span class="p-unit">mtl. netto</span>
-                    <span class="p-save">{v.price.save}</span>
-                  </div>
-                  <p class="p-terms">{v.price.terms}</p>
-                  <button class="btn-tile" type="button" data-open-dialog data-vehicle={v.name} data-topic={v.topic}>
-                    Preis &amp; Verfügbarkeit anfragen
-                    <span class="arw">
-                      <Icon icon={ArrowRight02Icon} size={17} />
-                    </span>
-                  </button>
-                </div>
-              </article>
+                  <span class="prow">
+                    {v.price.old && <span class="p-old">{v.price.old}</span>}
+                    <span class="p-new">{v.price.value}</span>
+                    <span class="p-unit">{page.offers.priceLabel}</span>
+                  </span>
+                </span>
+                <span class="ch">
+                  <Icon icon={ArrowRight01Icon} />
+                </span>
+              </a>
             ))
           }
         </div>
+
+        <!-- Mobil: Streifen -->
+        <div class="strip">
+          {
+            vehicles.map((v) => (
+              <a class="offer" href={`/fahrzeuge/${v.id}`}>
+                <span class="offer-media">
+                  <span class="offer-img" style={`background-image:url(${v.image})`} role="img" aria-label={v.alt} />
+                  <span class="offer-fade" />
+                  <span class={`pin tone-${v.tone}`} />
+                </span>
+                <span class="offer-body">
+                  <span class="offer-name">{v.name}</span>
+                  <span class="prow">
+                    {v.price.old && <span class="p-old">{v.price.old}</span>}
+                    <span class="p-new">{v.price.value}</span>
+                  </span>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+
+        <p class="tail">{site.priceNote}</p>
+      </section>
+    </div>
+
+    <!-- ============================ ABLAUF ============================ -->
+    <section class="proc" id="ablauf" aria-labelledby="proc-title">
+      <div class="proc-head">
+        <h2 id="proc-title">{page.process.heading}</h2>
+        <p>{page.process.intro}</p>
+      </div>
+
+      <div class="route" id="route">
+        <svg class="road" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true">
+          <path class="road-base" d={road} />
+          <path class="road-dash" d={road} />
+          <path class="road-draw" d={road} pathLength="1" />
+        </svg>
+        <ol class="steps">
+          {
+            steps.map((st, i) => (
+              <li class="step" style={`--x:${st.x}%;--y:${st.y};--i:${i}`}>
+                <span class="stop" aria-hidden="true">
+                  <Icon icon={st.icon} />
+                </span>
+                <span class="num" aria-hidden="true">0{i + 1}</span>
+                <h3>{st.title}</h3>
+                <p>{st.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="proc-cta">
+        <button class="primary" type="button" data-view="ask">
+          {page.process.ctaLabel}
+          <span class="go"><Icon icon={ArrowRight02Icon} /></span>
+        </button>
+        <p class="proc-fine">{page.process.finePrint}</p>
       </div>
     </section>
 
-    <!-- ============================ ALEX ============================ -->
-    <section class="alex" id="ueber-alex">
-      <div class="wrap">
-        <div class="alex-panel">
-          <div class="alex-photo">
-            <img src="/alex-tall.jpg" alt={`${brand.person} vom ${brand.name}`} width="480" height="720" />
-            <div class="tint"></div>
-          </div>
-          <div class="alex-body">
-            <span class="alex-eyebrow"><span class="dot"></span>Dein Ansprechpartner</span>
-            <h2>Moin, ich bin Alex.</h2>
-            <div class="copy">
-              <p class="first">Persönlich, direkt und ohne großes Verkaufstheater.</p>
-              <p>
-                Mir ist lieber, wir sprechen zehn Minuten vernünftig darüber, was du wirklich brauchst, als dass
-                ich dir drei Hochglanzangebote schicke, die am Ende nicht passen.
-              </p>
-              <p>Wenn ich weiß, wonach du suchst, kann ich dir meistens ziemlich schnell sagen, was machbar ist.</p>
-            </div>
-            <p class="alex-kicker">Also: Was soll’s werden?</p>
-            <div class="alex-cta">
-              <button class="btn-light" type="button" data-open-dialog>
-                <Icon icon={BubbleChatIcon} />
-                Kurz mit Alex sprechen
-              </button>
-              <span class="alex-sig">Zehn Minuten reichen meistens.</span>
-            </div>
-          </div>
+    <!-- ===================== LEASING & FINANZIERUNG ===================== -->
+    <section class="fin" id="finanzierung" aria-labelledby="fin-title">
+      <div class="fin-head" data-reveal>
+        <h2 id="fin-title">{page.finance.heading}</h2>
+        <p>{page.finance.intro}</p>
+      </div>
+
+      <div class="fork" data-reveal>
+        <span class="fork-car" aria-hidden="true"><Icon icon={Car05Icon} /></span>
+        <svg class="fork-lines" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M500 0 V22 C500 60 250 40 250 90" />
+          <path d="M500 0 V22 C500 60 750 40 750 90" />
+        </svg>
+      </div>
+
+      <div class="seg fin-tabs" role="tablist" aria-label={page.finance.heading} data-reveal>
+        {
+          ways.map((w, i) => (
+            <button class="seg-b" type="button" role="tab" id={`tab-${w.id}`} aria-selected={i === 0 ? 'true' : 'false'} aria-controls={`way-${w.id}`} data-way={w.id}>
+              {w.title}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="ways" data-reveal>
+        {
+          ways.map((w, i) => (
+            <article class="way" id={`way-${w.id}`} role="tabpanel" aria-labelledby={`tab-${w.id}`} data-way={w.id} data-active={i === 0 ? '1' : '0'}>
+              <span class="way-icon" aria-hidden="true"><Icon icon={w.icon} /></span>
+              <span class="way-tag">{w.tag}</span>
+              <h3>{w.title}</h3>
+              <p class="way-intro">{w.intro}</p>
+              <ul class="way-pros">
+                {w.pros.map((x) => (
+                  <li>
+                    <Icon icon={Tick02Icon} />
+                    {x}
+                  </li>
+                ))}
+              </ul>
+              <p class="way-fit">{w.fit}</p>
+            </article>
+          ))
+        }
+        <span class="oder" aria-hidden="true">{page.finance.comparisonLabel}</span>
+      </div>
+
+      <div class="fin-help" data-reveal>
+        <div>
+          <h3>{page.finance.helpHeading}</h3>
+          <p>{page.finance.helpText}</p>
+        </div>
+        <div class="fin-cta">
+          <button class="primary" type="button" data-view="ask">
+            {page.finance.ctaLabel}
+            <span class="go"><Icon icon={ArrowRight02Icon} /></span>
+          </button>
+          <span class="proc-fine">{page.finance.finePrint}</span>
         </div>
       </div>
+
+      <p class="fin-legal">{page.finance.legal}</p>
     </section>
-  </main>
 
-  <!-- ============================ FOOTER ============================ -->
-  <footer class="footer">
-    <div class="wrap">
-      <div class="foot-brand">
-        <img class="logo" src="/logo.png" alt="" width="58" height="58" />
-        <span>
-          <span class="brand-name">{brand.name}</span>
-          <span class="brand-sub">Fahrzeugvermittlung · {brand.region}</span>
-        </span>
-      </div>
-      <nav class="foot-links" aria-label="Rechtliches">
-        <a href="#fahrzeuge">Fahrzeuge</a>
-        <a href="#ueber-alex">Über Alex</a>
-        <a href="/impressum">Impressum</a>
-        <a href="/datenschutz">Datenschutz</a>
-      </nav>
-      <div class="foot-contact">
-        <span>
-          Telefon {telHref ? <a href={telHref}>{contact.phone}</a> : <span class="ph">[Nummer eintragen]</span>}
-        </span>
-        <span>
-          E-Mail {mailHref ? <a href={mailHref}>{contact.email}</a> : <span class="ph">[Adresse eintragen]</span>}
-        </span>
-      </div>
-    </div>
-    <div class="spacer"></div>
-  </footer>
-
-  <!-- ========================= BOTTOM-COCKPIT ======================== -->
-  <div class="cockpit">
-    <div class="cockpit-shell">
-      <div class="cp-panel" id="cp-panel" data-open="0">
-        {
-          telHref ? (
-            <a class="cp-item" href={telHref}>
-              <Icon icon={Call02Icon} />
-              Anrufen
-            </a>
-          ) : (
-            <span class="cp-item">
-              <Icon icon={Call02Icon} />
-              Anrufen
-            </span>
-          )
+    <footer class="foot">
+      <span>
+        {page.footer.phonePrefix} {site.phone ? site.phone : <span class="ph">[Nummer eintragen]</span>} · {page.footer.emailPrefix} {
+          site.email ? site.email : <span class="ph">[Adresse eintragen]</span>
         }
-        {
-          waHref ? (
-            <a class="cp-item" href={waHref} target="_blank" rel="noopener">
-              <Icon icon={WhatsappIcon} />
-              WhatsApp
-            </a>
-          ) : (
-            <span class="cp-item">
-              <Icon icon={WhatsappIcon} />
-              WhatsApp
-            </span>
-          )
-        }
-        {
-          mailHref ? (
-            <a class="cp-item" href={mailHref}>
-              <Icon icon={Mail01Icon} />
-              E-Mail
-            </a>
-          ) : (
-            <span class="cp-item">
-              <Icon icon={Mail01Icon} />
-              E-Mail
-            </span>
-          )
-        }
-        <button class="cp-item" type="button" data-open-dialog>
-          <Icon icon={Sent02Icon} />
-          Anfrage senden
-        </button>
-      </div>
-      <div class="cp-fillet" data-open="0"></div>
-      <nav class="cp-bar" aria-label="Schnellzugriff">
-        <a class="cp-btn" href="#top" data-section="top">
-          <Icon icon={Home01Icon} />
-          <span class="cp-label">Start</span>
-        </a>
-        <a class="cp-btn" href="#fahrzeuge" data-section="fahrzeuge">
-          <Icon icon={Car03Icon} />
-          <span class="cp-label">Fahrzeuge</span>
-        </a>
-        <span class="cp-sep"></span>
-        <button class="cp-main" type="button" data-open-dialog>
-          <Icon icon={BubbleChatIcon} />
-          Alex fragen
-        </button>
-        <span class="cp-sep"></span>
-        <a class="cp-btn" href="#ueber-alex" data-section="ueber-alex">
-          <Icon icon={UserIcon} />
-          <span class="cp-label">Über Alex</span>
-        </a>
-        <button
-          class="cp-more"
-          type="button"
-          aria-label="Weitere Kontaktmöglichkeiten"
-          aria-expanded="false"
-          aria-controls="cp-panel"
-          id="cp-more"
-        >
-          <Icon icon={MoreHorizontalIcon} />
-        </button>
-      </nav>
-    </div>
+      </span>
+      <span class="links">
+        <a href="/impressum">{page.footer.legalLabel}</a>
+        <a href="/datenschutz">{page.footer.privacyLabel}</a>
+      </span>
+    </footer>
   </div>
 
-  <!-- ========================= KONTAKT-DIALOG ======================== -->
-  <div class="ovl" id="ovl" data-open="0">
-    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="dlg-title" id="dlg">
+  <!-- ============================== SHEETS ============================== -->
+  <div
+    class="ovl"
+    id="ovl"
+    data-open="0"
+    data-context-prefix={page.form.contextPrefix}
+    data-phone-label={page.form.phoneLabel}
+    data-whatsapp-label={page.form.whatsappLabel}
+    data-submitting-label={page.form.submittingLabel}
+    data-submit-label={page.form.submitLabel}
+    data-send-error-suffix={page.form.sendErrorSuffix}
+  >
+    <!-- Alex: der ganze Text -->
+    <section class="sheet" id="sheet-alex" role="dialog" aria-modal="true" aria-labelledby="alex-title" hidden>
       <div class="grab"></div>
-      <div class="sheet-head">
-        <img src="/alex.jpg" alt="" width="46" height="46" />
+      <div class="sh-head">
         <div>
-          <div class="sheet-title" id="dlg-title">Kurz mit Alex sprechen</div>
-          <div class="sheet-sub">Sag mir grob, worum es geht – den Rest klären wir persönlich.</div>
+          <div class="sh-title" id="alex-title">{page.about.title}</div>
+          <div class="sh-sub">{page.about.subtitle}</div>
         </div>
-        <button class="x-btn" type="button" aria-label="Dialog schließen" data-close-dialog>
+        <button class="sh-x" type="button" aria-label={page.form.closeLabel} data-close>
+          <Icon icon={Cancel01Icon} />
+        </button>
+      </div>
+      <div class="sh-body">
+        <div class="band">
+          <img src={page.about.image} alt={page.about.imageAlt} width="1600" height="1067" />
+          <div class="duo"></div>
+        </div>
+        <p class="lead">{page.about.lead}</p>
+        {page.about.paragraphs.map((paragraph) => <p class="para">{paragraph}</p>)}
+        <p class="kicker">{page.about.kicker}</p>
+
+        <div class="rule">
+          <span class="rule-l">{page.about.ruleHeading}</span>
+          {page.about.ruleParagraphs.map((paragraph) => <p class="para">{paragraph}</p>)}
+          <p class="para strong">{page.about.ruleEmphasis}</p>
+        </div>
+
+        <button class="send" type="button" data-view="ask">
+          <Icon icon={BubbleChatIcon} />
+          {page.about.ctaLabel}
+        </button>
+      </div>
+    </section>
+
+    <!-- Angebote -->
+    <section class="sheet" id="sheet-cars" role="dialog" aria-modal="true" aria-labelledby="cars-title" hidden>
+      <div class="grab"></div>
+      <div class="sh-head">
+        <div>
+          <div class="sh-title" id="cars-title">{page.offers.heading}</div>
+          <div class="sh-sub">{page.offers.sheetSubtitle}</div>
+        </div>
+        <button class="sh-x" type="button" aria-label={page.form.closeLabel} data-close>
+          <Icon icon={Cancel01Icon} />
+        </button>
+      </div>
+      <div class="sh-body">
+        {
+          vehicles.map((v) => (
+            <a class="vrow" href={`/fahrzeuge/${v.id}`} data-id={v.id} data-vehicle={v.name} data-topic={v.topic}>
+              <span class="pic" style={`background-image:url(${v.image})`} role="img" aria-label={v.alt} />
+              <span class="vrow-txt">
+                <span class="t">{v.name}</span>
+                <span class="s">
+                  <span class={`dot tone-${v.tone}`} />
+                  {v.status}
+                </span>
+                <span class="prow">
+                  {v.price.old && <span class="p-old">{v.price.old}</span>}
+                  <span class="p-new">{v.price.value}</span>
+                  <span class="p-unit">{page.offers.priceLabel}</span>
+                </span>
+              </span>
+              <span class="ch">
+                <Icon icon={ArrowRight01Icon} />
+              </span>
+            </a>
+          ))
+        }
+        <p class="terms">{site.priceNote}</p>
+      </div>
+    </section>
+
+    <!-- Anfrage -->
+    <section class="sheet" id="sheet-ask" role="dialog" aria-modal="true" aria-labelledby="ask-title" hidden>
+      <div class="grab"></div>
+      <div class="sh-head">
+        <div>
+          <div class="sh-title" id="ask-title">{page.form.title}</div>
+          <div class="sh-sub">{page.form.subtitle}</div>
+        </div>
+        <button class="sh-x" type="button" aria-label={page.form.closeLabel} data-close>
           <Icon icon={Cancel01Icon} />
         </button>
       </div>
 
-      <div class="ctx" id="ctx" hidden>
-        <Icon icon={Car03Icon} />
-        <span>Anfrage zu: <span id="ctx-name"></span></span>
-        <button class="ctx-x" type="button" aria-label="Fahrzeugbezug entfernen" id="ctx-clear">
-          <Icon icon={Cancel01Icon} size={15} />
-        </button>
-      </div>
+      <form class="sh-body" id="form" novalidate>
+        <div class="ctx" id="ctx" hidden>
+          <Icon icon={Car03Icon} />
+          <span id="ctx-name"></span>
+          <button class="ctx-x" type="button" aria-label={page.form.removeContextLabel} id="ctx-clear">
+            <Icon icon={Cancel01Icon} size={14} />
+          </button>
+        </div>
 
-      <form class="form" id="form" novalidate>
-        <div class="row2">
-          <div class="fld">
-            <label class="lbl" for="f-name">Name</label>
-            <input class="inp" id="f-name" name="name" type="text" autocomplete="name" placeholder="Wie heißt du?" />
-          </div>
-          <div class="fld">
-            <span class="lbl" id="lbl-kind">Ich frage als</span>
-            <div class="seg" role="radiogroup" aria-labelledby="lbl-kind" data-seg="kind">
-              <button class="seg-b" type="button" role="radio" aria-checked="true" data-val="privat">
-                <Icon icon={UserIcon} />
-                Privat
-              </button>
-              <button class="seg-b" type="button" role="radio" aria-checked="false" data-val="firma">
-                <Icon icon={Building03Icon} />
-                Unternehmen
-              </button>
-            </div>
+        <div class="field">
+          <span class="lbl" id="lbl-topic">{page.form.topicLabel}</span>
+          <div class="chips" role="radiogroup" aria-labelledby="lbl-topic" id="chips">
+            {
+              page.form.topics.map((t, i) => (
+                <button class="chip" type="button" role="radio" aria-checked={i === 0} data-val={t.id}>
+                  {t.label}
+                </button>
+              ))
+            }
           </div>
         </div>
 
-        <div class="fld">
-          <label class="lbl" for="f-need">Was suchst du?</label>
-          <input
-            class="inp"
-            id="f-need"
-            name="need"
-            type="text"
-            placeholder="z. B. E-Transporter für die Werkstatt"
-          />
-        </div>
-
-        <div class="row2">
-          <div class="fld">
-            <label class="lbl" for="f-budget">Budget oder Leasingrate <span class="opt">– optional</span></label>
-            <input class="inp" id="f-budget" name="budget" type="text" placeholder="z. B. bis 450 € / Monat" />
-          </div>
-          <div class="fld">
-            <label class="lbl" for="f-when">Ab wann?</label>
-            <input class="inp" id="f-when" name="timing" type="text" placeholder="z. B. im nächsten Quartal" />
-          </div>
-        </div>
-
-        <div class="fld">
-          <span class="lbl" id="lbl-ch">So erreichst du mich am liebsten</span>
-          <div class="seg" role="radiogroup" aria-labelledby="lbl-ch" data-seg="channel">
+        <div class="field">
+          <span class="lbl" id="lbl-ch">{page.form.channelLabel}</span>
+          <div class="seg" role="radiogroup" aria-labelledby="lbl-ch" id="seg">
             <button class="seg-b" type="button" role="radio" aria-checked="true" data-val="tel">
               <Icon icon={Call02Icon} />
-              Anruf
+              {page.form.phoneOption}
             </button>
             <button class="seg-b" type="button" role="radio" aria-checked="false" data-val="wa">
               <Icon icon={WhatsappIcon} />
-              WhatsApp
-            </button>
-            <button class="seg-b" type="button" role="radio" aria-checked="false" data-val="mail">
-              <Icon icon={Mail01Icon} />
-              E-Mail
+              {page.form.whatsappOption}
             </button>
           </div>
         </div>
 
-        <div class="fld">
-          <label class="lbl" for="f-reach" id="reach-label">Deine Telefonnummer</label>
-          <input class="inp" id="f-reach" name="reach" type="text" required placeholder="01xx xxxxxxx" />
-          <p class="err" id="err-reach" hidden>Ohne Nummer oder Adresse kann ich mich nicht melden.</p>
+        <div class="field">
+          <label class="lbl" for="a-num" id="reach-label">{page.form.phoneLabel}</label>
+          <input class="inp" id="a-num" name="reach" type="tel" autocomplete="tel" required placeholder={page.form.phonePlaceholder} />
+          <p class="err" id="err-reach" hidden>{page.form.missingContactError}</p>
         </div>
 
-        <div class="fld">
-          <label class="lbl" for="f-msg">Noch etwas, das ich wissen sollte? <span class="opt">– optional</span></label>
-          <textarea class="inp" id="f-msg" name="message" rows="3" placeholder="Schreib einfach frei heraus."></textarea>
+        <div class="field">
+          <label class="lbl" for="a-msg">{page.form.messageLabel} <span class="opt">{page.form.optionalLabel}</span></label>
+          <textarea class="inp" id="a-msg" name="message" rows="2" placeholder={page.form.messagePlaceholder}></textarea>
         </div>
 
-        <button class="btn-send" type="submit" id="submit">
+        <button class="send" type="submit" id="submit">
           <Icon icon={Sent02Icon} />
-          <span id="submit-label">Anfrage an Alex senden</span>
+          <span id="submit-label">{page.form.submitLabel}</span>
         </button>
-        <p class="fine">Deine Angaben gehen direkt an Alex – nicht an ein Portal.</p>
+        <p class="fine">{page.form.finePrint}</p>
         <p class="err center" id="err-send" hidden></p>
       </form>
 
       <div class="done" id="done" hidden>
-        <span class="done-ring"
+        <span class="ring"
           ><Icon icon={Tick02Icon} /></span
         >
-        <h3>Alles klar – ist bei mir.</h3>
-        <p>Ich schaue, ob ich so etwas finde, und melde mich persönlich bei dir.</p>
-        <button class="btn-send" type="button" style="max-width:260px" data-close-dialog>Schließen</button>
+        <h3>{page.form.successTitle}</h3>
+        <p>{page.form.successText}</p>
+        <button class="send" type="button" data-close>{page.form.doneLabel}</button>
       </div>
-    </div>
+    </section>
   </div>
 </Base>
 
 <style>
-  /* ------------------------------ Grundriss ------------------------------ */
-  .wrap {
-    position: relative;
-    width: min(1200px, 100% - 48px);
-    margin: 0 auto;
+  :global(body[data-theme='light']) {
+    --font: 'Geist', 'Manrope', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
-
-  main {
+  .app {
     position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 32px 40px;
   }
-  main::before {
+  .app::before {
     content: '';
     position: absolute;
-    top: -340px;
-    right: -240px;
-    width: 1000px;
-    height: 1000px;
-    background: radial-gradient(circle, rgba(0, 51, 102, 0.1), rgba(0, 51, 102, 0) 62%);
+    top: -300px;
+    right: -180px;
+    width: 820px;
+    height: 820px;
+    background: radial-gradient(circle, rgba(0, 51, 102, 0.12), rgba(0, 51, 102, 0) 66%);
     pointer-events: none;
   }
-  main::after {
+  .app::after {
     content: '';
     position: absolute;
-    top: 1500px;
-    left: -320px;
-    width: 900px;
-    height: 900px;
-    background: radial-gradient(circle, rgba(0, 153, 102, 0.075), rgba(0, 153, 102, 0) 62%);
+    bottom: -340px;
+    left: -200px;
+    width: 760px;
+    height: 760px;
+    background: radial-gradient(circle, rgba(0, 153, 102, 0.1), rgba(0, 153, 102, 0) 66%);
     pointer-events: none;
   }
 
-  /* -------------------------------- Header ------------------------------- */
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    height: 88px;
-    background: rgba(245, 244, 241, 0.72);
-    backdrop-filter: blur(18px) saturate(1.4);
-    border-bottom: 1px solid var(--line-soft);
-  }
-  .header .wrap {
+  /* --------------------------------- Kopf -------------------------------- */
+  .bar {
+    position: relative;
+    flex: none;
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    height: 84px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 88px;
-  }
-  .brand,
-  .foot-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: inherit;
+    gap: 14px;
   }
   .logo {
-    width: 72px;
-    height: 72px;
+    width: 70px;
+    height: 70px;
     flex: none;
     object-fit: contain;
   }
-  .brand-name {
+  .bar-name {
     display: block;
     font-size: 15px;
     font-weight: 600;
-    letter-spacing: -0.012em;
-    line-height: 1.15;
+    letter-spacing: -0.014em;
   }
-  .brand-sub {
-    font-size: 11.5px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
+  .bar-sub {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-3);
   }
-  .status-pill {
+  .live-top {
+    margin-left: auto;
     display: inline-flex;
     align-items: center;
     gap: 9px;
-    height: 44px;
-    padding: 0 16px 0 12px;
+    height: 40px;
+    padding: 0 17px 0 13px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.78);
-    box-shadow: 0 0 0 1px var(--line);
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
     font-size: 13.5px;
-    font-weight: 500;
     color: var(--ink-2);
-    transition: box-shadow 0.18s var(--ease), transform 0.18s var(--ease);
-  }
-  .status-pill:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 0 0 1px rgba(0, 51, 102, 0.22), var(--sh-soft);
-  }
-  .status-ava {
-    width: 24px;
-    height: 24px;
-    border-radius: 999px;
-    object-fit: cover;
-    object-position: 50% 18%;
-    filter: grayscale(1);
-    flex: none;
   }
 
-  /* --------------------------------- Hero -------------------------------- */
-  .hero {
-    padding: 64px 0 104px;
+  /* -------------------------------- Bühne -------------------------------- */
+  .console {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    max-width: 1240px;
+    margin: 26px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    min-height: 0;
   }
-  .hero-grid {
+  .hero-row {
     display: grid;
-    grid-template-columns: 620px 1fr;
-    gap: 80px;
-    align-items: center;
+    grid-template-columns: 400px minmax(0, 1fr);
+    gap: 32px;
+    flex: 1;
+    min-height: 0;
   }
-  .eyebrow {
+
+  /* Alex */
+  .alex {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 36px;
+    overflow: hidden;
+    background: var(--accent-deep);
+    padding: 0;
+    box-shadow: 0 0 0 1px var(--line), 0 40px 70px -34px rgba(6, 26, 48, 0.45);
+    transition: transform 0.2s var(--ease);
+  }
+  .alex:hover {
+    transform: translateY(-2px);
+  }
+  .alex-pic {
+    position: absolute;
+    inset: 0;
+  }
+  .alex-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 20%;
+  }
+  .alex-pic::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(196deg, rgba(0, 51, 102, 0.3), rgba(0, 40, 79, 0.06) 40%, rgba(0, 40, 79, 0.97));
+  }
+  .alex-txt {
+    position: relative;
+    z-index: 1;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #fff;
+  }
+  .live {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    height: 32px;
-    padding: 0 14px 0 11px;
+    height: 30px;
+    padding: 0 13px 0 10px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 0 1px var(--line);
+    background: rgba(36, 192, 140, 0.13);
+    box-shadow: inset 0 0 0 1px rgba(36, 192, 140, 0.28);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #7fe0bd;
+  }
+  .alex-n {
+    margin-top: 14px;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .alex-r {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 300px;
+  }
+  .alex-more {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 14px 0 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.16s var(--ease);
+  }
+  .alex:hover .alex-more {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .alex-more .ic {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Mitte */
+  .mid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 8px 0 24px;
+    max-width: 620px;
+  }
+  .eyebrow {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    height: 34px;
+    padding: 0 15px 0 12px;
+    border-radius: 999px;
+    background: rgba(0, 51, 102, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.2);
     font-size: 12.5px;
     font-weight: 600;
-    letter-spacing: 0.02em;
     color: var(--accent);
   }
   .eyebrow .ic {
     width: 15px;
     height: 15px;
-    stroke-width: 1.8;
   }
   h1 {
-    margin-top: 26px;
-    font-size: clamp(32px, 4.2vw, 58px);
-    line-height: 0.98;
+    margin-top: 24px;
+    font-size: clamp(29px, 3.6vw, 50px);
+    line-height: 1.04;
     font-weight: 600;
     letter-spacing: -0.04em;
   }
-  h1 .accent {
-    color: var(--accent);
+  h1 .a {
+    color: var(--accent-text);
   }
-  .hero-copy {
+  .sub {
+    position: relative;
     margin-top: 26px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    max-width: 492px;
+    max-width: 480px;
+    padding: 22px 24px 20px 26px;
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+    overflow: hidden;
   }
-  .hero-copy p {
-    font-size: 17px;
-    line-height: 1.62;
-    color: var(--ink-2);
+  .sub::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent), var(--green));
   }
-  .hero-copy .lead {
-    font-size: 19.5px;
-    line-height: 1.55;
-    color: var(--ink);
-    letter-spacing: -0.008em;
-  }
-  .hero-copy .strong {
-    color: var(--ink);
+  .sub p {
+    font-size: 19px;
+    line-height: 1.45;
     font-weight: 500;
+    letter-spacing: -0.014em;
+    color: var(--ink);
   }
-  .hero-cta {
+  .acts {
     margin-top: 34px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .act {
     display: flex;
     align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
-  .hero-note {
-    font-size: 13.5px;
-    color: var(--ink-3);
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
+    justify-content: center;
     gap: 10px;
-    height: 54px;
-    padding: 0 26px;
-    border-radius: 999px;
-    background: var(--accent);
-    color: #fff;
+    height: 64px;
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--line);
     font-size: 16px;
     font-weight: 600;
-    letter-spacing: -0.008em;
-    box-shadow: 0 1px 2px rgba(0, 32, 64, 0.28), 0 14px 28px -12px rgba(0, 51, 102, 0.6);
-    transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease), background 0.18s var(--ease);
+    letter-spacing: -0.014em;
+    transition: background 0.16s var(--ease), transform 0.16s var(--ease);
   }
-  .btn-primary:hover {
-    background: var(--accent-deep);
-    transform: translateY(-2px);
+  .act:hover {
+    background: var(--surface-2);
+    transform: translateY(-1px);
   }
-  .btn-primary:active {
-    transform: translateY(0);
-  }
-
-  .hero-visual {
-    position: relative;
-    height: 460px;
-  }
-  .hv-frame {
-    position: absolute;
-    inset: 0;
-    border-radius: 44px;
-    overflow: hidden;
-    background: #dfe3e7;
-    box-shadow: 0 2px 6px rgba(6, 26, 48, 0.07), 0 40px 70px -30px rgba(6, 26, 48, 0.42);
-  }
-  .hv-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .hv-wash {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(160deg, rgba(0, 51, 102, 0.28), rgba(0, 51, 102, 0) 46%, rgba(10, 18, 26, 0.34));
-  }
-  .hv-chip {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    height: 40px;
-    padding: 0 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.86);
-    backdrop-filter: blur(16px) saturate(1.5);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7), 0 10px 24px -10px rgba(6, 26, 48, 0.5);
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--ink);
-    white-space: nowrap;
-  }
-  .hv-chip .ic {
-    color: var(--accent);
-  }
-  .hv-a {
-    top: 34px;
-    left: 30px;
-  }
-  .hv-b {
-    top: 92px;
-    left: 68px;
-  }
-  .hv-card {
-    position: absolute;
-    left: -26px;
-    bottom: -26px;
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    padding: 13px 22px 13px 13px;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(20px) saturate(1.4);
-    box-shadow: 0 0 0 1px var(--line-soft), 0 22px 44px -18px rgba(6, 26, 48, 0.45);
-  }
-  .hv-card img {
-    width: 46px;
-    height: 46px;
-    border-radius: 16px;
-    object-fit: cover;
-    object-position: 50% 14%;
-    filter: grayscale(1);
-  }
-  .hv-card .t {
-    display: block;
-    font-size: 14.5px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-  .hv-card .s {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 12.5px;
-    color: var(--ink-3);
-    margin-top: 2px;
-  }
-
-  /* ------------------------------ Fahrzeuge ------------------------------ */
-  .vehicles {
-    padding: 8px 0 112px;
-  }
-  .sec-head {
-    max-width: 660px;
-  }
-  h2 {
-    font-size: clamp(34px, 4vw, 50px);
-    line-height: 1.03;
-    font-weight: 600;
-    letter-spacing: -0.035em;
-  }
-  .sec-head p {
-    margin-top: 18px;
-    font-size: 17.5px;
-    line-height: 1.6;
+  .act .ic {
     color: var(--ink-2);
-    max-width: 600px;
   }
-  .sec-note {
-    margin-top: 12px !important;
-    font-size: 13px !important;
-    color: var(--ink-3) !important;
-  }
-
-  .grid-v {
-    margin-top: 52px;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 36px;
-  }
-  .tile {
-    position: relative;
+  .primary {
+    margin-top: 12px;
     display: flex;
-    flex-direction: column;
-    border-radius: 36px;
-    background: var(--surface);
-    overflow: hidden;
-    box-shadow: 0 0 0 1px var(--line-soft), var(--sh-soft);
-    transition: transform 0.28s var(--ease), box-shadow 0.28s var(--ease);
-  }
-  .tile:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 0 0 1px rgba(0, 51, 102, 0.12), var(--sh-lift);
-  }
-  .tile-media {
-    position: relative;
-    height: 246px;
-  }
-  .tile-img {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: 50% 52%;
-    -webkit-mask-image: linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.35) 84%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 62%, rgba(0, 0, 0, 0.35) 84%, transparent 100%);
-    transition: transform 0.7s var(--ease);
-  }
-  .tile:hover .tile-img {
-    transform: scale(1.055);
-  }
-  .chip-status {
-    position: absolute;
-    top: 18px;
-    left: 18px;
-    z-index: 2;
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    height: 31px;
-    padding: 0 13px 0 11px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(14px) saturate(1.5);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6), 0 6px 16px -6px rgba(6, 26, 48, 0.4);
-    font-size: 12px;
+    justify-content: space-between;
+    gap: 10px;
+    height: 64px;
+    padding: 0 12px 0 24px;
+    border-radius: 20px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 16.5px;
     font-weight: 600;
+    letter-spacing: -0.016em;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 16px 30px -14px rgba(0, 51, 102, 0.55);
+    transition: background 0.16s var(--ease), transform 0.16s var(--ease);
   }
-  .tone-blue {
-    background: #3366cc;
-    box-shadow: 0 0 0 3px rgba(51, 102, 204, 0.16);
+  .primary:hover {
+    background: var(--accent-deep);
+    transform: translateY(-1px);
   }
-  .tone-grey {
-    background: #838d97;
-    box-shadow: 0 0 0 3px rgba(131, 141, 151, 0.18);
+  .primary .go {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  }
+  .note {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--ink-3);
   }
 
-  .tile-body {
-    position: relative;
-    padding: 4px 26px 26px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  /* Angebote */
+  .panel {
+    flex: none;
   }
-  .tile-kicker {
+  .panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2px 0 4px;
+  }
+  .panel h2 {
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
     color: var(--ink-3);
   }
-  .tile-name {
-    margin-top: 7px;
-    font-size: 25px;
-    font-weight: 600;
-    letter-spacing: -0.028em;
-    line-height: 1.12;
-  }
-  .tile-feats {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-  .tile-feats li {
-    display: flex;
+  .panel-more {
+    display: none;
     align-items: center;
-    gap: 9px;
-    font-size: 14.5px;
+    gap: 5px;
+    font-size: 12.5px;
+    font-weight: 600;
     color: var(--ink-2);
   }
-  .tile-feats .ic {
-    width: 16px;
-    height: 16px;
-    stroke-width: 1.9;
-    color: var(--green);
+  .panel-more .ic {
+    width: 14px;
+    height: 14px;
   }
-
-  .tile-price {
-    margin-top: 16px;
+  .offers {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .ocard {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px 12px 12px;
+    border-radius: 22px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+    transition: background 0.18s var(--ease), transform 0.18s var(--ease);
+  }
+  .ocard,
+  .offer,
+  .vrow {
+    color: var(--ink);
+  }
+  .vrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px 10px 10px;
+    margin-top: 10px;
+    border-radius: 18px;
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line);
+    transition: background 0.18s var(--ease);
+  }
+  .vrow:first-child {
+    margin-top: 0;
+  }
+  .vrow:hover {
+    background: var(--line);
+  }
+  .vrow .pic {
+    width: 88px;
+    height: 68px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: 50%;
+    flex: none;
+  }
+  .vrow-txt {
+    min-width: 0;
+    flex: 1;
+  }
+  .vrow .t {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+  .vrow .s {
+    margin-top: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: var(--ink-2);
+  }
+  .vrow .ch {
+    color: var(--ink-3);
+  }
+  .ocard:hover {
+    background: var(--surface-2);
+    transform: translateY(-2px);
+  }
+  .ocard-pic {
+    width: 112px;
+    height: 92px;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: 50% 50%;
+    flex: none;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .ocard-txt {
+    min-width: 0;
+    flex: 1;
+  }
+  .ocard .t {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.25;
+  }
+  .ocard .s {
+    margin-top: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: var(--ink-2);
+  }
+  .ocard .ch {
+    color: var(--ink-3);
+    flex: none;
+  }
+  .tone-blue {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.18);
+  }
+  .tone-grey {
+    background: #8b959e;
+    box-shadow: 0 0 0 3px rgba(139, 149, 158, 0.2);
+  }
+  .prow {
+    margin-top: 5px;
     display: flex;
     align-items: baseline;
-    gap: 9px;
-    flex-wrap: wrap;
+    gap: 6px;
   }
   .p-old {
-    font-size: 14px;
+    font-size: 11.5px;
     font-weight: 500;
     color: var(--ink-3);
     text-decoration: line-through;
     text-decoration-thickness: 1px;
   }
   .p-new {
-    font-size: 25px;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-  }
-  .p-unit {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-2);
-  }
-  .p-save {
-    display: inline-flex;
-    align-items: center;
-    height: 24px;
-    padding: 0 10px;
-    border-radius: 999px;
-    background: rgba(0, 153, 102, 0.1);
-    box-shadow: inset 0 0 0 1px rgba(0, 153, 102, 0.24);
-    font-size: 11.5px;
-    font-weight: 600;
-    color: #008056;
-  }
-  .p-terms {
-    margin-top: 6px;
-    margin-bottom: 20px;
-    font-size: 11.5px;
-    line-height: 1.45;
-    color: var(--ink-3);
-  }
-
-  .btn-tile {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
-    height: 52px;
-    padding: 0 12px 0 20px;
-    border-radius: 999px;
-    background: var(--surface-2);
-    font-size: 14.5px;
-    font-weight: 600;
-    letter-spacing: -0.008em;
-    box-shadow: inset 0 0 0 1px var(--line-soft);
-    transition: background 0.2s var(--ease), color 0.2s var(--ease), box-shadow 0.2s var(--ease);
-  }
-  .btn-tile .arw {
-    display: grid;
-    place-items: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 4px 10px -5px rgba(0, 51, 102, 0.9);
-    transition: background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
-  }
-  .tile:hover .btn-tile,
-  .btn-tile:hover {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: inset 0 0 0 1px transparent;
-  }
-  .tile:hover .btn-tile .arw,
-  .btn-tile:hover .arw {
-    background: rgba(255, 255, 255, 0.18);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.26);
-    transform: translateX(2px);
-  }
-
-  /* --------------------------------- Alex -------------------------------- */
-  .alex {
-    padding: 0 0 116px;
-  }
-  .alex-panel {
-    position: relative;
-    display: grid;
-    grid-template-columns: 468px 1fr;
-    border-radius: 48px;
-    overflow: hidden;
-    background: linear-gradient(152deg, #073059 0%, #04203c 100%);
-    box-shadow: 0 3px 8px rgba(6, 26, 48, 0.1), 0 50px 90px -40px rgba(4, 32, 60, 0.66);
-    min-height: 528px;
-  }
-  .alex-photo {
-    position: relative;
-    min-height: 340px;
-  }
-  .alex-photo img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 8%;
-    filter: grayscale(1) contrast(1.06);
-  }
-  .alex-photo .tint {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(100deg, rgba(4, 32, 60, 0.06), rgba(4, 32, 60, 0.55));
-  }
-  .alex-body {
-    position: relative;
-    padding: 60px 64px 58px 56px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #fff;
-  }
-  .alex-body::before {
-    content: '';
-    position: absolute;
-    top: -120px;
-    right: -120px;
-    width: 460px;
-    height: 460px;
-    background: radial-gradient(circle, rgba(51, 102, 204, 0.34), rgba(51, 102, 204, 0) 66%);
-  }
-  .alex-eyebrow {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    align-self: flex-start;
-    height: 32px;
-    padding: 0 14px 0 11px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.11);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
-    font-size: 12.5px;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
-  }
-  .alex-body h2 {
-    position: relative;
-    margin-top: 22px;
-    color: #fff;
-  }
-  .alex-body .copy {
-    position: relative;
-    margin-top: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    max-width: 520px;
-  }
-  .alex-body .copy p {
     font-size: 17px;
-    line-height: 1.62;
-    color: rgba(255, 255, 255, 0.78);
-  }
-  .alex-body .copy .first {
-    font-size: 19px;
-    color: rgba(255, 255, 255, 0.94);
-    letter-spacing: -0.008em;
-  }
-  .alex-kicker {
-    position: relative;
-    margin-top: 26px;
-    font-size: 23px;
     font-weight: 600;
     letter-spacing: -0.026em;
-    color: #fff;
+    color: var(--ink);
   }
-  .alex-cta {
+  .p-unit {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .panel .tail {
+    margin-top: 12px;
+    padding: 0 4px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+  .strip {
+    display: none;
+  }
+
+  /* -------------------------------- Ablauf ------------------------------- */
+  .proc {
+    position: relative;
+    width: 100%;
+    max-width: 1240px;
+    margin: 96px auto 0;
+    padding-top: 64px;
+    border-top: 1px solid var(--line);
+  }
+  .proc-head {
+    max-width: 560px;
+  }
+  .proc-head h2 {
+    font-size: clamp(26px, 3vw, 38px);
+    line-height: 1.08;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+  .proc-head p {
+    margin-top: 14px;
+    font-size: 16.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+
+  .route {
+    --road-h: 170px;
     position: relative;
     margin-top: 28px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
+    padding-top: var(--road-h);
+    --p: 0;
   }
-  .btn-light {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    height: 54px;
-    padding: 0 26px;
-    border-radius: 999px;
-    background: #fff;
-    color: var(--accent);
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.008em;
-    box-shadow: 0 14px 30px -14px rgba(0, 0, 0, 0.7);
-    transition: transform 0.18s var(--ease);
-  }
-  .btn-light:hover {
-    transform: translateY(-2px);
-  }
-  .alex-sig {
-    font-size: 13.5px;
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  /* -------------------------------- Footer ------------------------------- */
-  .footer {
-    position: relative;
-    padding-bottom: 40px;
-  }
-  .footer .wrap {
-    border-top: 1px solid var(--line);
-    padding-top: 36px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  .foot-links {
-    display: flex;
-    align-items: center;
-    gap: 26px;
-    font-size: 13.5px;
-    flex-wrap: wrap;
-  }
-  .foot-links a {
-    color: var(--ink-3);
-  }
-  .foot-links a:hover {
-    color: var(--ink);
-  }
-  .foot-contact {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-    text-align: right;
-    font-size: 13.5px;
-    color: var(--ink-2);
-  }
-  .ph {
-    color: var(--ink-3);
-    background: rgba(16, 24, 32, 0.05);
-    border-radius: 6px;
-    padding: 1px 7px;
-    font-size: 12.5px;
-  }
-  .spacer {
-    height: 176px;
-  }
-
-  /* ---------------------------- Bottom-Cockpit --------------------------- */
-  .cockpit {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: calc(30px + env(safe-area-inset-bottom, 0px));
-    z-index: 60;
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-  }
-  .cockpit-shell {
-    pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: calc(100vw - 24px);
-    filter: drop-shadow(0 2px 4px rgba(6, 26, 48, 0.1)) drop-shadow(0 16px 34px rgba(6, 26, 48, 0.2));
-  }
-  .cp-panel {
-    position: relative;
-    width: 272px;
-    background: #fff;
-    border-radius: 24px 24px 0 0;
-    padding: 0 10px;
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(8px) scale(0.97);
-    transform-origin: 50% 100%;
-    transition: max-height 0.2s var(--ease), opacity 0.16s var(--ease), transform 0.2s var(--ease),
-      padding 0.2s var(--ease);
-  }
-  .cp-panel[data-open='1'] {
-    max-height: 260px;
-    opacity: 1;
-    padding: 10px 10px 6px;
-    transform: translateY(0) scale(1);
-  }
-  .cp-fillet {
-    position: relative;
-    width: 272px;
-    height: 0;
-    background: #fff;
-    transition: height 0.2s var(--ease);
-  }
-  .cp-fillet[data-open='1'] {
-    height: 18px;
-  }
-  .cp-fillet::before,
-  .cp-fillet::after {
-    content: '';
+  .road {
     position: absolute;
+    left: 0;
     top: 0;
-    width: 18px;
-    height: 100%;
-  }
-  .cp-fillet::before {
-    left: -18px;
-    background: radial-gradient(circle 18px at top left, rgba(0, 0, 0, 0) 17.6px, #fff 18px);
-  }
-  .cp-fillet::after {
-    right: -18px;
-    background: radial-gradient(circle 18px at top right, rgba(0, 0, 0, 0) 17.6px, #fff 18px);
-  }
-  .cp-item {
-    display: flex;
-    align-items: center;
-    gap: 11px;
     width: 100%;
-    min-height: 46px;
-    padding: 0 13px;
-    border-radius: 14px;
-    font-size: 14.5px;
-    font-weight: 500;
-    color: var(--ink-2);
-    transition: background 0.16s var(--ease), color 0.16s var(--ease);
+    height: var(--road-h);
+    overflow: visible;
+    fill: none;
   }
-  .cp-item:hover {
-    background: var(--surface-2);
-    color: var(--ink);
+  .road path {
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
-  .cp-item .ic {
+  .road-base {
+    stroke: var(--surface);
+    stroke-width: 14;
+  }
+  .road-dash {
+    stroke: var(--line);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 8;
+  }
+  .road-draw {
+    stroke: var(--accent);
+    stroke-width: 2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--p));
+    transition: stroke-dashoffset 0.25s linear;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px;
+  }
+  .step {
+    position: relative;
+    padding: 0 8px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    transition-delay: calc(var(--i) * 110ms + 120ms);
+  }
+  .step.in {
+    opacity: 1;
+    transform: none;
+  }
+  .stop {
+    position: absolute;
+    left: 50%;
+    top: calc(-1 * var(--road-h) + var(--y) * var(--road-h));
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .stop .ic {
+    width: 21px;
+    height: 21px;
+  }
+  .step:hover .stop {
+    transform: translate(-50%, -50%) scale(1.08);
+    box-shadow: inset 0 0 0 1.5px var(--accent-hi), var(--sh-lift);
+  }
+  .num {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+    transition: color 0.25s var(--ease);
+  }
+  .step:hover .num {
     color: var(--accent);
   }
-  .cp-bar {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    height: 62px;
-    padding: 7px 8px;
-    background: #fff;
-    border-radius: 31px;
-  }
-  .cp-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    height: 48px;
-    padding: 0 15px;
-    border-radius: 24px;
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--ink-3);
-    white-space: nowrap;
-    transition: background 0.16s var(--ease), color 0.16s var(--ease);
-  }
-  .cp-btn .ic {
-    width: 19px;
-    height: 19px;
-  }
-  .cp-btn:hover {
-    background: #f3f3f0;
-    color: var(--ink);
-  }
-  .cp-btn[data-active='1'] {
-    color: var(--ink);
+  .step h3 {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 1.25;
     font-weight: 600;
-    background: #f0f1ee;
+    letter-spacing: -0.02em;
   }
-  .cp-main {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    height: 48px;
-    padding: 0 22px;
-    border-radius: 24px;
+  .step p {
+    margin-top: 8px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  /* Ziel */
+  .step:last-child .stop {
+    width: 58px;
+    height: 58px;
     background: var(--accent);
     color: #fff;
-    font-size: 14.5px;
-    font-weight: 600;
-    letter-spacing: -0.008em;
-    white-space: nowrap;
-    box-shadow: 0 8px 18px -8px rgba(0, 51, 102, 0.85);
-    transition: background 0.16s var(--ease), transform 0.16s var(--ease);
+    box-shadow: 0 0 0 7px var(--green-ring), 0 16px 30px -12px rgba(0, 51, 102, 0.6);
   }
-  .cp-main:hover {
-    background: var(--accent-deep);
-    transform: translateY(-1px);
-  }
-  .cp-sep {
-    width: 1px;
+  .step:last-child .stop .ic {
+    width: 24px;
     height: 24px;
-    background: var(--line);
-    margin: 0 4px;
   }
-  .cp-more {
+  .step:last-child:hover .stop {
+    box-shadow: 0 0 0 9px var(--green-ring), 0 20px 34px -12px rgba(0, 51, 102, 0.7);
+  }
+  .step:last-child h3 {
+    color: var(--accent);
+  }
+
+  .proc-cta {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .proc-cta .primary {
+    margin: 0;
+    width: auto;
+    display: inline-flex;
+    gap: 18px;
+    padding: 0 10px 0 24px;
+  }
+  .proc-fine {
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 1100px) {
+    .steps {
+      gap: 12px;
+    }
+    .step h3 {
+      font-size: 15px;
+    }
+  }
+
+  /* Mobil & Tablet: vertikale Route */
+  @media (max-width: 900px) {
+    .proc {
+      margin-top: 64px;
+      padding-top: 44px;
+    }
+    .route {
+      padding-top: 0;
+      margin-top: 30px;
+    }
+    .road {
+      display: none;
+    }
+    .steps {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+    .steps::before,
+    .steps::after {
+      content: '';
+      position: absolute;
+      left: 23px;
+      top: 26px;
+      bottom: 26px;
+      width: 0;
+      border-left: 1.5px dashed var(--line);
+    }
+    .steps::after {
+      border-left: 2px solid var(--accent);
+      bottom: auto;
+      height: calc(var(--p) * (100% - 52px));
+      transition: height 0.25s linear;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      column-gap: 18px;
+      padding: 0;
+      text-align: left;
+      transform: translateX(-10px);
+    }
+    .step > :not(.stop) {
+      grid-column: 2;
+    }
+    .stop {
+      position: relative;
+      z-index: 1;
+      grid-row: 1 / span 3;
+      left: auto;
+      top: 0;
+      transform: none;
+      width: 48px;
+      height: 48px;
+    }
+    .step:hover .stop {
+      transform: scale(1.06);
+    }
+    .step:last-child .stop {
+      width: 48px;
+      height: 48px;
+    }
+    .step h3 {
+      font-size: 17px;
+    }
+    .step p {
+      font-size: 15px;
+      max-width: 460px;
+    }
+    .proc-cta {
+      align-items: stretch;
+      margin-top: 36px;
+    }
+    .proc-cta .primary {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .proc-fine {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .proc {
+      margin: 48px 20px 0;
+      width: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .route {
+      --p: 1;
+    }
+    .step {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ------------------------ Leasing & Finanzierung ----------------------- */
+  .fin {
+    position: relative;
+    width: 100%;
+    max-width: 1240px;
+    margin: 96px auto 0;
+    padding-top: 64px;
+    border-top: 1px solid var(--line);
+  }
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  [data-reveal].in {
+    opacity: 1;
+    transform: none;
+  }
+  .fin-head {
+    max-width: 620px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .fin-head h2 {
+    font-size: clamp(26px, 3vw, 38px);
+    line-height: 1.08;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+  .fin-head p {
+    margin-top: 14px;
+    font-size: 16.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+
+  /* Gabelung: ein Auto, zwei Wege */
+  .fork {
+    position: relative;
+    height: 150px;
+    margin-top: 28px;
+    transition-delay: 0.1s;
+  }
+  .fork-car {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 0 7px var(--green-ring), 0 16px 30px -12px rgba(0, 51, 102, 0.6);
+    z-index: 1;
+  }
+  .fork-car .ic {
+    width: 26px;
+    height: 26px;
+  }
+  .fork-lines {
+    position: absolute;
+    left: 0;
+    top: 60px;
+    width: 100%;
+    height: 90px;
+    fill: none;
+    overflow: visible;
+  }
+  .fork-lines path {
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 7;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.55;
+  }
+
+  .fin-tabs {
+    display: none;
+  }
+  .fin-tabs .seg-b[aria-selected='true'] {
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+  }
+
+  /* Eine Fläche, zwei Wege */
+  .ways {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 30px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+    transition-delay: 0.2s;
+  }
+  .way {
+    position: relative;
+    padding: 40px 44px 40px;
+    border-radius: 30px;
+    transition: background 0.25s var(--ease);
+  }
+  .way:hover {
+    background: var(--surface-2);
+  }
+  .way + .way {
+    box-shadow: inset 1px 0 0 var(--line);
+  }
+  .oder {
+    position: absolute;
+    left: 50%;
+    top: 40px;
+    transform: translateX(-50%);
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    z-index: 1;
+  }
+  .way-icon {
     display: grid;
     place-items: center;
     width: 48px;
     height: 48px;
-    border-radius: 24px;
-    color: var(--ink-3);
-    transition: background 0.16s var(--ease), color 0.16s var(--ease);
+    border-radius: 14px;
+    background: rgba(0, 51, 102, 0.07);
+    color: var(--accent);
+    transition: transform 0.25s var(--ease);
   }
-  .cp-more:hover,
-  .cp-more[aria-expanded='true'] {
-    background: #f0f1ee;
+  .way:hover .way-icon {
+    transform: translateY(-2px);
+  }
+  .way-icon .ic {
+    width: 22px;
+    height: 22px;
+  }
+  .way-tag {
+    display: inline-block;
+    margin-top: 22px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .way h3 {
+    margin-top: 6px;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .way-intro {
+    margin-top: 10px;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .way-pros {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    gap: 10px;
+  }
+  .way-pros li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14.5px;
+    line-height: 1.45;
     color: var(--ink);
   }
+  .way-pros .ic {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    color: var(--green);
+    stroke-width: 2;
+  }
+  .way-fit {
+    margin-top: 24px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(0, 51, 102, 0.05);
+    box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.1);
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--accent);
+  }
 
-  /* --------------------------------- Dialog ------------------------------ */
+  .fin-help {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 32px;
+    border-radius: 24px;
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line-soft);
+    transition-delay: 0.1s;
+  }
+  .fin-help h3 {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.024em;
+  }
+  .fin-help p {
+    margin-top: 8px;
+    max-width: 560px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .fin-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .fin-cta .primary {
+    margin: 0;
+    width: auto;
+    display: inline-flex;
+    gap: 18px;
+    padding: 0 10px 0 24px;
+    white-space: nowrap;
+  }
+  .fin-legal {
+    margin-top: 20px;
+    padding: 0 4px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--ink-3);
+    max-width: 820px;
+  }
+
+  @media (max-width: 1100px) {
+    .way {
+      padding: 32px 30px;
+    }
+  }
+
+  /* Mobil & Tablet: Tabs, ein Weg sichtbar */
+  @media (max-width: 900px) {
+    .fin {
+      margin-top: 64px;
+      padding-top: 44px;
+    }
+    .fin-head {
+      text-align: left;
+      margin-inline: 0;
+    }
+    .fork {
+      display: none;
+    }
+    .fin-tabs {
+      display: grid;
+      margin-top: 24px;
+    }
+    .ways {
+      grid-template-columns: 1fr;
+      margin-top: 12px;
+      border-radius: 24px;
+    }
+    .way {
+      padding: 26px 22px 24px;
+      border-radius: 24px;
+    }
+    .way + .way {
+      box-shadow: none;
+    }
+    .way[data-active='0'] {
+      display: none;
+    }
+    .way[data-active='1'] {
+      animation: way-in 0.35s var(--ease);
+    }
+    .oder {
+      display: none;
+    }
+    .way h3 {
+      font-size: 24px;
+    }
+    .way-pros li {
+      font-size: 15px;
+    }
+    .fin-help {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 24px 22px;
+      margin-top: 16px;
+    }
+    .fin-cta {
+      align-items: stretch;
+    }
+    .fin-cta .primary {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .fin-cta .proc-fine {
+      text-align: center;
+    }
+  }
+  @keyframes way-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .fin {
+      margin: 48px 20px 0;
+      width: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .way[data-active='1'] {
+      animation: none;
+    }
+  }
+
+  .foot {
+    position: relative;
+    flex: none;
+    width: 100%;
+    max-width: 1240px;
+    margin: 26px auto 0;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+  .foot .links {
+    display: flex;
+    gap: 22px;
+  }
+  .foot a {
+    color: var(--ink-3);
+  }
+  .foot a:hover {
+    color: var(--ink-2);
+  }
+  .ph {
+    background: var(--surface-2);
+    border-radius: 6px;
+    padding: 2px 8px;
+    color: var(--ink-2);
+  }
+
+  /* -------------------------------- Sheets ------------------------------- */
   .ovl {
     position: fixed;
     inset: 0;
@@ -1235,8 +1590,8 @@ const description =
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(10, 20, 32, 0.42);
-    backdrop-filter: blur(6px);
+    background: rgba(6, 26, 48, 0.45);
+    backdrop-filter: blur(5px);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s var(--ease);
@@ -1246,13 +1601,14 @@ const description =
     pointer-events: auto;
   }
   .sheet {
-    width: 552px;
-    max-height: 88vh;
+    width: 520px;
+    max-height: 86vh;
     overflow: auto;
-    border-radius: 36px;
-    background: var(--surface);
-    box-shadow: 0 40px 90px -30px rgba(4, 20, 40, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.6);
-    transform: translateY(14px) scale(0.975);
+    border-radius: 30px;
+    background: var(--sheet);
+    padding-bottom: 26px;
+    box-shadow: 0 0 0 1px var(--line), 0 50px 90px -34px rgba(6, 26, 48, 0.4);
+    transform: translateY(12px) scale(0.98);
     opacity: 0;
     transition: transform 0.22s var(--ease), opacity 0.18s var(--ease);
   }
@@ -1263,58 +1619,116 @@ const description =
   .grab {
     display: none;
   }
-  .sheet-head {
+  .sh-head {
+    padding: 26px 26px 0;
     display: flex;
     align-items: flex-start;
-    gap: 14px;
-    padding: 26px 26px 0;
+    gap: 13px;
   }
-  .sheet-head img {
-    width: 46px;
-    height: 46px;
-    border-radius: 16px;
-    object-fit: cover;
-    object-position: 50% 14%;
-    filter: grayscale(1);
-    flex: none;
-  }
-  .sheet-title {
-    font-size: 20px;
+  .sh-title {
+    font-size: 19px;
     font-weight: 600;
-    letter-spacing: -0.024em;
+    letter-spacing: -0.026em;
   }
-  .sheet-sub {
+  .sh-sub {
     margin-top: 3px;
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--ink-2);
   }
-  .x-btn {
+  .sh-x {
     margin-left: auto;
     display: grid;
     place-items: center;
     width: 44px;
     height: 44px;
     border-radius: 999px;
-    color: var(--ink-3);
+    background: var(--surface-2);
+    color: var(--ink-2);
     flex: none;
-    transition: background 0.16s var(--ease), color 0.16s var(--ease);
   }
-  .x-btn:hover {
-    background: #f1f1ee;
+  .sh-x:hover {
+    background: var(--line);
     color: var(--ink);
   }
+  .sh-body {
+    padding: 18px 26px 0;
+  }
+
+  .band {
+    height: 200px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background: var(--accent-deep);
+  }
+  .band img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+  }
+  .band .duo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 40, 79, 0.08), rgba(0, 40, 79, 0.6));
+  }
+  .lead {
+    margin-top: 18px;
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 500;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+  }
+  .para {
+    margin-top: 14px;
+    font-size: 15.5px;
+    line-height: 1.62;
+    color: var(--ink-2);
+  }
+  .para.strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .kicker {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+  }
+  .rule {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .rule-l {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .terms {
+    margin-top: 14px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
   .ctx {
-    margin: 18px 26px 0;
     display: flex;
     align-items: center;
-    gap: 11px;
-    padding: 12px 14px;
+    gap: 10px;
+    padding: 11px 14px;
     border-radius: 16px;
-    background: rgba(0, 51, 102, 0.055);
-    box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.1);
-    font-size: 14px;
-    color: var(--accent);
+    background: rgba(0, 51, 102, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.2);
+    font-size: 13.5px;
     font-weight: 500;
+    color: var(--accent);
   }
   .ctx-x {
     margin-left: auto;
@@ -1324,79 +1738,64 @@ const description =
     height: 26px;
     border-radius: 999px;
     color: var(--accent);
-    opacity: 0.6;
+    opacity: 0.7;
   }
   .ctx-x:hover {
     opacity: 1;
-    background: rgba(0, 51, 102, 0.09);
+    background: rgba(0, 51, 102, 0.1);
   }
-  .form {
-    padding: 20px 26px 26px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  .field {
+    margin-top: 20px;
   }
-  .row2 {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 13px;
-  }
-  .fld {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
+  .field:first-child {
+    margin-top: 0;
   }
   .lbl {
-    font-size: 12.5px;
+    display: block;
+    font-size: 12px;
     font-weight: 600;
-    color: var(--ink-2);
-  }
-  .lbl .opt {
-    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--ink-3);
   }
-  .inp {
-    width: 100%;
-    height: 46px;
-    padding: 0 14px;
-    border: 0;
+  .lbl .opt {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+  .chips {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    height: 44px;
+    padding: 0 16px;
     border-radius: 14px;
-    background: #f7f7f4;
+    background: var(--surface-2);
     box-shadow: inset 0 0 0 1px var(--line);
-    font-size: 14.5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-2);
+    transition: background 0.16s var(--ease), color 0.16s var(--ease), box-shadow 0.16s var(--ease);
+  }
+  .chip:hover {
     color: var(--ink);
-    transition: box-shadow 0.16s var(--ease), background 0.16s var(--ease);
   }
-  textarea.inp {
-    height: auto;
-    padding: 12px 14px;
-    resize: vertical;
-    line-height: 1.5;
-  }
-  .inp::placeholder {
-    color: #a9b1b9;
-  }
-  .inp:focus {
-    outline: none;
-    background: #fff;
-    box-shadow: inset 0 0 0 1.5px var(--accent);
-  }
-  .inp[aria-invalid='true'] {
-    box-shadow: inset 0 0 0 1.5px #b4453a;
-  }
-  .err {
-    font-size: 12.5px;
-    color: #b4453a;
-  }
-  .err.center {
-    text-align: center;
+  .chip[aria-checked='true'] {
+    background: rgba(0, 51, 102, 0.1);
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1.5px var(--accent-hi);
   }
   .seg {
+    margin-top: 10px;
     display: grid;
-    grid-auto-flow: column;
-    gap: 4px;
-    padding: 4px;
-    border-radius: 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 5px;
+    border-radius: 16px;
     background: var(--surface-2);
     box-shadow: inset 0 0 0 1px var(--line-soft);
   }
@@ -1404,79 +1803,115 @@ const description =
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
-    height: 38px;
-    border-radius: 10px;
-    font-size: 13.5px;
+    gap: 8px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--ink-2);
-    transition: background 0.16s var(--ease), color 0.16s var(--ease), box-shadow 0.16s var(--ease);
+    transition: background 0.16s var(--ease), color 0.16s var(--ease);
   }
   .seg-b .ic {
-    width: 16px;
-    height: 16px;
+    width: 17px;
+    height: 17px;
   }
   .seg-b:hover {
     color: var(--ink);
   }
   .seg-b[aria-checked='true'] {
-    background: #fff;
-    color: var(--accent);
+    background: var(--surface);
+    color: var(--ink);
     font-weight: 600;
-    box-shadow: 0 1px 2px rgba(6, 26, 48, 0.1), 0 0 0 1px var(--line-soft);
+    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
   }
-  .btn-send {
-    margin-top: 4px;
+  .inp {
+    margin-top: 10px;
+    width: 100%;
+    height: 52px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 16px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 16px;
+    color: var(--ink);
+  }
+  textarea.inp {
+    height: auto;
+    padding: 12px 16px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+  .inp::placeholder {
+    color: var(--ink-3);
+  }
+  .inp:focus {
+    outline: none;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1.5px var(--accent-hi);
+  }
+  .inp[aria-invalid='true'] {
+    box-shadow: inset 0 0 0 1.5px #c8473d;
+  }
+  .err {
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: #c8473d;
+  }
+  .err.center {
+    text-align: center;
+  }
+  .send {
+    margin-top: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     width: 100%;
-    height: 52px;
-    border-radius: 999px;
+    height: 58px;
+    border-radius: 18px;
     background: var(--accent);
     color: #fff;
-    font-size: 15.5px;
+    font-size: 16px;
     font-weight: 600;
-    letter-spacing: -0.008em;
-    box-shadow: 0 12px 26px -12px rgba(0, 51, 102, 0.8);
-    transition: background 0.18s var(--ease), transform 0.18s var(--ease), opacity 0.18s var(--ease);
+    letter-spacing: -0.014em;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 12px 26px -12px rgba(0, 51, 102, 0.55);
+    transition: background 0.16s var(--ease), opacity 0.16s var(--ease);
   }
-  .btn-send:hover {
+  .send:hover {
     background: var(--accent-deep);
-    transform: translateY(-1px);
   }
-  .btn-send[disabled] {
+  .send[disabled] {
     opacity: 0.6;
     pointer-events: none;
   }
   .fine {
-    font-size: 12.5px;
-    line-height: 1.5;
-    color: var(--ink-3);
+    margin-top: 12px;
     text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-3);
   }
   .done {
-    padding: 34px 30px;
+    padding: 34px 30px 10px;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     gap: 12px;
   }
-  .done-ring {
+  .ring {
     display: grid;
     place-items: center;
-    width: 60px;
-    height: 60px;
+    width: 62px;
+    height: 62px;
     border-radius: 999px;
-    background: rgba(0, 153, 102, 0.1);
+    background: var(--green-ring);
     color: var(--green);
   }
-  .done-ring .ic {
+  .ring .ic {
     width: 28px;
     height: 28px;
-    stroke-width: 1.8;
+    stroke-width: 1.9;
   }
   .done h3 {
     font-size: 22px;
@@ -1485,183 +1920,302 @@ const description =
   }
   .done p {
     font-size: 15px;
+    line-height: 1.55;
     color: var(--ink-2);
-    max-width: 330px;
-    line-height: 1.6;
+    max-width: 300px;
   }
 
   /* ------------------------------ Responsive ----------------------------- */
-  @media (max-width: 1180px) {
-    .hero-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
+  @media (max-width: 1100px) {
+    .hero-row {
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 24px;
     }
-    .hero-visual {
-      height: 420px;
+    .mid {
+      padding: 0 0 0 16px;
     }
-    .alex-panel {
-      grid-template-columns: 40% 1fr;
+    .offers {
+      gap: 12px;
     }
-    .alex-body {
-      padding: 48px 44px;
+    .ocard-pic {
+      width: 92px;
+      height: 80px;
     }
   }
 
   @media (max-width: 900px) {
-    .wrap {
-      width: min(1200px, 100% - 40px);
-    }
-    .hero {
-      padding: 40px 0 72px;
-    }
-    .hero-grid {
+    .offers {
       grid-template-columns: 1fr;
-      gap: 48px;
     }
-    .hero-visual {
-      height: 320px;
-    }
-    .hv-card {
-      left: 0;
-      right: 0;
-      bottom: -22px;
-    }
-    .grid-v {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-    }
-    .alex-panel {
-      grid-template-columns: 1fr;
-      border-radius: 36px;
-    }
-    .alex-photo {
-      height: 300px;
-    }
-    .alex-photo img {
-      object-position: 50% 12%;
-    }
-    .alex-photo .tint {
-      background: linear-gradient(to bottom, rgba(4, 32, 60, 0.05) 45%, rgba(4, 32, 60, 0.86));
-    }
-    .alex-body {
-      padding: 30px 26px 34px;
-    }
-    .footer .wrap {
-      flex-direction: column;
-      gap: 20px;
-    }
-    .foot-contact {
-      text-align: left;
+    .ocard .ch {
+      margin-left: auto;
     }
   }
 
-  @media (max-width: 640px) {
-    .wrap {
-      width: min(1200px, 100% - 32px);
+  @media (max-width: 760px) {
+    .app {
+      padding: 0 0 14px;
     }
-    .header,
-    .header .wrap {
-      height: 74px;
-    }
-    .status-label {
-      display: none;
-    }
-    .status-pill {
-      padding: 0 12px;
-    }
-    .header .brand-sub {
-      display: none;
+    .bar {
+      height: 68px;
+      padding: 0 20px;
+      gap: 11px;
     }
     .logo {
-      width: 58px;
-      height: 58px;
+      width: 56px;
+      height: 56px;
     }
-    .hero-copy .lead {
-      font-size: 18px;
+    .bar-name {
+      font-size: 13px;
     }
-    .hero-copy p {
-      font-size: 16px;
+    .bar-sub {
+      font-size: 10px;
     }
-    .hero-cta {
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .btn-primary {
-      justify-content: center;
-    }
-    .hero-note {
-      text-align: center;
-    }
-    .grid-v {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-    .tile-media {
-      height: 200px;
-    }
-    .tile-body {
-      padding: 4px 20px 20px;
-    }
-    .tile-name {
-      font-size: 22px;
-    }
-    .sec-head p {
-      font-size: 16px;
-    }
-    .alex-kicker {
-      font-size: 20px;
-    }
-    .alex-cta {
-      align-items: stretch;
-      flex-direction: column;
-    }
-    .btn-light {
-      justify-content: center;
-    }
-    .spacer {
-      height: 150px;
-    }
-
-    /* Cockpit mobil: Icon über Label, kompakter */
-    .cp-bar {
-      height: 66px;
-      padding: 6px;
-      gap: 2px;
-    }
-    .cp-btn {
-      flex-direction: column;
-      gap: 3px;
-      min-width: 54px;
-      height: 54px;
-      padding: 0 6px;
-      border-radius: 27px;
-      font-size: 9.5px;
-      font-weight: 600;
-    }
-    .cp-btn .ic {
-      width: 20px;
-      height: 20px;
-    }
-    .cp-main {
-      height: 54px;
-      padding: 0 16px;
-      border-radius: 27px;
-      font-size: 13.5px;
-    }
-    .cp-sep {
+    .live-top {
       display: none;
     }
-    .cp-more {
-      width: 46px;
-      height: 54px;
-      border-radius: 27px;
+
+    .console {
+      margin-top: 8px;
+      gap: 0;
     }
-    .cp-panel,
-    .cp-fillet {
-      width: 240px;
+    .hero-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
-    /* Dialog mobil als Bottom Sheet */
+    /* Reihenfolge mobil: Aussage, Person, Handlung, Angebote.
+       .mid wird aufgelöst, damit die Alex-Karte dazwischenpasst. */
+    .mid {
+      display: contents;
+    }
+    .mid h1,
+    .mid .sub,
+    .mid .acts,
+    .mid .primary {
+      margin-inline: 20px;
+    }
+    .mid h1 {
+      order: 0;
+    }
+    .mid .sub {
+      order: 1;
+      max-width: none;
+    }
+    .mid .acts {
+      order: 3;
+    }
+    .mid .primary {
+      order: 4;
+    }
+    .eyebrow {
+      display: none;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 29px;
+      line-height: 1.1;
+      letter-spacing: -0.036em;
+    }
+    .sub {
+      margin-top: 14px;
+      max-width: none;
+      padding: 18px 18px 16px 20px;
+      border-radius: 20px;
+    }
+    .sub p {
+      font-size: 16.5px;
+    }
+    .acts {
+      margin-top: 14px;
+      gap: 10px;
+    }
+    .act {
+      height: 60px;
+      border-radius: 20px;
+      font-size: 15.5px;
+      gap: 9px;
+    }
+    .primary {
+      margin-top: 8px;
+      height: 60px;
+      font-size: 16px;
+      padding: 0 12px 0 22px;
+    }
+    .note {
+      display: none;
+    }
+
+    .alex {
+      order: 2;
+      flex-direction: row;
+      justify-content: flex-start;
+      margin: 14px 20px 0;
+      height: 156px;
+      border-radius: 26px;
+      background: var(--surface);
+      box-shadow: inset 0 0 0 1px var(--line), 0 22px 40px -22px rgba(6, 26, 48, 0.3);
+    }
+    .alex-txt {
+      flex: 1;
+      min-width: 0;
+      padding: 16px 12px 16px 18px;
+      justify-content: flex-start;
+      color: var(--ink);
+    }
+    .alex-r {
+      color: var(--ink-2);
+    }
+    .live {
+      background: var(--green-ring);
+      box-shadow: inset 0 0 0 1px rgba(0, 153, 102, 0.3);
+      color: var(--green);
+      height: 26px;
+      font-size: 10.5px;
+      padding: 0 11px 0 9px;
+    }
+    .alex-n {
+      margin-top: 12px;
+      font-size: 19px;
+      letter-spacing: -0.028em;
+    }
+    .alex-r {
+      margin-top: 6px;
+      font-size: 12.5px;
+      line-height: 1.4;
+    }
+    .alex-more {
+      margin-top: auto;
+      height: auto;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+      color: var(--accent-text);
+      font-size: 12.5px;
+    }
+    .alex-more .ic {
+      width: 14px;
+      height: 14px;
+    }
+    .alex-pic {
+      position: relative;
+      inset: auto;
+      width: 132px;
+      flex: none;
+    }
+    .alex-pic img {
+      position: absolute;
+      inset: 0;
+      object-position: 50% 20%;
+    }
+    .alex-pic::after {
+      background: none;
+      box-shadow: inset 28px 0 30px -24px var(--surface);
+    }
+
+    /* Angebote als Streifen */
+    .panel {
+      margin-top: 18px;
+    }
+    .panel-head {
+      padding: 0 20px;
+    }
+    .panel-more {
+      display: inline-flex;
+    }
+    .offers {
+      display: none;
+    }
+    .strip {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 0 20px 4px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: 20px;
+      scrollbar-width: none;
+    }
+    .strip::-webkit-scrollbar {
+      display: none;
+    }
+    .offer {
+      flex: none;
+      width: 172px;
+      scroll-snap-align: start;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: inset 0 0 0 1px var(--line);
+      transition: background 0.2s var(--ease);
+    }
+    .offer:hover {
+      background: var(--surface-2);
+    }
+    .offer-media {
+      display: block;
+      position: relative;
+      height: 92px;
+    }
+    .offer-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: 50% 50%;
+    }
+    .offer-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--surface) 2%, rgba(255, 255, 255, 0) 62%);
+    }
+    .pin {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+    .offer-body {
+      display: block;
+      padding: 2px 12px 12px;
+    }
+    .offer-name {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.012em;
+      min-height: 32px;
+    }
+    .offer .p-new {
+      font-size: 16px;
+    }
+    .offer .p-old {
+      font-size: 11px;
+    }
+    .offer .p-unit {
+      font-size: 10.5px;
+    }
+    .panel .tail {
+      margin: 10px 20px 0;
+      padding: 0;
+      font-size: 11px;
+    }
+
+    .foot {
+      margin-top: 12px;
+      padding: 0 20px;
+      height: auto;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 11.5px;
+    }
+
+    /* Sheets von unten */
     .ovl {
       align-items: flex-end;
     }
@@ -1669,130 +2223,94 @@ const description =
       width: 100%;
       max-height: 92vh;
       border-radius: 30px 30px 0 0;
+      padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
       transform: translateY(26px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
     .grab {
       display: block;
-      width: 40px;
+      width: 38px;
       height: 4px;
       border-radius: 999px;
-      background: rgba(16, 24, 32, 0.14);
+      background: var(--line);
       margin: 10px auto 0;
     }
-    .sheet-head {
-      padding: 14px 20px 0;
+    .sh-head {
+      padding: 14px 22px 0;
     }
-    .ctx,
-    .form {
-      margin-left: 0;
-      margin-right: 0;
+    .sh-body {
+      padding: 18px 22px 0;
     }
-    .ctx {
-      margin: 16px 20px 0;
+    .band {
+      height: 180px;
     }
-    .form {
-      padding: 18px 20px 22px;
+    .lead {
+      font-size: 16.5px;
     }
-    .row2 {
-      grid-template-columns: 1fr;
-    }
-    .inp {
-      height: 48px;
-      font-size: 16px; /* verhindert iOS-Zoom */
+    .para {
+      font-size: 15px;
     }
   }
 </style>
 
 <script>
   const ovl = document.getElementById('ovl')!;
-  const dlg = document.getElementById('dlg')!;
+  const sheets: Record<string, HTMLElement> = {
+    alex: document.getElementById('sheet-alex')!,
+    cars: document.getElementById('sheet-cars')!,
+    ask: document.getElementById('sheet-ask')!,
+  };
   const form = document.getElementById('form') as HTMLFormElement;
   const done = document.getElementById('done')!;
   const ctx = document.getElementById('ctx')!;
   const ctxName = document.getElementById('ctx-name')!;
-  const reachInput = document.getElementById('f-reach') as HTMLInputElement;
+  const reach = document.getElementById('a-num') as HTMLInputElement;
   const reachLabel = document.getElementById('reach-label')!;
   const errReach = document.getElementById('err-reach')!;
   const errSend = document.getElementById('err-send')!;
   const submit = document.getElementById('submit') as HTMLButtonElement;
   const submitLabel = document.getElementById('submit-label')!;
-  const panel = document.getElementById('cp-panel')!;
-  const fillet = document.querySelector('.cp-fillet') as HTMLElement;
-  const moreBtn = document.getElementById('cp-more')!;
 
+  let current: string | null = null;
   let lastFocused: HTMLElement | null = null;
   let vehicle = '';
-  let topic = '';
+  let topic = 'firma';
+  let channel = 'tel';
 
-  /* ------------------------------- Cockpit ------------------------------- */
-  function setMore(open: boolean) {
-    panel.dataset.open = open ? '1' : '0';
-    fillet.dataset.open = open ? '1' : '0';
-    moreBtn.setAttribute('aria-expanded', String(open));
-  }
-  moreBtn.addEventListener('click', () => setMore(moreBtn.getAttribute('aria-expanded') !== 'true'));
-  document.addEventListener('click', (e) => {
-    const t = e.target as Node;
-    if (moreBtn.getAttribute('aria-expanded') === 'true' && !panel.contains(t) && !moreBtn.contains(t)) setMore(false);
-  });
-
-  /* Aktiven Abschnitt im Cockpit markieren */
-  const sections = ['top', 'fahrzeuge', 'ueber-alex']
-    .map((id) => document.getElementById(id))
-    .filter(Boolean) as HTMLElement[];
-  const navBtns = Array.from(document.querySelectorAll<HTMLElement>('.cp-btn'));
-  if ('IntersectionObserver' in window && sections.length) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (!en.isIntersecting) return;
-          navBtns.forEach((b) => (b.dataset.active = b.dataset.section === en.target.id ? '1' : '0'));
-        });
-      },
-      { rootMargin: '-45% 0px -45% 0px' }
-    );
-    sections.forEach((s) => io.observe(s));
-  }
-
-  /* -------------------------------- Dialog ------------------------------- */
-  function focusables() {
-    return Array.from(
-      dlg.querySelectorAll<HTMLElement>('button, input, textarea, select, a[href]')
-    ).filter((el) => el.offsetParent !== null);
-  }
-
-  function openDialog(name?: string, tpc?: string) {
-    lastFocused = document.activeElement as HTMLElement;
-    vehicle = name || '';
-    topic = tpc || '';
-    ctx.hidden = !vehicle;
-    ctxName.textContent = vehicle;
-    const need = document.getElementById('f-need') as HTMLInputElement;
-    if (vehicle && !need.value) need.value = vehicle;
-    form.hidden = false;
-    done.hidden = true;
-    errSend.hidden = true;
+  function open(view: string, name?: string, tpc?: string) {
+    if (!sheets[view]) return;
+    if (!current) lastFocused = document.activeElement as HTMLElement;
+    Object.entries(sheets).forEach(([k, el]) => (el.hidden = k !== view));
+    current = view;
     ovl.dataset.open = '1';
     document.body.style.overflow = 'hidden';
-    setMore(false);
-    setTimeout(() => (document.getElementById('f-name') as HTMLElement)?.focus(), 60);
+
+    if (view === 'ask') {
+      if (name) {
+        vehicle = name;
+        ctxName.textContent = `${ovl.dataset.contextPrefix} ${name}`;
+      }
+      ctx.hidden = !vehicle;
+      if (tpc) setTopic(tpc);
+      form.hidden = false;
+      done.hidden = true;
+      errSend.hidden = true;
+      setTimeout(() => reach.focus(), 80);
+    }
   }
 
-  function closeDialog() {
+  function close() {
     ovl.dataset.open = '0';
+    current = null;
     document.body.style.overflow = '';
     lastFocused?.focus();
   }
 
-  document.querySelectorAll<HTMLElement>('[data-open-dialog]').forEach((el) =>
-    el.addEventListener('click', () => openDialog(el.dataset.vehicle, el.dataset.topic))
+  document.querySelectorAll<HTMLElement>('[data-view]').forEach((el) =>
+    el.addEventListener('click', () => open(el.dataset.view!, el.dataset.vehicle, el.dataset.topic))
   );
-  document.querySelectorAll<HTMLElement>('[data-close-dialog]').forEach((el) =>
-    el.addEventListener('click', closeDialog)
-  );
+  document.querySelectorAll<HTMLElement>('[data-close]').forEach((el) => el.addEventListener('click', close));
   ovl.addEventListener('click', (e) => {
-    if (e.target === ovl) closeDialog();
+    if (e.target === ovl) close();
   });
   document.getElementById('ctx-clear')!.addEventListener('click', () => {
     vehicle = '';
@@ -1800,83 +2318,79 @@ const description =
   });
 
   document.addEventListener('keydown', (e) => {
+    if (!current) return;
     if (e.key === 'Escape') {
-      if (ovl.dataset.open === '1') {
-        e.preventDefault();
-        closeDialog();
-      } else if (moreBtn.getAttribute('aria-expanded') === 'true') {
-        e.preventDefault();
-        setMore(false);
-      }
+      e.preventDefault();
+      close();
       return;
     }
-    if (e.key === 'Tab' && ovl.dataset.open === '1') {
-      const f = focusables();
-      if (!f.length) return;
-      const first = f[0];
-      const last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+    if (e.key !== 'Tab') return;
+    const sheet = sheets[current];
+    const f = Array.from(
+      sheet.querySelectorAll<HTMLElement>('button, input, textarea, select, a[href]')
+    ).filter((el) => el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   });
 
-  /* -------------------------- Segmentierte Auswahl ------------------------ */
-  const seg: Record<string, string> = { kind: 'privat', channel: 'tel' };
-  document.querySelectorAll<HTMLElement>('.seg').forEach((group) => {
-    const key = group.dataset.seg!;
-    group.querySelectorAll<HTMLElement>('.seg-b').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        seg[key] = btn.dataset.val!;
-        group
-          .querySelectorAll<HTMLElement>('.seg-b')
-          .forEach((b) => b.setAttribute('aria-checked', String(b === btn)));
-        if (key === 'channel') {
-          const mail = seg.channel === 'mail';
-          reachLabel.textContent = mail ? 'Deine E-Mail-Adresse' : 'Deine Telefonnummer';
-          reachInput.placeholder = mail ? 'name@firma.de' : '01xx xxxxxxx';
-          reachInput.type = mail ? 'email' : 'tel';
-          reachInput.autocomplete = mail ? 'email' : 'tel';
-        }
-      });
-    });
-  });
+  /* Chips + Segment */
+  const chipGroup = document.getElementById('chips')!;
+  function setTopic(val: string) {
+    topic = val;
+    chipGroup
+      .querySelectorAll<HTMLElement>('.chip')
+      .forEach((c) => c.setAttribute('aria-checked', String(c.dataset.val === val)));
+  }
+  chipGroup.querySelectorAll<HTMLElement>('.chip').forEach((c) =>
+    c.addEventListener('click', () => setTopic(c.dataset.val!))
+  );
 
-  /* -------------------------------- Absenden ------------------------------ */
+  const segGroup = document.getElementById('seg')!;
+  segGroup.querySelectorAll<HTMLElement>('.seg-b').forEach((b) =>
+    b.addEventListener('click', () => {
+      channel = b.dataset.val!;
+      segGroup
+        .querySelectorAll<HTMLElement>('.seg-b')
+        .forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+      reachLabel.textContent = channel === 'wa' ? ovl.dataset.whatsappLabel! : ovl.dataset.phoneLabel!;
+    })
+  );
+
+  /* Absenden */
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errSend.hidden = true;
 
-    const reach = reachInput.value.trim();
-    const ok = seg.channel === 'mail' ? /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(reach) : reach.replace(/\D/g, '').length >= 6;
+    const value = reach.value.trim();
+    const ok = value.replace(/\D/g, '').length >= 6;
     errReach.hidden = ok;
-    reachInput.setAttribute('aria-invalid', String(!ok));
+    reach.setAttribute('aria-invalid', String(!ok));
     if (!ok) {
-      reachInput.focus();
+      reach.focus();
       return;
     }
 
-    const data = new FormData(form);
     const payload = {
-      name: String(data.get('name') || ''),
-      kind: seg.kind,
-      need: String(data.get('need') || ''),
-      vehicle,
+      kind: topic === 'firma' || topic === 'transporter' ? 'firma' : 'privat',
       topic,
-      budget: String(data.get('budget') || ''),
-      timing: String(data.get('timing') || ''),
-      channel: seg.channel,
-      reach,
-      message: String(data.get('message') || ''),
-      source: 'landingpage',
+      vehicle,
+      need: vehicle,
+      channel,
+      reach: value,
+      message: String(new FormData(form).get('message') || ''),
+      source: 'app',
     };
 
     submit.disabled = true;
-    submitLabel.textContent = 'Wird gesendet …';
+    submitLabel.textContent = ovl.dataset.submittingLabel!;
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -1887,12 +2401,74 @@ const description =
       form.hidden = true;
       done.hidden = false;
     } catch (err) {
-      errSend.textContent =
-        (err as Error).message + ' – ruf Alex gern direkt an, das geht immer.';
+      errSend.textContent = `${(err as Error).message} ${ovl.dataset.sendErrorSuffix}`;
       errSend.hidden = false;
     } finally {
       submit.disabled = false;
-      submitLabel.textContent = 'Anfrage an Alex senden';
+      submitLabel.textContent = ovl.dataset.submitLabel!;
     }
   });
+
+  /* Ablauf: Route zeichnet sich beim Scrollen, Schritte blenden nacheinander ein */
+  const route = document.getElementById('route');
+  if (route) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stepsEl = route.querySelectorAll<HTMLElement>('.step');
+    if (reduce) {
+      stepsEl.forEach((el) => el.classList.add('in'));
+    } else {
+      new IntersectionObserver(
+        (entries, io) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              stepsEl.forEach((el) => el.classList.add('in'));
+              io.disconnect();
+            }
+          }),
+        { threshold: 0.2 }
+      ).observe(route);
+      const draw = () => {
+        const r = route.getBoundingClientRect();
+        const vh = innerHeight;
+        // 0 wenn die Route unten ins Bild kommt, 1 wenn sie ~zwei Drittel hoch steht
+        const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.55 + r.height * 0.35)));
+        route.style.setProperty('--p', p.toFixed(3));
+      };
+      addEventListener('scroll', draw, { passive: true });
+      addEventListener('resize', draw);
+      draw();
+    }
+  }
+
+  /* Leasing & Finanzierung: Einblenden + Tabs (mobil) */
+  const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add('in');
+            io.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.15 }
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+  const finTabs = document.querySelectorAll<HTMLElement>('.fin-tabs [role="tab"]');
+  finTabs.forEach((t) =>
+    t.addEventListener('click', () => {
+      finTabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+      document
+        .querySelectorAll<HTMLElement>('.way')
+        .forEach((w) => (w.dataset.active = w.dataset.way === t.dataset.way ? '1' : '0'));
+    })
+  );
+
+  /* Von der Detailseite: ?anfrage=<id> öffnet das Formular vorbelegt */
+  const wanted = new URLSearchParams(location.search).get('anfrage');
+  const pre = wanted && document.querySelector<HTMLElement>(`.vrow[data-id="${CSS.escape(wanted)}"]`);
+  if (pre) open('ask', pre.dataset.vehicle, pre.dataset.topic);
 </script>

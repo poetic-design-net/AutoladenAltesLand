@@ -1,0 +1,523 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { ArrowLeft01Icon, ArrowLeft02Icon, ArrowRight01Icon, Call02Icon, Sent02Icon, Tick02Icon, WhatsappIcon } from '@hugeicons/core-free-icons';
+import { contactLinks, getSiteSettings } from '../../lib/content';
+import { getAllVehicles } from '../../lib/vehicles';
+
+const [all, site] = await Promise.all([getAllVehicles(), getSiteSettings()]);
+const { telHref, waHref } = contactLinks(site);
+const v = all.find((x) => x.id === Astro.params.id);
+if (!v) return new Response(null, { status: 404 });
+const others = all.filter((x) => x.id !== v.id);
+const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
+---
+
+<Base
+  title={`${v.name} – ${site.brandName}`}
+  description={`${v.name}: ${v.features.join(', ')}. Kaufpreis ${v.price.value}. Frag Alex nach Preis und Verfügbarkeit.`}
+  ogImage={v.image || site.logo}
+  fonts="family=Geist:wght@300..700"
+>
+  <div class="page">
+    <header class="bar">
+      <a class="back" href="/">
+        <Icon icon={ArrowLeft02Icon} />
+        Zurück
+      </a>
+      <a class="brand" href="/">
+        <img class="logo" src={site.logo} alt={site.logoAlt} width="48" height="48" />
+      </a>
+    </header>
+
+    <main class="grid">
+      <figure class="media" data-slider>
+        <div class="track">
+          {pics.map((p, i) => <img src={p} alt={i === 0 ? v.alt : ''} width="1200" height="800" loading={i ? 'lazy' : 'eager'} />)}
+        </div>
+        <span class="status">
+          <span class={`dot tone-${v.tone}`}></span>
+          {v.status}
+        </span>
+        {
+          pics.length > 1 && (
+            <>
+              <button class="nav prev" type="button" aria-label="Vorheriges Bild" data-dir="-1"><Icon icon={ArrowLeft01Icon} /></button>
+              <button class="nav next" type="button" aria-label="Nächstes Bild" data-dir="1"><Icon icon={ArrowRight01Icon} /></button>
+              <div class="dots" role="tablist">
+                {pics.map((_, i) => <button type="button" role="tab" aria-label={`Bild ${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'} data-i={i} />)}
+              </div>
+            </>
+          )
+        }
+      </figure>
+
+      <section class="body">
+        <span class="kicker">{v.kicker}</span>
+        <h1>{v.name}</h1>
+
+        <div class="price">
+          {v.price.old && <span class="p-old">{v.price.old}</span>}
+          <span class="p-new">{v.price.value}</span>
+          <span class="p-unit">Kaufpreis</span>
+        </div>
+        <p class="terms">{v.price.terms}</p>
+
+        {
+          v.features.length > 0 && (
+            <ul class="feats">
+              {v.features.map((f) => (
+                <li>
+                  <Icon icon={Tick02Icon} />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+
+        {v.description && <p class="desc">{v.description}</p>}
+
+        <a class="primary" href={`/?anfrage=${v.id}`}>
+          <Icon icon={Sent02Icon} />
+          Preis &amp; Verfügbarkeit anfragen
+          <span class="go"><Icon icon={ArrowRight01Icon} /></span>
+        </a>
+        <div class="acts">
+          <a class="act" href={telHref ?? '/'}>
+            <Icon icon={Call02Icon} />
+            Anrufen
+          </a>
+          <a class="act" href={waHref ?? '/'} target={waHref ? '_blank' : undefined} rel="noopener">
+            <Icon icon={WhatsappIcon} />
+            WhatsApp
+          </a>
+        </div>
+        <p class="note">Geht direkt an Alex – nicht an ein Portal.</p>
+        <p class="fine">{site.priceNote}</p>
+      </section>
+    </main>
+
+    {
+      others.length > 0 && (
+        <section class="more">
+          <h2>Weitere Fahrzeuge</h2>
+          <div class="cards">
+            {others.map((o) => (
+              <a class="card" href={`/fahrzeuge/${o.id}`}>
+                <span class="card-pic" style={`background-image:url(${o.image})`} role="img" aria-label={o.alt} />
+                <span class="card-txt">
+                  <span class="t">{o.name}</span>
+                  <span class="s">
+                    <span class={`dot tone-${o.tone}`} />
+                    {o.status}
+                  </span>
+                  <span class="prow">
+                    {o.price.old && <span class="p-old">{o.price.old}</span>}
+                    <span class="p-new">{o.price.value}</span>
+                  </span>
+                </span>
+                <span class="ch">
+                  <Icon icon={ArrowRight01Icon} />
+                </span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <footer class="foot">
+      <a href="/impressum">Impressum</a>
+      <a href="/datenschutz">Datenschutz</a>
+    </footer>
+  </div>
+</Base>
+
+<style>
+  :global(body[data-theme='light']) {
+    --font: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 40px 40px;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 16px 0 12px;
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--ink-2);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .back:hover {
+    color: var(--ink);
+  }
+  .back .ic {
+    width: 16px;
+    height: 16px;
+  }
+  .logo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  .grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+  }
+  .media {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    border-radius: 28px;
+    overflow: hidden;
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+  }
+  .track {
+    display: flex;
+    height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .track img {
+    flex: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    scroll-snap-align: start;
+  }
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--sh-soft);
+    opacity: 0.9;
+  }
+  .nav:hover {
+    opacity: 1;
+  }
+  .nav.prev {
+    left: 14px;
+  }
+  .nav.next {
+    right: 14px;
+  }
+  .dots {
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+    display: flex;
+    gap: 6px;
+  }
+  .dots button {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+    padding: 0;
+  }
+  .dots button[aria-selected='true'] {
+    background: #fff;
+    width: 20px;
+  }
+  .status {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 13px 0 11px;
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow: var(--sh-soft);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  .kicker {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin-top: 8px;
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1.06;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+  .price {
+    margin-top: 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .p-old {
+    font-size: 15px;
+    color: var(--ink-3);
+    text-decoration: line-through;
+  }
+  .p-new {
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .p-unit {
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .terms {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .feats {
+    margin-top: 22px;
+    display: grid;
+    gap: 8px;
+  }
+  .feats li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+  .feats .ic {
+    width: 18px;
+    height: 18px;
+    color: var(--green);
+  }
+  .desc {
+    margin-top: 20px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    white-space: pre-line;
+  }
+
+  .primary {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 62px;
+    padding: 0 12px 0 22px;
+    border-radius: 20px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.014em;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 16px 30px -14px rgba(0, 51, 102, 0.55);
+    transition: background 0.16s var(--ease), transform 0.16s var(--ease);
+  }
+  .primary:hover {
+    background: var(--accent-deep);
+    transform: translateY(-1px);
+  }
+  .primary .go {
+    margin-left: auto;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+  }
+  .acts {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .act {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 56px;
+    border-radius: 18px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .act:hover {
+    background: var(--surface-2);
+  }
+  .act .ic {
+    color: var(--ink-2);
+  }
+  .note {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+  .fine {
+    margin-top: 6px;
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
+  .more {
+    margin-top: 56px;
+  }
+  .more h2 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .cards {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px 12px 12px;
+    border-radius: 22px;
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--line);
+    transition: background 0.18s var(--ease), transform 0.18s var(--ease);
+  }
+  .card:hover {
+    background: var(--surface-2);
+    transform: translateY(-2px);
+  }
+  .card-pic {
+    width: 96px;
+    height: 80px;
+    border-radius: 14px;
+    background-size: cover;
+    background-position: 50%;
+    flex: none;
+  }
+  .card-txt {
+    min-width: 0;
+    flex: 1;
+  }
+  .card .t {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+  .card .s {
+    margin-top: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    color: var(--ink-2);
+  }
+  .card .prow {
+    margin-top: 5px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .card .p-old {
+    font-size: 11.5px;
+  }
+  .card .p-new {
+    font-size: 17px;
+  }
+  .card .p-unit {
+    font-size: 11px;
+  }
+  .card .ch {
+    color: var(--ink-3);
+  }
+  .tone-blue {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.18);
+  }
+  .tone-grey {
+    background: #8b959e;
+    box-shadow: 0 0 0 3px rgba(139, 149, 158, 0.2);
+  }
+
+  .foot {
+    margin-top: 40px;
+    display: flex;
+    gap: 22px;
+    font-size: 12.5px;
+  }
+  .foot a {
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 820px) {
+    .page {
+      padding: 8px 20px 32px;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-top: 8px;
+    }
+    .media {
+      border-radius: 22px;
+    }
+    .p-new {
+      font-size: 30px;
+    }
+  }
+</style>
+
+<script>
+  /* ponytail: nativer Scroll-Snap-Slider, Buttons und Punkte sind nur Komfort */
+  const fig = document.querySelector<HTMLElement>('[data-slider]');
+  const track = fig?.querySelector<HTMLElement>('.track');
+  if (fig && track) {
+    const dots = Array.from(fig.querySelectorAll<HTMLElement>('.dots button'));
+    const idx = () => Math.round(track.scrollLeft / track.clientWidth);
+    const go = (i: number) => track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+    fig.querySelectorAll<HTMLElement>('.nav').forEach((b) => b.addEventListener('click', () => go(idx() + Number(b.dataset.dir))));
+    dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.i))));
+    track.addEventListener('scroll', () => dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === idx()))), { passive: true });
+  }
+</script>

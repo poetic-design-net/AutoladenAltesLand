@@ -1,25 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
-import { brand } from '../data/site';
+import { legal } from '../data/site';
+import { contactLinks, getSiteSettings } from '../lib/content';
+
+const site = await getSiteSettings();
+const { mailHref } = contactLinks(site);
 ---
 
-<Base title={`Datenschutz – ${brand.name}`} description="Datenschutzerklärung" theme="light">
+<Base title={`Datenschutz – ${site.brandName}`} description="Datenschutzerklärung" theme="light" ogImage={site.logo}>
   <main class="legal">
     <a class="back" href="/">← Zurück</a>
     <h1>Datenschutz</h1>
-    <p class="hint">
-      Diese Seite ist noch ein Gerüst. Die Datenschutzerklärung muss vor dem Livegang ergänzt werden –
-      am besten juristisch geprüft.
+    <h2>Verantwortlicher</h2>
+    <p>
+      {legal.company}, {legal.street}, {legal.city}<br />
+      Geschäftsführer {legal.ceo} · <a href={mailHref}>{site.email}</a> · {site.phone}
     </p>
     <h2>Was die Seite verarbeitet</h2>
     <ul>
-      <li>Beim Absenden einer Anfrage: die Angaben aus dem Formular (Name, Kontaktweg, Nummer bzw. Adresse, Nachricht). Sie werden per E-Mail an <span class="ph">[Empfänger]</span> zugestellt und dort gespeichert.</li>
-      <li>Versanddienstleister: Resend (Auftragsverarbeitung). <span class="ph">[AV-Vertrag ergänzen]</span></li>
-      <li>Schriften werden von Google Fonts geladen. <span class="ph">[Alternativ lokal einbinden]</span></li>
-      <li>Hosting: Vercel. <span class="ph">[Serverstandort und AV-Vertrag ergänzen]</span></li>
+      <li>Beim Absenden einer Anfrage: die Angaben aus dem Formular (Name, Kontaktweg, Nummer bzw. Adresse, Nachricht). Sie werden per E-Mail an {site.email} zugestellt und dort gespeichert.</li>
+      <li>Versanddienstleister für Formular-Anfragen: Resend Inc., USA (Auftragsverarbeitung auf Basis der EU-Standardvertragsklauseln).</li>
+      <li>Schriften werden von Google Fonts geladen. Dabei wird deine IP-Adresse an Google übermittelt.</li>
+      <li>Hosting: Vercel Inc., USA (Auftragsverarbeitung auf Basis der EU-Standardvertragsklauseln). Beim Aufruf werden Server-Logdaten wie IP-Adresse und Zeitpunkt verarbeitet.</li>
     </ul>
     <h2>Deine Rechte</h2>
-    <p>Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit. Kontakt: <span class="ph">[Adresse]</span></p>
+    <p>Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit. Kontakt: <a href={mailHref}>{site.email}</a> oder per Post an die oben genannte Anschrift.</p>
   </main>
 </Base>
 

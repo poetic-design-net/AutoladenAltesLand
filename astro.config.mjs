@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  site: 'https://autoladen-altes-land.vercel.app',
+  site: 'https://www.autoladen-altesland.de',
   integrations: [sitemap()],
   output: 'server',
   adapter: vercel(),

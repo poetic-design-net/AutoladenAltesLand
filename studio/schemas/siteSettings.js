@@ -1,104 +1,68 @@
 export default {
   name: 'siteSettings',
-  title: 'Website Einstellungen',
+  title: 'Website',
   type: 'document',
+  groups: [
+    { name: 'brand', title: 'Marke', default: true },
+    { name: 'contact', title: 'Kontakt' },
+    { name: 'vehicles', title: 'Fahrzeuge' },
+  ],
   fields: [
     {
-      name: 'title',
-      title: 'Website Titel',
+      name: 'brandName',
+      title: 'Name',
       type: 'string',
-      validation: Rule => Rule.required()
+      group: 'brand',
+      validation: (R) => R.required(),
     },
     {
-      name: 'description',
-      title: 'Website Beschreibung',
-      type: 'text',
-      description: 'Für SEO und Meta-Tags',
-      rows: 3
-    },
-    {
-      name: 'keywords',
-      title: 'Keywords',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'SEO Keywords'
+      name: 'contactName',
+      title: 'Ansprechpartner',
+      type: 'string',
+      group: 'brand',
+      validation: (R) => R.required(),
     },
     {
       name: 'logo',
       title: 'Logo',
       type: 'image',
-      options: {
-        hotspot: true
-      }
+      group: 'brand',
+      options: { hotspot: true },
+      fields: [{ name: 'alt', title: 'Alt-Text', type: 'string' }],
+      validation: (R) => R.required(),
     },
+    { name: 'phone', title: 'Telefon', type: 'string', group: 'contact' },
     {
-      name: 'favicon',
-      title: 'Favicon',
-      type: 'image'
-    },
-    {
-      name: 'ogImage',
-      title: 'Open Graph Image',
-      type: 'image',
-      description: 'Bild für Social Media Sharing'
-    },
-    {
-      name: 'primaryColor',
-      title: 'Primärfarbe',
+      name: 'whatsapp',
+      title: 'WhatsApp-Nummer',
       type: 'string',
-      description: 'Hex-Code z.B. #1e40af'
+      group: 'contact',
+      description: 'International, ohne + und Leerzeichen, z. B. 491751234567',
     },
     {
-      name: 'secondaryColor',
-      title: 'Sekundärfarbe',
+      name: 'email',
+      title: 'E-Mail',
       type: 'string',
-      description: 'Hex-Code z.B. #f97316'
+      group: 'contact',
+      validation: (R) => R.email(),
     },
     {
-      name: 'footerText',
-      title: 'Footer Text',
+      name: 'featuredVehicleCount',
+      title: 'Anzahl Fahrzeuge auf der Startseite',
+      type: 'number',
+      group: 'vehicles',
+      description: '0 = alle sichtbaren Fahrzeuge',
+      initialValue: 3,
+      validation: (R) => R.required().min(0).integer(),
+    },
+    {
+      name: 'priceNote',
+      title: 'Allgemeiner Preis-Hinweis',
       type: 'text',
-      rows: 2
+      rows: 2,
+      group: 'vehicles',
+      validation: (R) => R.required(),
     },
-    {
-      name: 'cookieBanner',
-      title: 'Cookie Banner Text',
-      type: 'text',
-      rows: 3
-    },
-    {
-      name: 'navigation',
-      title: 'Navigation',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'title',
-              title: 'Titel',
-              type: 'string'
-            },
-            {
-              name: 'link',
-              title: 'Link',
-              type: 'string'
-            },
-            {
-              name: 'external',
-              title: 'Externer Link',
-              type: 'boolean',
-              initialValue: false
-            }
-          ]
-        }
-      ]
-    }
   ],
-  preview: {
-    select: {
-      title: 'title',
-      media: 'logo'
-    }
-  }
+  preview: { prepare: () => ({ title: 'Website' }) },
 };

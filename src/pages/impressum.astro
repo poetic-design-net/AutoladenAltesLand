@@ -1,23 +1,34 @@
 ---
 import Base from '../layouts/Base.astro';
-import { brand } from '../data/site';
+import { legal } from '../data/site';
+import { contactLinks, getSiteSettings } from '../lib/content';
+
+const site = await getSiteSettings();
+const { telHref, mailHref } = contactLinks(site);
 ---
 
-<Base title={`Impressum – ${brand.name}`} description="Impressum" theme="light">
+<Base title={`Impressum – ${site.brandName}`} description={`Impressum der ${legal.company}`} theme="light" ogImage={site.logo}>
   <main class="legal">
     <a class="back" href="/">← Zurück</a>
     <h1>Impressum</h1>
-    <p class="hint">
-      Die folgenden Angaben fehlen noch. Ohne vollständiges Impressum darf die Seite nicht online gehen
-      (§ 5 DDG).
-    </p>
+    <p class="law">Angaben gemäß § 5 DDG</p>
     <dl>
-      <dt>Anbieter</dt><dd><span class="ph">[Firmierung / Inhaber]</span></dd>
-      <dt>Anschrift</dt><dd><span class="ph">[Straße, PLZ, Ort]</span></dd>
-      <dt>Telefon</dt><dd><span class="ph">[Nummer]</span></dd>
-      <dt>E-Mail</dt><dd><span class="ph">[Adresse]</span></dd>
-      <dt>Umsatzsteuer-ID</dt><dd><span class="ph">[falls vorhanden]</span></dd>
-      <dt>Verantwortlich für den Inhalt</dt><dd><span class="ph">[Name, Anschrift]</span></dd>
+      <dt>Anbieter</dt>
+      <dd>{legal.company}<br />{legal.street}<br />{legal.city}</dd>
+      <dt>Vertreten durch</dt>
+      <dd>Geschäftsführer {legal.ceo}</dd>
+      <dt>Kontakt</dt>
+      <dd>
+        Telefon <a href={telHref}>{site.phone}</a><br />
+        E-Mail <a href={mailHref}>{site.email}</a><br />
+        Web <a href={`https://${legal.web}`}>{legal.web}</a>
+      </dd>
+      <dt>Registereintrag</dt>
+      <dd>{legal.register}</dd>
+      <dt>Umsatzsteuer-ID</dt>
+      <dd>{legal.vatId}</dd>
+      <dt>Verantwortlich für den Inhalt</dt>
+      <dd>{legal.ceo}<br />{legal.street}<br />{legal.city}</dd>
     </dl>
   </main>
 </Base>
@@ -26,11 +37,9 @@ import { brand } from '../data/site';
   .legal { width: min(680px, 100% - 40px); margin: 0 auto; padding: 56px 0 120px; }
   .back { font-size: 13.5px; font-weight: 600; }
   h1 { margin-top: 20px; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; }
-  .hint { margin-top: 16px; padding: 14px 16px; border-radius: 16px; background: rgba(0,51,102,.055);
-          box-shadow: inset 0 0 0 1px rgba(0,51,102,.1); font-size: 14.5px; line-height: 1.55; color: var(--accent); }
-  dl { margin-top: 28px; display: grid; grid-template-columns: 200px 1fr; gap: 14px 20px; font-size: 15.5px; }
+  .law { margin-top: 10px; font-size: 14px; color: var(--ink-3); }
+  dl { margin-top: 28px; display: grid; grid-template-columns: 200px 1fr; gap: 16px 20px; font-size: 15.5px; line-height: 1.5; }
   dt { font-weight: 600; color: var(--ink-2); }
   dd { margin: 0; }
-  .ph { color: var(--ink-3); background: rgba(16,24,32,.05); border-radius: 6px; padding: 2px 8px; font-size: 14px; }
   @media (max-width: 640px) { dl { grid-template-columns: 1fr; gap: 4px 0; } dt { margin-top: 12px; } }
 </style>

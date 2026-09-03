@@ -1,10 +1,10 @@
+import { getSiteSettings } from '../../lib/content';
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
 export const prerender = false;
 
 /** Empfängeradresse – über die Umgebung setzbar, damit sie nicht im Code steht. */
-const TO = import.meta.env.CONTACT_TO;
 const FROM = import.meta.env.CONTACT_FROM ?? 'Website <onboarding@resend.dev>';
 
 const LABELS: Record<string, string> = {
@@ -31,6 +31,7 @@ function row(label: string, value: string): string {
 }
 
 export const POST: APIRoute = async ({ request }) => {
+  const TO = import.meta.env.CONTACT_TO ?? (await getSiteSettings()).email;
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -78,7 +79,7 @@ export const POST: APIRoute = async ({ request }) => {
     row('Thema', LABELS[topic] ?? topic),
     row('Fahrzeug', vehicle),
     row('Bedarf', need),
-    row('Budget / Rate', budget),
+    row('Budget', budget),
     row('Zeitraum', timing),
     row('Rückmeldung per', LABELS[channel] ?? channel),
     row('Erreichbar unter', reach),

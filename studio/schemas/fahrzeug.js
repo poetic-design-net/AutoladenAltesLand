@@ -1,129 +1,118 @@
+// Fahrzeug-Angebot: spiegelt den Vehicle-Typ in src/data/site.ts.
 export default {
   name: 'fahrzeug',
   title: 'Fahrzeuge',
   type: 'document',
   fields: [
+    { name: 'name', title: 'Name', type: 'string', validation: (R) => R.required() },
     {
-      name: 'marke',
-      title: 'Marke',
+      name: 'slug',
+      title: 'URL-Kürzel',
+      type: 'slug',
+      options: { source: 'name' },
+      validation: (R) => R.required(),
+    },
+    {
+      name: 'kicker',
+      title: 'Kategorie-Zeile',
       type: 'string',
-      validation: Rule => Rule.required()
+      description: 'z. B. „Nutzfahrzeug“ oder „Dienstwagen“',
     },
     {
-      name: 'modell',
-      title: 'Modell',
-      type: 'string',
-      validation: Rule => Rule.required()
-    },
-    {
-      name: 'jahr',
-      title: 'Baujahr',
-      type: 'number'
-    },
-    {
-      name: 'preis',
-      title: 'Preis (€)',
-      type: 'number',
-      validation: Rule => Rule.required()
-    },
-    {
-      name: 'reichweite',
-      title: 'Reichweite (km)',
-      type: 'number'
-    },
-    {
-      name: 'ladezeit',
-      title: 'Ladezeit (Schnellladen)',
-      type: 'string',
-      description: 'z.B. "30 Min auf 80%"'
-    },
-    {
-      name: 'leistung',
-      title: 'Leistung (kW)',
-      type: 'number'
-    },
-    {
-      name: 'batterie',
-      title: 'Batteriekapazität (kWh)',
-      type: 'number'
-    },
-    {
-      name: 'zustand',
-      title: 'Zustand',
+      name: 'topic',
+      title: 'Anfrage-Thema',
       type: 'string',
       options: {
         list: [
-          {title: 'Neu', value: 'neu'},
-          {title: 'Vorführwagen', value: 'vorfuehrwagen'},
-          {title: 'Gebraucht', value: 'gebraucht'},
-          {title: 'Jahreswagen', value: 'jahreswagen'}
-        ]
-      }
+          { title: 'Firmenwagen', value: 'firma' },
+          { title: 'Transporter', value: 'transporter' },
+          { title: 'Privat', value: 'privat' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'firma',
     },
     {
-      name: 'verfuegbar',
-      title: 'Verfügbar',
-      type: 'boolean',
-      initialValue: true
+      name: 'status',
+      title: 'Status-Text',
+      type: 'string',
+      description: 'z. B. „Kontingent verfügbar“',
     },
     {
-      name: 'highlight',
-      title: 'Als Highlight anzeigen',
-      type: 'boolean',
-      description: 'Auf der Startseite hervorheben'
+      name: 'tone',
+      title: 'Status-Farbe',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Grün', value: 'green' },
+          { title: 'Blau', value: 'blue' },
+          { title: 'Grau', value: 'grey' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'green',
     },
     {
-      name: 'bilder',
-      title: 'Bilder',
+      name: 'image',
+      title: 'Bild',
+      type: 'image',
+      options: { hotspot: true },
+      fields: [{ name: 'alt', title: 'Alt-Text', type: 'string' }],
+    },
+    {
+      name: 'gallery',
+      title: 'Weitere Bilder (Slider auf der Detailseite)',
       type: 'array',
       of: [
         {
           type: 'image',
-          options: {
-            hotspot: true
-          },
-          fields: [
-            {
-              name: 'alt',
-              title: 'Alt Text',
-              type: 'string'
-            },
-            {
-              name: 'caption',
-              title: 'Bildunterschrift',
-              type: 'string'
-            }
-          ]
-        }
-      ]
+          options: { hotspot: true },
+          fields: [{ name: 'alt', title: 'Alt-Text', type: 'string' }],
+        },
+      ],
     },
+    { name: 'features', title: 'Merkmale', type: 'array', of: [{ type: 'string' }] },
     {
       name: 'beschreibung',
-      title: 'Beschreibung',
+      title: 'Beschreibung (Detailseite)',
       type: 'text',
-      rows: 5
+      rows: 6,
     },
     {
-      name: 'ausstattung',
-      title: 'Ausstattung',
-      type: 'array',
-      of: [{type: 'string'}]
-    }
+      name: 'price',
+      title: 'Kaufpreis',
+      type: 'string',
+      description: 'z. B. „34.900 €“',
+      validation: (R) => R.required(),
+    },
+    {
+      name: 'priceOld',
+      title: 'Streichpreis (optional)',
+      type: 'string',
+      description: 'Nur wenn es einen echten regulären Preis gibt, z. B. „46.900 €“',
+    },
+    {
+      name: 'priceTerms',
+      title: 'Zusatz zum Preis',
+      type: 'string',
+      description: 'z. B. „EU-Neuwagen und Jahreswagen“',
+    },
+    { name: 'verfuegbar', title: 'Online zeigen', type: 'boolean', initialValue: true },
+    {
+      name: 'sortierung',
+      title: 'Reihenfolge',
+      type: 'number',
+      description: 'Kleinere Zahl zuerst',
+      initialValue: 10,
+    },
+  ],
+  orderings: [
+    { title: 'Reihenfolge', name: 'sort', by: [{ field: 'sortierung', direction: 'asc' }] },
   ],
   preview: {
-    select: {
-      title: 'modell',
-      subtitle: 'marke',
-      media: 'bilder.0',
-      preis: 'preis'
+    select: { title: 'name', subtitle: 'price', media: 'image', on: 'verfuegbar' },
+    prepare({ title, subtitle, media, on }) {
+      return { title, subtitle: `${on ? '' : 'versteckt · '}${subtitle ?? ''}`, media };
     },
-    prepare(selection) {
-      const {title, subtitle, preis} = selection;
-      return {
-        title: `${subtitle} ${title}`,
-        subtitle: preis ? `€ ${preis.toLocaleString('de-DE')}` : 'Preis auf Anfrage',
-        media: selection.media
-      };
-    }
-  }
+  },
 };
