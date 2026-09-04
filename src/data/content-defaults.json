@@ -36,6 +36,9 @@
       "whatsappLinkLabel": "Oder direkt per WhatsApp"
     },
     "offers": {
+      "sliderLabel": "Fahrzeuge entdecken",
+      "previousLabel": "Vorherige Fahrzeuge",
+      "nextLabel": "Weitere Fahrzeuge",
       "heading": "Was gerade geht",
       "intro": "Ein paar Beispiele. Dein Wunschfahrzeug finden wir gemeinsam.",
       "ctaLabel": "Alle Möglichkeiten besprechen",

@@ -61,7 +61,7 @@ The homepage overrides the global light-theme font with Geist and Manrope. Headl
 
 Header and hero have a 1400px maximum width; inner content is capped at 1240px. Desktop horizontal page padding is 40px, mobile padding is 20px. The hero uses separate supplied desktop/mobile WebP assets through a picture element. Text sits in the desktop image's left free space and the mobile image's upper free space.
 
-The trust strip has three columns. Intro copy sits beside three benefits on desktop and stacks below 1024px. With at least three offers, the first vehicle spans two rows beside two compact cards. Cards become one column at 760px. Additional CMS offers continue in source order.
+The plain trust strip has three columns. Intro and offers form one section: the intro heading becomes the vehicle heading, with the introduction and Alex dialog link alongside it on desktop and below it under 1024px. There is no duplicate icon-benefit row or separate “Was gerade geht” heading. Equal-sized vehicle cards form a native horizontal scroll-snap track on every viewport. Its left edge aligns to the 1240px content column; its right edge reaches the viewport. Mobile reveals part of the next card. Previous/next controls appear only when content overflows; touch, trackpad, keyboard arrows and Home/End work without autoplay. Sanity controls the vehicle count and order.
 
 Process and financing retain their existing layouts and behavior; they were expressly excluded from this redesign. Their provider-facing copy now uses Alex’s first-person singular voice. Footer content uses three desktop groups and stacks on mobile.
 
@@ -80,12 +80,12 @@ Cards and hero use gently rounded corners. Small status labels are not interacti
 - Offers: whole-card links to real vehicle pages; status overlays, current CMS prices and facts. Do not substitute mockup specifications for real data.
 - Footer: direct phone/email/WhatsApp links, section links, FAQ/contact dialogs and legal links.
 - Dialogs: background inertness, initial focus, Escape closure, Tab containment and focus restoration. FAQ answers use native details/summary.
-- Mobile navigation: four section links become visible only after the hero leaves the viewport; hidden navigation is inert. Active section is identified semantically and visually.
+- Mobile navigation: four section links appear at 150px of vertical scroll on viewports up to 760px wide and hide again below that threshold. Hidden navigation is inert. Active section is identified semantically and visually.
 - Icons: existing Hugeicons stroke-rounded set. Parent-scoped Astro styles use `:global(.ic)` when styling the child icon component.
 
 ## Do's and Don'ts
 
-- Do retain the supplied logo, Alex imagery, source-backed vehicle data and contact details. Visible homepage content, navigation labels and benefit symbols are sourced from Sanity; JSON defaults provide resilience when content is missing.
+- Do retain the supplied logo, Alex imagery, source-backed vehicle data and contact details. Visible homepage content and navigation labels are sourced from Sanity; JSON defaults provide resilience when content is missing.
 - Do keep both original PNGs untouched; WebP conversion provenance is stored alongside each new asset.
 - Do preserve responsive image selection, focus behavior and reduced-motion support.
 - Don't reintroduce an initial mobile menu or pin the process section.

@@ -68,7 +68,7 @@ export default {
     { name: 'hero', title: 'Einstieg', default: true },
     { name: 'navigation', title: 'Navigation' },
     { name: 'offers', title: 'Fahrzeuge' },
-    { name: 'intro', title: 'Vorstellung & Vorteile' },
+    { name: 'intro', title: 'Fahrzeug-Einleitung & Vorteilsleiste' },
     { name: 'process', title: 'Ablauf' },
     { name: 'finance', title: 'Leasing & Finanzierung' },
     { name: 'about', title: 'Über Alex' },
@@ -150,9 +150,30 @@ export default {
       type: 'object',
       group: 'offers',
       fields: [
-        requiredString('heading', 'Überschrift'),
-        { name: 'intro', title: 'Einleitung auf der Startseite', type: 'string' },
+        requiredString('heading', 'Titel im Fahrzeug-Dialog', {
+          description:
+            'Die Überschrift über dem Slider wird unter „Fahrzeug-Einleitung & Vorteilsleiste“ gepflegt.',
+        }),
+        { name: 'intro', title: 'Frühere Fahrzeug-Einleitung', type: 'string', hidden: true },
         { name: 'ctaLabel', title: 'Button zur Beratung', type: 'string' },
+        {
+          name: 'sliderLabel',
+          title: 'Slider-Bezeichnung für Screenreader',
+          type: 'string',
+          initialValue: 'Fahrzeuge entdecken',
+        },
+        {
+          name: 'previousLabel',
+          title: 'Zurück-Pfeil: barrierefreie Beschriftung',
+          type: 'string',
+          initialValue: 'Vorherige Fahrzeuge',
+        },
+        {
+          name: 'nextLabel',
+          title: 'Weiter-Pfeil: barrierefreie Beschriftung',
+          type: 'string',
+          initialValue: 'Weitere Fahrzeuge',
+        },
         requiredString('allLabel', 'Button „Alle ansehen“'),
         requiredString('sheetSubtitle', 'Untertitel in der Fahrzeugübersicht'),
         requiredString('priceLabel', 'Preisbezeichnung'),
@@ -160,17 +181,19 @@ export default {
     },
     {
       name: 'intro',
-      title: 'Vorstellung & Vorteile',
+      title: 'Fahrzeug-Einleitung & Vorteilsleiste',
       type: 'object',
       group: 'intro',
       fields: [
         requiredString('eyebrow', 'Hinweis über der Überschrift'),
-        requiredText('heading', 'Überschrift', 2),
-        requiredText('text', 'Einleitung'),
+        requiredText('heading', 'Überschrift über den Fahrzeugen', 2),
+        requiredText('text', 'Vorstellungstext neben der Überschrift'),
         requiredString('promisesLabel', 'Bezeichnung der Vorteilsleiste'),
         ...['promises', 'benefits'].map((name) => ({
           name,
           title: name === 'promises' ? 'Leiste unter dem Hero' : 'Drei Vorteile',
+          // Keep existing content without exposing controls for the removed icon row.
+          hidden: name === 'benefits',
           type: 'array',
           validation: (R) => R.length(3),
           of: [

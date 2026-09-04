@@ -51,7 +51,8 @@ export default {
       title: 'Anzahl Fahrzeuge auf der Startseite',
       type: 'number',
       group: 'vehicles',
-      description: '0 = alle sichtbaren Fahrzeuge',
+      description:
+        'Anzahl im horizontalen Startseiten-Slider. 0 = alle sichtbaren Fahrzeuge; die Reihenfolge wird am Fahrzeug festgelegt.',
       initialValue: 3,
       validation: (R) => R.required().min(0).integer(),
     },
