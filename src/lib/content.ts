@@ -66,6 +66,7 @@ export async function getContent(): Promise<{ site: SiteSettings; page: Frontpag
             image: heroImageUrl(item.image, '', 1200),
             thumbnail: heroImageUrl(item.image, '', 480),
             alt: item.alt || item.image.alt || page.rooftent.galleryLabel,
+            fit: item.fit === 'contain' ? 'contain' : 'cover',
           }))
       : fallbackFrontpage.rooftent.gallery;
     if (!page.form.topics.some((item) => item.id === 'dachzelt'))

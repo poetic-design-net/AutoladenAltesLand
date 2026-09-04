@@ -24,7 +24,7 @@ Preserve the supplied logo, original photographs, existing website identity, wor
 
 ## Evidence on Hand
 
-User-supplied rooftop-tent mockup, two illustrative banner images and original installation photographs. The lakeside Bulli illustration is selected for the banner; original photos supply the gallery. Do not infer product certifications from an attached promotional seal.
+User-supplied rooftop-tent mockup, two illustrative banner images and original installation photographs. The lakeside Bulli illustration is selected for the banner; original photos supply the gallery. The additional supplied seal image represents the ntv/DISQ Qualitäts-Sieger 2026 manufacturer award for Naturbummler, verified in the DISQ recipient list. It must not imply TÜV certification, a partnership, or an award for Autoladen Altes Land.
 
 ## Open Decisions
 

@@ -60,6 +60,7 @@ if (docs.some((doc) => !doc.rooftent)) {
       _key: `rooftent-photo-${i + 1}`,
       image: await image(item.image, item.alt),
       alt: item.alt,
+      ...(item.fit ? { fit: item.fit } : {}),
     }))
   );
 }

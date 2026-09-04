@@ -33,4 +33,13 @@ Originale gesamt: **3.647.608 Bytes**. Alle zehn WebP-Varianten zusammen: **1.07
 
 Jede WebP-Datei besitzt eine gleichnamige `.webp.json`-Herkunftsdatei, erstellt mit Impeccables `embed-prompt.mjs`. WebP wird von diesem Skript über Sidecars unterstützt. Herkunft geprüft: 10 Rasterdateien, keine fehlenden Einträge. Diese Sidecars gemeinsam mit den Bildern erhalten.
 
+## Ergänzung: Hersteller-Auszeichnung
+
+Auf ausdrücklichen Nutzerwunsch ergänzt: `WhatsApp Image 2026-09-04 at 10.13.31.jpeg` (1179 × 1178, 91.866 Bytes). Das vorhandene ntv/DISQ-Siegel gehört zur Auszeichnung von Naturbummler, nicht Autoladen Altes Land. Kein TÜV-Siegel oder Partnerschaftsnachweis. Naturbummler ist in der [DISQ-Preisträgerliste 2026](https://disq.de/qualitaets-sieger.html) in der Kategorie Dachzelte aufgeführt (geprüft 04.09.2026; Kundenbefragung).
+
+- `naturbummler-qualitaetssieger-2026-1179.webp`: 1179 × 1178, 57.190 Bytes.
+- `naturbummler-qualitaetssieger-2026-480.webp`: 480 × 480, 18.132 Bytes.
+
+Keine Hochskalierung, kein Ausschnitt, keine Retusche; WebP Qualität 84, private Metadaten entfernt, Herkunft in Sidecars. Die Galerie zeigt dieses Motiv vollständig mit `object-fit: contain`, damit das Siegel nicht angeschnitten wird. Alle zwölf Bilddateien zusammen: 1.154.982 Bytes.
+
 Nicht übernommen: WhatsApp Image 2026-09-04 at 10.13.31.jpeg (Auszeichnungssiegel) und die nicht ausgewählte SUV-Visualisierung.

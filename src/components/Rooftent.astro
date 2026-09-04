@@ -7,10 +7,12 @@ import {
   TentIcon,
 } from '@hugeicons/core-free-icons';
 import type { Frontpage } from '../lib/content';
+import { httpsUrl } from '../lib/reviews';
 interface Props {
   content: Frontpage['rooftent'];
 }
 const { content: c } = Astro.props;
+const awardSource = httpsUrl(c.awardSourceUrl);
 ---
 
 {
@@ -68,6 +70,7 @@ const { content: c } = Astro.props;
                   href={photo.image}
                   data-gallery-image
                   data-index={i}
+                  data-fit={photo.fit === 'contain' ? 'contain' : 'cover'}
                   data-track-id={`rooftent_photo_${i + 1}`}
                   aria-label={`${c.openLabel}: ${photo.alt}`}
                 >
@@ -87,6 +90,22 @@ const { content: c } = Astro.props;
             ))}
           </ul>
         </div>
+      )}
+      {c.awardText && (
+        <p class="award-note">
+          {c.awardText}{' '}
+          {awardSource && (
+            <a
+              href={awardSource}
+              target="_blank"
+              rel="noopener"
+              data-track-id="rooftent_award_source"
+            >
+              {c.awardSourceLabel}
+              <Icon icon={ArrowRight02Icon} size={14} />
+            </a>
+          )}
+        </p>
       )}
       <dialog class="viewer" aria-label={c.galleryLabel}>
         <button
@@ -287,6 +306,30 @@ const { content: c } = Astro.props;
     padding: 2px 6px;
     font-size: 10px;
     font-variant-numeric: tabular-nums;
+  }
+  .photos a[data-fit='contain'] {
+    background: #e6e8ea;
+  }
+  .photos a[data-fit='contain'] img {
+    object-fit: contain;
+  }
+  .photos a[data-fit='contain']:hover img {
+    transform: none;
+  }
+  .award-note {
+    margin-top: 12px;
+    max-width: 90ch;
+    color: #4c5660;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .award-note a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #003366;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
   a:focus-visible,
   button:focus-visible {

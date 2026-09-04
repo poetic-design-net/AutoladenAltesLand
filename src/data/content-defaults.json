@@ -41,7 +41,7 @@
     },
     "rooftent": {
       "enabled": true,
-      "eyebrow": "Ein Nebenprojekt von Alex",
+      "eyebrow": "Raus in die Natur.",
       "heading": "Mehr Freiheit\npasst aufs Dach.",
       "text": "Für spontane Nächte draußen und kleine Fluchten zwischendurch. Bei mir bekommst du Dachzelte und persönliche Beratung – passend zu deinem Auto und deinen Plänen.",
       "ctaLabel": "Dachzelt anfragen",
@@ -56,6 +56,9 @@
       "closeLabel": "Galerie schließen",
       "previousLabel": "Vorheriges Bild",
       "nextLabel": "Nächstes Bild",
+      "awardText": "Naturbummler: Qualitäts-Sieger 2026 in der Kategorie Dachzelte. Eine Auszeichnung des Herstellers durch ntv/DISQ auf Basis einer Kundenbefragung.",
+      "awardSourceLabel": "Zur Auszeichnung",
+      "awardSourceUrl": "https://disq.de/qualitaets-sieger.html",
       "gallery": [
         {
           "image": "/dachzelte/dachzelt-vw-bus-am-wasser-1200.webp",
@@ -76,6 +79,12 @@
           "image": "/dachzelte/dachzelt-kombi-heckansicht-1200.webp",
           "thumbnail": "/dachzelte/dachzelt-kombi-heckansicht-480.webp",
           "alt": "Kombi mit Dachzelt und Fahrradträger von hinten"
+        },
+        {
+          "image": "/dachzelte/naturbummler-qualitaetssieger-2026-1179.webp",
+          "thumbnail": "/dachzelte/naturbummler-qualitaetssieger-2026-480.webp",
+          "alt": "Naturbummler-Dachzelt mit ntv/DISQ-Siegel Deutschlands Qualitäts-Sieger 2026 – Auszeichnung des Herstellers",
+          "fit": "contain"
         }
       ]
     },

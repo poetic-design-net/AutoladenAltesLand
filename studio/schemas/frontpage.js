@@ -108,8 +108,23 @@ export default {
         requiredString('previousLabel', 'Vorheriges Bild – Beschriftung'),
         requiredString('nextLabel', 'Nächstes Bild – Beschriftung'),
         {
+          name: 'awardText',
+          title: 'Hersteller-Auszeichnung – Hinweis',
+          type: 'text',
+          rows: 2,
+          description:
+            'Die Auszeichnung gilt Naturbummler, nicht Autoladen Altes Land. Kein TÜV-Siegel oder Partnerschaftsnachweis.',
+        },
+        { name: 'awardSourceLabel', title: 'Auszeichnung – Linkbeschriftung', type: 'string' },
+        {
+          name: 'awardSourceUrl',
+          title: 'Auszeichnung – Quellenlink',
+          type: 'url',
+          validation: (R) => R.uri({ scheme: ['https'] }),
+        },
+        {
           name: 'gallery',
-          title: 'Originalfotos',
+          title: 'Galerie – Originalfotos & Herstellerbilder',
           type: 'array',
           description: 'Reihenfolge per Ziehen ändern. Eine leere Liste blendet die Galerie aus.',
           of: [
@@ -124,6 +139,17 @@ export default {
                   validation: (R) => R.required(),
                 },
                 requiredString('alt', 'Bildbeschreibung / Bildunterschrift'),
+                {
+                  name: 'fit',
+                  title: 'Vorschaubild',
+                  type: 'string',
+                  options: {
+                    list: [
+                      { title: 'Fläche füllen (Foto)', value: 'cover' },
+                      { title: 'Vollständig zeigen (Siegel / Text)', value: 'contain' },
+                    ],
+                  },
+                },
               ],
               preview: { select: { title: 'alt', media: 'image' } },
             },
