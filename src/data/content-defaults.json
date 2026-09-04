@@ -39,6 +39,46 @@
       "whatsappLinkLabel": "Oder direkt per WhatsApp",
       "vehiclesLinkLabel": "Fahrzeuge ansehen"
     },
+    "rooftent": {
+      "enabled": true,
+      "eyebrow": "Ein Nebenprojekt von Alex",
+      "heading": "Mehr Freiheit\npasst aufs Dach.",
+      "text": "Für spontane Nächte draußen und kleine Fluchten zwischendurch. Bei mir bekommst du Dachzelte und persönliche Beratung – passend zu deinem Auto und deinen Plänen.",
+      "ctaLabel": "Dachzelt anfragen",
+      "topicLabel": "Dachzelt",
+      "finePrint": "Persönlich beraten. Passend zu deinem Fahrzeug.",
+      "image": "/dachzelte/dachzelt-bulli-see-1600.webp",
+      "imageSmall": "/dachzelte/dachzelt-bulli-see-800.webp",
+      "imageAlt": "Illustration: Bulli mit geöffnetem Dachzelt am See",
+      "galleryLabel": "Ein paar Einblicke",
+      "galleryNote": "Dachzelte auf unterschiedlichen Fahrzeugen.",
+      "openLabel": "Bild vergrößern",
+      "closeLabel": "Galerie schließen",
+      "previousLabel": "Vorheriges Bild",
+      "nextLabel": "Nächstes Bild",
+      "gallery": [
+        {
+          "image": "/dachzelte/dachzelt-vw-bus-am-wasser-1200.webp",
+          "thumbnail": "/dachzelte/dachzelt-vw-bus-am-wasser-480.webp",
+          "alt": "Geöffnetes Dachzelt auf einem VW-Bus am Wasser"
+        },
+        {
+          "image": "/dachzelte/dachzelt-nissan-vor-werkstatt-1200.webp",
+          "thumbnail": "/dachzelte/dachzelt-nissan-vor-werkstatt-480.webp",
+          "alt": "Dachzelt mit Leiter auf einem Nissan vor der Werkstatt"
+        },
+        {
+          "image": "/dachzelte/dachzelt-kombi-seitenansicht-1200.webp",
+          "thumbnail": "/dachzelte/dachzelt-kombi-seitenansicht-480.webp",
+          "alt": "Weißer Kombi mit aufgebautem Dachzelt in der Seitenansicht"
+        },
+        {
+          "image": "/dachzelte/dachzelt-kombi-heckansicht-1200.webp",
+          "thumbnail": "/dachzelte/dachzelt-kombi-heckansicht-480.webp",
+          "alt": "Kombi mit Dachzelt und Fahrradträger von hinten"
+        }
+      ]
+    },
     "offers": {
       "sliderLabel": "Fahrzeuge entdecken",
       "previousLabel": "Vorherige Fahrzeuge",
@@ -194,6 +234,10 @@
         {
           "id": "offen",
           "label": "Noch offen"
+        },
+        {
+          "id": "dachzelt",
+          "label": "Dachzelt"
         }
       ],
       "channelLabel": "Wie erreiche ich dich?",

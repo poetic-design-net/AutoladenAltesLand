@@ -83,6 +83,14 @@ Cards and hero use gently rounded corners. Small status labels are not interacti
 - Mobile navigation: four section links appear at 150px of vertical scroll on viewports up to 760px wide and hide again below that threshold. Hidden navigation is inert. Active section is identified semantically and visually.
 - Icons: existing Hugeicons stroke-rounded set. Parent-scoped Astro styles use `:global(.ic)` when styling the child icon component.
 
+### Rooftop-tent banner and gallery
+
+The local extension after process and before financing pairs a navy copy field with the supplied lakeside Bulli illustration. Heading, copy and pale inquiry button remain semantic HTML; the navy-to-photo transition is CSS. Green eyebrow and focus accents, rounded corners and the existing icon set connect it to the homepage without changing the wider visual system. At 760px and below, copy sits above a separate photographic region; neither this banner nor the spacious mobile homepage hero is forced into one viewport.
+
+Four supplied original installation photos form a compact horizontal scroll-snap gallery. Thumbnails may crop for consistency; the modal viewer contains the full image. Native modal focus containment and Escape closure, arrow-key navigation, focus restoration, visible focus rings and reduced-motion handling remain intact. Photo links still open the images without JavaScript; enlarged images load only when selected.
+
+Sanity's rooftop-tent fields own copy, responsive imagery, gallery order/alt text and visibility, with local defaults. The inquiry opens the existing contact dialog with the `dachzelt` topic and `rooftent_contact` attribution. Preserve the distinction between the illustrative banner and original gallery photos, plus the README and per-image provenance JSON in `public/dachzelte`. The surface brief and verification record live in `docs/dachzelte.md`.
+
 ## Do's and Don'ts
 
 - Do retain the supplied logo, Alex imagery, source-backed vehicle data and contact details. Visible homepage content and navigation labels are sourced from Sanity; JSON defaults provide resilience when content is missing.

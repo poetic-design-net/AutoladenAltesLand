@@ -13,6 +13,7 @@ const LABELS: Record<string, string> = {
   firma: 'Unternehmen',
   transporter: 'Transporter',
   offen: 'Noch offen',
+  dachzelt: 'Dachzelt',
   tel: 'Anruf',
   wa: 'WhatsApp',
   mail: 'E-Mail',

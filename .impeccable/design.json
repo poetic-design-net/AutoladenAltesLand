@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-03T21:45:00Z",
+  "generatedAt": "2026-09-04T08:44:42Z",
   "title": "Design System: Autoladen Altes Land",
   "extensions": {
     "shadows": [
@@ -58,6 +58,13 @@
       "description": "Flat vehicle link surface; imagery and facts come from the CMS.",
       "html": "<a class=\"ds-card\" href=\"#fahrzeuge\">Fahrzeuge ansehen</a>",
       "css": ".ds-card{display:block;padding:18px;border-radius:12px;background:#fff;color:#14181c;font:500 16px Geist,sans-serif;transition:box-shadow .18s cubic-bezier(.22,1,.36,1)}.ds-card:hover{box-shadow:0 10px 28px -14px rgba(0,51,102,.28)}.ds-card:focus-visible{outline:2px solid #3366cc;outline-offset:3px}"
+    },
+    {
+      "name": "Rooftop-tent inquiry",
+      "kind": "button",
+      "description": "Pale inquiry action on the local navy/photo rooftop-tent banner; opens the existing contact dialog with the rooftop-tent topic. Copy and imagery are CMS-owned. The adjacent original-photo gallery uses a keyboard-accessible full-image dialog.",
+      "html": "<div class=\"ds-rooftent-surface\"><button class=\"ds-rooftent-inquiry\">Dachzelt anfragen<span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12H20M20 12L14 6M20 12L14 18\"/></svg></span></button></div>",
+      "css": ".ds-rooftent-surface{padding:24px;border-radius:16px;background:#09283f}.ds-rooftent-inquiry{display:inline-flex;align-items:center;justify-content:space-between;gap:32px;min-height:58px;padding:10px 12px 10px 22px;border:0;border-radius:10px;background:#f5f4f1;color:#003366;font:600 16px/1.5 Geist,Manrope,sans-serif;cursor:pointer}.ds-rooftent-inquiry span{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#e6e8ea;transition:transform .2s ease-out}.ds-rooftent-inquiry:hover span{transform:translateX(3px)}.ds-rooftent-inquiry:focus-visible{outline:3px solid #50c9a9;outline-offset:3px}@media(max-width:760px){.ds-rooftent-inquiry{width:100%;gap:16px}}@media(prefers-reduced-motion:reduce){.ds-rooftent-inquiry span{transition:none}}"
     },
     {
       "name": "Availability label",

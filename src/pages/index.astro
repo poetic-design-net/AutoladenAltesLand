@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import Reviews from '../components/Reviews.astro';
+import Rooftent from '../components/Rooftent.astro';
 import {
   ArrowRight01Icon,
   ArrowRight02Icon,
@@ -339,6 +340,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
         </div>
       </section>
 
+      <Rooftent content={page.rooftent} />
       <!-- ===================== LEASING & FINANZIERUNG ===================== -->
       <section
         class="fin"
@@ -3230,6 +3232,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     if (view === 'ask') {
       formStarted = false;
       track('aal_form_open', { form_id: 'contact', form_source: formSource() });
+      // A tent enquiry must not retain a previously selected vehicle.
+      if (tpc === 'dachzelt') vehicle = '';
+      else if (topic === 'dachzelt' && !tpc) setTopic('offen');
       if (name) {
         vehicle = name;
         ctxName.textContent = `${ovl.dataset.contextPrefix} ${name}`;

@@ -51,6 +51,25 @@ export async function getContent(): Promise<{ site: SiteSettings; page: Frontpag
     const raw = await client.fetch<{ site?: any; page?: any }>(QUERY);
     const site = merge(fallbackSite, raw.site);
     const page = merge(fallbackFrontpage, raw.page);
+    const tent = raw.page?.rooftent;
+    page.rooftent.image = heroImageUrl(tent?.image, fallbackFrontpage.rooftent.image, 1600);
+    page.rooftent.imageSmall = heroImageUrl(
+      tent?.image,
+      fallbackFrontpage.rooftent.imageSmall,
+      800
+    );
+    page.rooftent.imageAlt = tent?.image?.alt || page.rooftent.imageAlt;
+    page.rooftent.gallery = Array.isArray(tent?.gallery)
+      ? tent.gallery
+          .filter((item: any) => item?.image?.asset)
+          .map((item: any) => ({
+            image: heroImageUrl(item.image, '', 1200),
+            thumbnail: heroImageUrl(item.image, '', 480),
+            alt: item.alt || item.image.alt || page.rooftent.galleryLabel,
+          }))
+      : fallbackFrontpage.rooftent.gallery;
+    if (!page.form.topics.some((item) => item.id === 'dachzelt'))
+      page.form.topics = [...page.form.topics, { id: 'dachzelt', label: page.rooftent.topicLabel }];
     page.seoImage = imageUrl(raw.page?.seoImage, fallbackFrontpage.seoImage, 1200, 630);
     page.seoImageAlt = raw.page?.seoImage?.alt || page.seoImageAlt;
     page.hero.desktopImage = heroImageUrl(

@@ -1,0 +1,478 @@
+---
+import Icon from './Icon.astro';
+import {
+  ArrowRight02Icon,
+  ArrowLeft02Icon,
+  Cancel01Icon,
+  TentIcon,
+} from '@hugeicons/core-free-icons';
+import type { Frontpage } from '../lib/content';
+interface Props {
+  content: Frontpage['rooftent'];
+}
+const { content: c } = Astro.props;
+---
+
+{
+  c.enabled && (
+    <section
+      class="rooftent"
+      id="dachzelte"
+      aria-labelledby="rooftent-title"
+      data-track-section="rooftent"
+    >
+      <div class="banner">
+        <img
+          class="scene"
+          src={c.image}
+          srcset={`${c.imageSmall} 800w, ${c.image} 1600w`}
+          sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1320px) calc(100vw - 80px), 1240px"
+          alt={c.imageAlt}
+          width="1600"
+          height="800"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="copy">
+          <p class="eyebrow">
+            <Icon icon={TentIcon} size={32} />
+            {c.eyebrow}
+          </p>
+          <h2 id="rooftent-title">{c.heading}</h2>
+          <p class="description">{c.text}</p>
+          <button
+            type="button"
+            class="inquiry"
+            data-view="ask"
+            data-topic="dachzelt"
+            data-track-id="rooftent_contact"
+          >
+            {c.ctaLabel}
+            <span>
+              <Icon icon={ArrowRight02Icon} />
+            </span>
+          </button>
+          <p class="fine">{c.finePrint}</p>
+        </div>
+      </div>
+      {c.gallery.length > 0 && (
+        <div class="gallery">
+          <div class="gallery-heading">
+            <h3>{c.galleryLabel}</h3>
+            <p>{c.galleryNote}</p>
+          </div>
+          <ul class="photos" aria-label={c.galleryLabel}>
+            {c.gallery.map((photo, i) => (
+              <li>
+                <a
+                  href={photo.image}
+                  data-gallery-image
+                  data-index={i}
+                  data-track-id={`rooftent_photo_${i + 1}`}
+                  aria-label={`${c.openLabel}: ${photo.alt}`}
+                >
+                  <img
+                    src={photo.thumbnail}
+                    alt={photo.alt}
+                    width="480"
+                    height="360"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="photo-number" aria-hidden="true">
+                    0{i + 1}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      <dialog class="viewer" aria-label={c.galleryLabel}>
+        <button
+          class="viewer-close"
+          type="button"
+          data-gallery-close
+          data-track-id="rooftent_gallery_close"
+          aria-label={c.closeLabel}
+        >
+          <Icon icon={Cancel01Icon} />
+        </button>
+        <figure>
+          <>
+            <img data-full-image alt="" />
+            <figcaption data-caption aria-live="polite" />
+          </>
+        </figure>
+        <div class="viewer-controls">
+          <button
+            type="button"
+            data-gallery-prev
+            data-track-id="rooftent_gallery_previous"
+            aria-label={c.previousLabel}
+          >
+            <Icon icon={ArrowLeft02Icon} />
+          </button>
+          <span data-counter aria-live="polite" />
+          <button
+            type="button"
+            data-gallery-next
+            data-track-id="rooftent_gallery_next"
+            aria-label={c.nextLabel}
+          >
+            <Icon icon={ArrowRight02Icon} />
+          </button>
+        </div>
+      </dialog>
+    </section>
+  )
+}
+
+<style>
+  .rooftent {
+    width: 100%;
+    max-width: 1240px;
+    margin: 64px auto 0;
+    scroll-margin-top: 24px;
+  }
+  .banner {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #09283f;
+    color: #fff;
+  }
+  .scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -2;
+  }
+  .banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(5, 32, 53, 0.97) 0%,
+      rgba(5, 32, 53, 0.92) 29%,
+      rgba(5, 32, 53, 0.68) 48%,
+      rgba(5, 32, 53, 0.06) 75%
+    );
+    z-index: -1;
+  }
+  .copy {
+    width: 57%;
+    padding: 52px clamp(28px, 4vw, 60px);
+  }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #50c9a9;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .eyebrow :global(.ic) {
+    flex: none;
+  }
+  h2 {
+    white-space: pre-line;
+    margin: 22px 0;
+    font-size: clamp(32px, 3.6vw, 50px);
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+  .description {
+    max-width: 42ch;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #f0f3f5;
+  }
+  .inquiry {
+    margin-top: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    min-height: 58px;
+    padding: 10px 12px 10px 22px;
+    background: #f5f4f1;
+    color: #003366;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .inquiry span {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e6e8ea;
+    transition: transform 0.2s ease-out;
+  }
+  .inquiry:hover span {
+    transform: translateX(3px);
+  }
+  .fine {
+    margin-top: 16px;
+    color: #dbe4e9;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .gallery-heading h3 {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .gallery-heading p {
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .photos {
+    list-style: none;
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 4px 4px 10px;
+    margin: 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #8295a3 transparent;
+  }
+  .photos li {
+    flex: 1 0 160px;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+  .photos a {
+    position: relative;
+    display: block;
+    height: 126px;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .photos img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease-out;
+  }
+  .photos a:hover img {
+    transform: scale(1.035);
+  }
+  .photo-number {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    border-radius: 4px;
+    background: #09283f;
+    color: white;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid #50c9a9;
+    outline-offset: 3px;
+  }
+  .viewer {
+    width: min(1100px, calc(100vw - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 52px 20px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: #09283f;
+    color: white;
+    margin: auto;
+  }
+  .viewer::backdrop {
+    background: rgba(0, 15, 29, 0.88);
+  }
+  .viewer figure {
+    margin: 0;
+  }
+  .viewer figure img {
+    width: 100%;
+    height: min(70dvh, 780px);
+    object-fit: contain;
+  }
+  .viewer figcaption {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .viewer button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #234257;
+    cursor: pointer;
+  }
+  .viewer-close {
+    position: absolute;
+    right: 12px;
+    top: 6px;
+  }
+  .viewer-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 760px) {
+    .rooftent {
+      margin-top: 40px;
+    }
+    .banner {
+      display: flex;
+      flex-direction: column;
+      border-radius: 12px;
+    }
+    .copy {
+      order: 0;
+      width: 100%;
+      padding: 28px 24px 20px;
+    }
+    .scene {
+      position: relative;
+      order: 1;
+      inset: auto;
+      z-index: 0;
+      height: 240px;
+      object-position: 78% center;
+    }
+    .banner::before {
+      inset: auto 0 215px;
+      height: 25px;
+      background: linear-gradient(#09283f, transparent);
+      z-index: 1;
+      pointer-events: none;
+    }
+    h2 {
+      font-size: clamp(30px, 7.5vw, 40px);
+      margin: 20px 0 16px;
+    }
+    .eyebrow {
+      gap: 10px;
+      font-size: 10px;
+    }
+    .description {
+      font-size: 15px;
+    }
+    .inquiry {
+      width: 100%;
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .gallery {
+      display: block;
+      margin-top: 20px;
+    }
+    .gallery-heading {
+      margin-bottom: 12px;
+    }
+    .gallery-heading p {
+      margin-top: 4px;
+    }
+    .photos {
+      gap: 12px;
+    }
+    .photos li {
+      flex: 0 0 152px;
+    }
+    .photos a {
+      height: 114px;
+    }
+    .viewer {
+      padding-inline: 12px;
+    }
+    .viewer figure img {
+      height: min(62dvh, 640px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .inquiry span,
+    .photos img {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('#dachzelte');
+  if (root) {
+    const dialog = root.querySelector<HTMLDialogElement>('dialog')!;
+    const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-gallery-image]'));
+    const full = dialog.querySelector<HTMLImageElement>('[data-full-image]')!;
+    const caption = dialog.querySelector<HTMLElement>('[data-caption]')!;
+    const counter = dialog.querySelector<HTMLElement>('[data-counter]')!;
+    let index = 0;
+    let previousOverflow = '';
+    let trigger: HTMLElement | null = null;
+    function show(next: number) {
+      index = (next + links.length) % links.length;
+      full.src = links[index].href;
+      full.alt = links[index].querySelector('img')?.alt || '';
+      caption.textContent = full.alt;
+      counter.textContent = `${index + 1} / ${links.length}`;
+    }
+    links.forEach((link, i) =>
+      link.addEventListener('click', (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        trigger = link;
+        show(i);
+        previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        dialog.showModal();
+      })
+    );
+    dialog.querySelector('[data-gallery-close]')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-gallery-prev]')?.addEventListener('click', () => show(index - 1));
+    dialog.querySelector('[data-gallery-next]')?.addEventListener('click', () => show(index + 1));
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        show(index + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+    });
+    dialog.addEventListener('click', (event) => {
+      if (event.target !== dialog) return;
+      const r = dialog.getBoundingClientRect();
+      if (
+        event.clientX < r.left ||
+        event.clientX > r.right ||
+        event.clientY < r.top ||
+        event.clientY > r.bottom
+      )
+        dialog.close();
+    });
+    dialog.addEventListener('close', () => {
+      document.body.style.overflow = previousOverflow;
+      trigger?.focus({ preventScroll: true });
+    });
+  }
+</script>
