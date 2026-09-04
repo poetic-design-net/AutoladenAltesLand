@@ -33,6 +33,13 @@ export default {
     },
     { name: 'phone', title: 'Telefon', type: 'string', group: 'contact' },
     {
+      name: 'instagramUrl',
+      title: 'Instagram-Profil',
+      type: 'url',
+      group: 'contact',
+      validation: (R) => R.uri({ scheme: ['https'] }),
+    },
+    {
       name: 'whatsapp',
       title: 'WhatsApp-Nummer',
       type: 'string',

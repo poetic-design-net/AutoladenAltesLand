@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { canonicalUrl, serializeJsonLd, SITE_URL } from '../lib/seo';
 
 interface Props {
   title: string;
@@ -8,6 +9,10 @@ interface Props {
   /** Google-Fonts-Familie(n) für dieses Theme */
   fonts?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  siteName?: string;
+  structuredData?: unknown;
+  noindex?: boolean;
 }
 
 const {
@@ -15,10 +20,16 @@ const {
   description,
   theme = 'light',
   fonts = 'family=Instrument+Sans:wght@400;500;600;700',
-  ogImage = '/logo.png',
+  ogImage = '/hero-desktop-1672.webp',
+  ogImageAlt = 'Alex vom Autoladen Altes Land',
+  siteName = 'Autoladen Altes Land',
+  structuredData,
+  noindex = false,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
+const canonical = canonicalUrl(Astro.url.pathname);
+const socialImage = new URL(ogImage, SITE_URL).href;
+const isPreview = (import.meta.env.VERCEL_ENV ?? process.env.VERCEL_ENV) === 'preview';
 const themeColor = theme === 'dark' ? '#0d1013' : '#f5f4f1';
 ---
 
@@ -30,14 +41,33 @@ const themeColor = theme === 'dark' ? '#0d1013' : '#f5f4f1';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <meta name="theme-color" content={themeColor} />
+    <meta
+      name="robots"
+      content={noindex || isPreview ? 'noindex, follow' : 'index, follow, max-image-preview:large'}
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(ogImage, Astro.url.origin).href} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    {
+      structuredData && (
+        <script type="application/ld+json" set:html={serializeJsonLd(structuredData)} />
+      )
+    }
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

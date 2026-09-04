@@ -51,6 +51,8 @@ export async function getContent(): Promise<{ site: SiteSettings; page: Frontpag
     const raw = await client.fetch<{ site?: any; page?: any }>(QUERY);
     const site = merge(fallbackSite, raw.site);
     const page = merge(fallbackFrontpage, raw.page);
+    page.seoImage = imageUrl(raw.page?.seoImage, fallbackFrontpage.seoImage, 1200, 630);
+    page.seoImageAlt = raw.page?.seoImage?.alt || page.seoImageAlt;
     page.hero.desktopImage = heroImageUrl(
       raw.page?.hero?.desktopImage,
       fallbackFrontpage.hero.desktopImage,

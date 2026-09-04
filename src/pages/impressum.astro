@@ -7,7 +7,7 @@ const site = await getSiteSettings();
 const { telHref, mailHref } = contactLinks(site);
 ---
 
-<Base title={`Impressum – ${site.brandName}`} description={`Impressum der ${legal.company}`} theme="light" ogImage={site.logo}>
+<Base title={`Impressum – ${site.brandName}`} description={`Impressum der ${legal.company}`} theme="light" ogImage={site.logo} ogImageAlt={site.logoAlt} siteName={site.brandName}>
   <main class="legal">
     <a class="back" href="/">← Zurück</a>
     <h1>Impressum</h1>

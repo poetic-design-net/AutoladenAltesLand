@@ -1,9 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
-import { ArrowLeft01Icon, ArrowLeft02Icon, ArrowRight01Icon, Call02Icon, Sent02Icon, Tick02Icon, WhatsappIcon } from '@hugeicons/core-free-icons';
+import {
+  ArrowLeft01Icon,
+  ArrowLeft02Icon,
+  ArrowRight01Icon,
+  Call02Icon,
+  Sent02Icon,
+  Tick02Icon,
+  WhatsappIcon,
+} from '@hugeicons/core-free-icons';
 import { contactLinks, getSiteSettings } from '../../lib/content';
 import { getAllVehicles } from '../../lib/vehicles';
+import { canonicalUrl, SITE_URL } from '../../lib/seo';
 
 const [all, site] = await Promise.all([getAllVehicles(), getSiteSettings()]);
 const { telHref, waHref } = contactLinks(site);
@@ -11,12 +20,42 @@ const v = all.find((x) => x.id === Astro.params.id);
 if (!v) return new Response(null, { status: 404 });
 const others = all.filter((x) => x.id !== v.id);
 const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
+const vehicleUrl = canonicalUrl(`/fahrzeuge/${encodeURIComponent(v.id)}`);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${vehicleUrl}#webpage`,
+      url: vehicleUrl,
+      name: v.name,
+      inLanguage: 'de-DE',
+      about: {
+        '@type': 'Car',
+        name: v.name,
+        image: pics.map((image) => new URL(image, SITE_URL).href),
+        description: v.description || v.features.join(', '),
+      },
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: site.brandName, item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: v.name, item: vehicleUrl },
+      ],
+    },
+  ],
+};
 ---
 
 <Base
   title={`${v.name} – ${site.brandName}`}
   description={`${v.name}: ${v.features.join(', ')}. Kaufpreis ${v.price.value}. Frag Alex nach Preis und Verfügbarkeit.`}
   ogImage={v.image || site.logo}
+  ogImageAlt={v.alt || v.name}
+  siteName={site.brandName}
+  structuredData={structuredData}
   fonts="family=Geist:wght@300..700"
 >
   <div class="page">
@@ -33,7 +72,17 @@ const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
     <main class="grid">
       <figure class="media" data-slider>
         <div class="track">
-          {pics.map((p, i) => <img src={p} alt={i === 0 ? v.alt : ''} width="1200" height="800" loading={i ? 'lazy' : 'eager'} />)}
+          {
+            pics.map((p, i) => (
+              <img
+                src={p}
+                alt={i === 0 ? v.alt : ''}
+                width="1200"
+                height="800"
+                loading={i ? 'lazy' : 'eager'}
+              />
+            ))
+          }
         </div>
         <span class="status">
           <span class={`dot tone-${v.tone}`}></span>
@@ -42,10 +91,22 @@ const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
         {
           pics.length > 1 && (
             <>
-              <button class="nav prev" type="button" aria-label="Vorheriges Bild" data-dir="-1"><Icon icon={ArrowLeft01Icon} /></button>
-              <button class="nav next" type="button" aria-label="Nächstes Bild" data-dir="1"><Icon icon={ArrowRight01Icon} /></button>
+              <button class="nav prev" type="button" aria-label="Vorheriges Bild" data-dir="-1">
+                <Icon icon={ArrowLeft01Icon} />
+              </button>
+              <button class="nav next" type="button" aria-label="Nächstes Bild" data-dir="1">
+                <Icon icon={ArrowRight01Icon} />
+              </button>
               <div class="dots" role="tablist">
-                {pics.map((_, i) => <button type="button" role="tab" aria-label={`Bild ${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'} data-i={i} />)}
+                {pics.map((_, i) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-label={`Bild ${i + 1}`}
+                    aria-selected={i === 0 ? 'true' : 'false'}
+                    data-i={i}
+                  />
+                ))}
               </div>
             </>
           )
@@ -105,7 +166,12 @@ const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
           <div class="cards">
             {others.map((o) => (
               <a class="card" href={`/fahrzeuge/${o.id}`}>
-                <span class="card-pic" style={`background-image:url(${o.image})`} role="img" aria-label={o.alt} />
+                <span
+                  class="card-pic"
+                  style={`background-image:url(${o.image})`}
+                  role="img"
+                  aria-label={o.alt}
+                />
                 <span class="card-txt">
                   <span class="t">{o.name}</span>
                   <span class="s">
@@ -188,7 +254,9 @@ const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
     border-radius: 28px;
     overflow: hidden;
     background: var(--surface-2);
-    box-shadow: inset 0 0 0 1px var(--line), var(--sh-soft);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--sh-soft);
   }
   .track {
     display: flex;
@@ -343,8 +411,12 @@ const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
     font-size: 16px;
     font-weight: 600;
     letter-spacing: -0.014em;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 16px 30px -14px rgba(0, 51, 102, 0.55);
-    transition: background 0.16s var(--ease), transform 0.16s var(--ease);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 16px 30px -14px rgba(0, 51, 102, 0.55);
+    transition:
+      background 0.16s var(--ease),
+      transform 0.16s var(--ease);
   }
   .primary:hover {
     background: var(--accent-deep);
@@ -421,7 +493,9 @@ const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
     background: var(--surface);
     color: var(--ink);
     box-shadow: inset 0 0 0 1px var(--line);
-    transition: background 0.18s var(--ease), transform 0.18s var(--ease);
+    transition:
+      background 0.18s var(--ease),
+      transform 0.18s var(--ease);
   }
   .card:hover {
     background: var(--surface-2);
@@ -516,8 +590,14 @@ const pics = [v.image, ...(v.images ?? [])].filter(Boolean);
     const dots = Array.from(fig.querySelectorAll<HTMLElement>('.dots button'));
     const idx = () => Math.round(track.scrollLeft / track.clientWidth);
     const go = (i: number) => track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
-    fig.querySelectorAll<HTMLElement>('.nav').forEach((b) => b.addEventListener('click', () => go(idx() + Number(b.dataset.dir))));
+    fig
+      .querySelectorAll<HTMLElement>('.nav')
+      .forEach((b) => b.addEventListener('click', () => go(idx() + Number(b.dataset.dir))));
     dots.forEach((d) => d.addEventListener('click', () => go(Number(d.dataset.i))));
-    track.addEventListener('scroll', () => dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === idx()))), { passive: true });
+    track.addEventListener(
+      'scroll',
+      () => dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === idx()))),
+      { passive: true }
+    );
   }
 </script>
