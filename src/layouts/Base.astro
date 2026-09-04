@@ -75,5 +75,9 @@ const themeColor = theme === 'dark' ? '#0d1013' : '#f5f4f1';
   </head>
   <body data-theme={theme}>
     <slot />
+    <script>
+      import { initTracking } from '../scripts/tracking';
+      initTracking();
+    </script>
   </body>
 </html>

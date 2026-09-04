@@ -1,6 +1,7 @@
 import { getSiteSettings } from '../../lib/content';
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
+import { campaignRecord, trackingId } from '../../lib/tracking';
 
 export const prerender = false;
 
@@ -66,7 +67,12 @@ export const POST: APIRoute = async ({ request }) => {
   const topic = clean(body.topic, 20);
   const budget = clean(body.budget, 120);
   const timing = clean(body.timing, 120);
-  const source = clean(body.source, 40);
+  const source = trackingId(body.source, 'direct');
+  const attribution =
+    body.attribution && typeof body.attribution === 'object'
+      ? (body.attribution as Record<string, unknown>)
+      : {};
+  const campaign = campaignRecord(attribution.campaign);
 
   const subject = vehicle
     ? `Anfrage: ${vehicle}`
@@ -85,6 +91,7 @@ export const POST: APIRoute = async ({ request }) => {
     row('Erreichbar unter', reach),
     message ? `<h3>Nachricht</h3><p>${message.replace(/\n/g, '<br>')}</p>` : '',
     `<hr><p style="color:#888;font-size:12px">Quelle: ${source || 'unbekannt'}</p>`,
+    ...Object.entries(campaign).map(([key, value]) => row(key, clean(value, 100))),
   ]
     .filter(Boolean)
     .join('\n');

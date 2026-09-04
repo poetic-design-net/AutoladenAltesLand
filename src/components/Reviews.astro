@@ -36,14 +36,25 @@ const initials = (name: string) =>
 
 {
   content.enabled && sourceUrl && (
-    <section class="reviews" id="bewertungen" aria-labelledby="reviews-title">
+    <section
+      class="reviews"
+      id="bewertungen"
+      aria-labelledby="reviews-title"
+      data-track-section="reviews"
+    >
       <div class="reviews-head">
         <div>
           <span class="reviews-label">{content.eyebrow}</span>
           <h2 id="reviews-title">{content.heading}</h2>
           <p class="reviews-intro">{content.intro}</p>
         </div>
-        <a class="reviews-summary" href={sourceUrl} target="_blank" rel="noopener noreferrer">
+        <a
+          class="reviews-summary"
+          href={sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-track-id="reviews_summary"
+        >
           <span class="reviews-source">
             {content.live ? (
               <span class="google-attribution" translate="no">
@@ -189,6 +200,7 @@ const initials = (name: string) =>
                 </blockquote>
                 <a
                   class="review-original"
+                  data-track-id="review_original"
                   href={review.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -208,12 +220,24 @@ const initials = (name: string) =>
       <div class="reviews-bottom">
         {items.length > 0 && <p class="reviews-note">{content.note}</p>}
         <div class="reviews-links">
-          <a class="reviews-all" href={sourceUrl} target="_blank" rel="noopener noreferrer">
+          <a
+            class="reviews-all"
+            href={sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-track-id="reviews_all"
+          >
             {content.allLabel}
             <Icon icon={LinkSquare01Icon} />
           </a>
           {writeUrl && (
-            <a class="reviews-write" href={writeUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              class="reviews-write"
+              href={writeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-track-id="review_write"
+            >
               {content.writeLabel}
               <Icon icon={ArrowRight02Icon} />
             </a>

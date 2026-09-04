@@ -69,7 +69,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 >
   <div class="app">
     <!-- ============================ KOPF ============================ -->
-    <header class="bar">
+    <header class="bar" data-track-section="header">
       <a class="brand" href="#start" aria-label={`${site.brandName} – Startseite`}>
         <img class="logo" src={site.logo} alt="" width="72" height="72" />
         <span class="bar-name">{site.brandName}</span>
@@ -91,7 +91,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
             </a>
           )
         }
-        <button class="header-contact" type="button" data-view="ask"
+        <button class="header-contact" type="button" data-view="ask" data-track-id="header_contact"
           >{page.header.contactLabel}</button
         >
       </div>
@@ -100,7 +100,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     <main id="start" tabindex="-1">
       <div class="console">
         <div class="hero-fold">
-          <div class="hero-row">
+          <div class="hero-row" data-track-section="hero">
             <picture class="hero-artwork">
               <source
                 media="(max-width: 760px)"
@@ -124,7 +124,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
                 <p>{page.hero.quote}</p>
               </blockquote>
 
-              <button class="primary hero-primary" type="button" data-view="ask">
+              <button
+                class="primary hero-primary"
+                type="button"
+                data-view="ask"
+                data-track-id="hero_contact"
+              >
                 {page.hero.ctaLabel}
                 <span class="go"><Icon icon={ArrowRight02Icon} /></span>
               </button>
@@ -143,7 +148,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
                     </button>
                   )
                 }
-                  <a class="hero-vehicles" href="#vehicle-slider">
+                <a class="hero-vehicles" href="#vehicle-slider">
                   {page.hero.vehiclesLinkLabel}
                   <Icon icon={ArrowRight02Icon} />
                 </a>
@@ -166,8 +171,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
         </div>
 
         <!-- Vorstellung und Fahrzeuge bilden einen gemeinsamen Bereich. -->
-        <section class="panel" id="fahrzeuge" aria-labelledby="offers-title" tabindex="-1">
-          <div class="intro" id="alex" tabindex="-1">
+        <section
+          class="panel"
+          id="fahrzeuge"
+          aria-labelledby="offers-title"
+          tabindex="-1"
+          data-track-section="vehicles"
+        >
+          <div class="intro" id="alex" tabindex="-1" data-track-section="intro">
             <div class="intro-heading">
               <span class="hero-label">{page.intro.eyebrow}</span>
               <h2 id="offers-title">{page.intro.heading}</h2>
@@ -180,7 +191,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
             </div>
           </div>
           <div class="offers-toolbar">
-            <button class="panel-more panel-more--desktop" type="button" data-view="ask">
+            <button
+              class="panel-more panel-more--desktop"
+              type="button"
+              data-view="ask"
+              data-track-id="vehicles_contact_desktop"
+            >
               {page.offers.ctaLabel}
               <Icon icon={ArrowRight02Icon} />
             </button>
@@ -216,7 +232,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           >
             {
               vehicles.map((v) => (
-                <a class="ocard" href={`/fahrzeuge/${v.id}`}>
+                <a
+                  class="ocard"
+                  href={`/fahrzeuge/${v.id}`}
+                  data-track-id="vehicle_card"
+                  data-track-vehicle={v.id}
+                >
                   <span class="ocard-image">
                     <img
                       class="ocard-pic"
@@ -258,7 +279,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           </div>
 
           <p class="tail">{site.priceNote}</p>
-          <button class="panel-more panel-more--mobile" type="button" data-view="ask">
+          <button
+            class="panel-more panel-more--mobile"
+            type="button"
+            data-view="ask"
+            data-track-id="vehicles_contact_mobile"
+          >
             {page.offers.ctaLabel}
             <Icon icon={ArrowRight02Icon} />
           </button>
@@ -266,7 +292,13 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       </div>
 
       <!-- ============================ ABLAUF ============================ -->
-      <section class="proc" id="ablauf" aria-labelledby="proc-title" tabindex="-1">
+      <section
+        class="proc"
+        id="ablauf"
+        aria-labelledby="proc-title"
+        tabindex="-1"
+        data-track-section="process"
+      >
         <div class="proc-stage">
           <div class="proc-head">
             <h2 id="proc-title">{page.process.heading}</h2>
@@ -298,7 +330,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           </div>
 
           <div class="proc-cta">
-            <button class="primary" type="button" data-view="ask">
+            <button class="primary" type="button" data-view="ask" data-track-id="process_contact">
               {page.process.ctaLabel}
               <span class="go"><Icon icon={ArrowRight02Icon} /></span>
             </button>
@@ -308,7 +340,13 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       </section>
 
       <!-- ===================== LEASING & FINANZIERUNG ===================== -->
-      <section class="fin" id="finanzierung" aria-labelledby="fin-title" tabindex="-1">
+      <section
+        class="fin"
+        id="finanzierung"
+        aria-labelledby="fin-title"
+        tabindex="-1"
+        data-track-section="finance"
+      >
         <div class="fin-head" data-reveal>
           <h2 id="fin-title">{page.finance.heading}</h2>
           <p>{page.finance.intro}</p>
@@ -383,7 +421,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
             <p>{page.finance.helpText}</p>
           </div>
           <div class="fin-cta">
-            <button class="primary" type="button" data-view="ask">
+            <button class="primary" type="button" data-view="ask" data-track-id="finance_contact">
               {page.finance.ctaLabel}
               <span class="go"><Icon icon={ArrowRight02Icon} /></span>
             </button>
@@ -396,7 +434,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       <Reviews content={reviews} />
     </main>
 
-    <div class="mobile-navigation" id="mobile-navigation" data-expanded="0">
+    <div
+      class="mobile-navigation"
+      id="mobile-navigation"
+      data-expanded="0"
+      data-track-section="mobile_navigation"
+    >
       <nav
         class="mobile-bar"
         id="mobile-bar"
@@ -421,7 +464,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       </nav>
     </div>
 
-    <footer class="foot" id="kontakt" tabindex="-1">
+    <footer class="foot" id="kontakt" tabindex="-1" data-track-section="footer">
       <div class="footer-top">
         <svg class="footer-road" viewBox="0 0 620 360" fill="none" aria-hidden="true">
           <path d="M10 352C200 296 446 237 343 183C209 113 523 125 448 85C409 65 534 40 610 18"
@@ -438,7 +481,13 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           <p>{page.footer.intro}</p>
         </div>
         <div class="footer-actions">
-          <button class="footer-primary" type="button" data-view="ask" aria-haspopup="dialog">
+          <button
+            class="footer-primary"
+            type="button"
+            data-view="ask"
+            aria-haspopup="dialog"
+            data-track-id="footer_contact"
+          >
             {page.footer.ctaLabel}<span><Icon icon={ArrowRight02Icon} /></span>
           </button>
           {
@@ -537,6 +586,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     <section
       class="sheet"
       id="sheet-faq"
+      data-track-section="faq_dialog"
       role="dialog"
       aria-modal="true"
       aria-labelledby="faq-title"
@@ -575,6 +625,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     <section
       class="sheet"
       id="sheet-alex"
+      data-track-section="alex_dialog"
       role="dialog"
       aria-modal="true"
       aria-labelledby="alex-title"
@@ -616,6 +667,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     <section
       class="sheet"
       id="sheet-cars"
+      data-track-section="vehicles_dialog"
       role="dialog"
       aria-modal="true"
       aria-labelledby="cars-title"
@@ -673,6 +725,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     <section
       class="sheet"
       id="sheet-ask"
+      data-track-section="contact_form"
       role="dialog"
       aria-modal="true"
       aria-labelledby="ask-title"
@@ -905,7 +958,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     min-height: 540px;
     overflow: hidden;
     border-radius: 16px;
-    background: #dceaf2;
+    --hero-ground: linear-gradient(105deg, #e3e7e8, #dedad2);
+    background: var(--hero-ground);
   }
   .hero-artwork {
     position: absolute;
@@ -2801,49 +2855,36 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     .console {
       margin-top: 20px;
     }
-    .hero-fold {
-      display: flex;
-      flex-direction: column;
-      /* Small viewport stays stable while browser chrome opens/closes.
-         Min-height, never a height cap: zoom and longer CMS copy may grow. */
-      min-height: calc(
-        100svh - 92px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
-      );
-    }
     .hero-row {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      height: auto;
+      display: block;
+      height: clamp(760px, 165vw, 1100px);
       min-height: 0;
       border-radius: 12px;
     }
     .mid {
-      order: 0;
-      flex: none;
       justify-content: flex-start;
-      padding: 20px 20px 12px;
+      padding: 28px 24px;
     }
     .hero-label {
       font-size: 9px;
     }
     h1 {
-      margin-top: 12px;
-      font-size: clamp(26px, 7vw, 38px);
+      margin-top: 14px;
+      font-size: clamp(25px, 6.8vw, 40px);
     }
     .sub {
-      margin-top: 12px;
+      margin-top: 20px;
       max-width: 34ch;
     }
     .sub p {
       font-size: 16px;
-      line-height: 1.45;
+      line-height: 1.6;
     }
     .hero-primary {
-      margin-top: 16px;
+      margin-top: 24px;
       min-width: 0;
       width: 100%;
-      height: 52px;
+      height: 54px;
       padding-inline: 16px 10px;
       gap: 12px;
       font-size: 14px;
@@ -2857,35 +2898,21 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       grid-template-columns: 1fr 1fr;
       width: 100%;
       gap: 12px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
     .hero-vehicles {
       justify-content: flex-end;
       font-size: 12px;
     }
     .hero-artwork {
-      position: relative;
-      inset: auto;
-      order: 1;
-      flex: 1;
-      min-height: clamp(140px, 21svh, 230px);
-    }
-    .hero-artwork img {
       position: absolute;
       inset: 0;
-      object-position: center 50%;
     }
-    .hero-artwork::after {
-      content: '';
-      position: absolute;
-      inset: 0 0 auto;
-      height: 40px;
-      background: linear-gradient(#dceaf2, transparent);
-      pointer-events: none;
+    .hero-artwork img {
+      object-position: center top;
     }
     .trust-strip {
-      flex: none;
-      padding-block: 16px;
+      padding-block: 24px;
     }
     .trust-strip li {
       padding-inline: 10px;
@@ -3113,6 +3140,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
 <script>
   import '../scripts/vehicle-slider';
+  import { track, setFormSource, formSource, formAttribution } from '../scripts/tracking';
+  import { trackingId } from '../lib/tracking';
 
   const navigation = document.getElementById('mobile-navigation')!;
   const mobileBar = document.getElementById('mobile-bar')!;
@@ -3184,6 +3213,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   let vehicle = '';
   let topic = 'firma';
   let channel = 'tel';
+  let formStarted = false;
 
   function open(view: string, name?: string, tpc?: string) {
     if (!sheets[view]) return;
@@ -3198,6 +3228,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     document.body.style.overflow = 'hidden';
 
     if (view === 'ask') {
+      formStarted = false;
+      track('aal_form_open', { form_id: 'contact', form_source: formSource() });
       if (name) {
         vehicle = name;
         ctxName.textContent = `${ovl.dataset.contextPrefix} ${name}`;
@@ -3216,6 +3248,12 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   }
 
   function close() {
+    if (current === 'ask')
+      track('aal_form_close', {
+        form_id: 'contact',
+        form_source: formSource(),
+        action: !done.hidden ? 'completed' : formStarted ? 'abandoned' : 'closed',
+      });
     current = null;
     document.body.style.overflow = '';
     app.inert = false;
@@ -3225,13 +3263,18 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     ovl.inert = true;
   }
 
-  document
-    .querySelectorAll<HTMLElement>('[data-view]')
-    .forEach((el) =>
-      el.addEventListener('click', () =>
-        open(el.dataset.view!, el.dataset.vehicle, el.dataset.topic)
-      )
-    );
+  document.querySelectorAll<HTMLElement>('[data-view]').forEach((el) =>
+    el.addEventListener('click', () => {
+      if (el.dataset.view === 'ask') {
+        const section = trackingId(
+          el.closest<HTMLElement>('[data-track-section]')?.dataset.trackSection,
+          'page'
+        );
+        setFormSource(el.dataset.trackId || `${section}_contact`);
+      }
+      open(el.dataset.view!, el.dataset.vehicle, el.dataset.topic);
+    })
+  );
   document
     .querySelectorAll<HTMLElement>('[data-close]')
     .forEach((el) => el.addEventListener('click', close));
@@ -3292,8 +3335,14 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   );
 
   /* Absenden */
+  form.addEventListener('input', () => {
+    if (formStarted) return;
+    formStarted = true;
+    track('aal_form_start', { form_id: 'contact', form_source: formSource() });
+  });
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (submit.disabled || form.hidden) return;
     errSend.hidden = true;
 
     const value = reach.value.trim();
@@ -3301,10 +3350,17 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     errReach.hidden = ok;
     reach.setAttribute('aria-invalid', String(!ok));
     if (!ok) {
+      track('aal_form_error', {
+        form_id: 'contact',
+        form_source: formSource(),
+        error_type: 'validation',
+      });
       reach.focus();
       return;
     }
 
+    const submissionSource = formSource();
+    const submissionMethod = channel === 'wa' ? 'whatsapp' : 'phone';
     const payload = {
       kind: topic === 'firma' || topic === 'transporter' ? 'firma' : 'privat',
       topic,
@@ -3313,10 +3369,16 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       channel,
       reach: value,
       message: String(new FormData(form).get('message') || ''),
-      source: 'app',
+      source: submissionSource,
+      attribution: formAttribution(),
     };
 
     submit.disabled = true;
+    track('aal_form_submit', {
+      form_id: 'contact',
+      form_source: submissionSource,
+      contact_method: submissionMethod,
+    });
     submitLabel.textContent = ovl.dataset.submittingLabel!;
     try {
       const res = await fetch('/api/contact', {
@@ -3326,9 +3388,20 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       });
       if (!res.ok)
         throw new Error((await res.json().catch(() => ({}))).error || 'Senden fehlgeschlagen');
+      if (!(await res.json()).ok) throw new Error('Senden fehlgeschlagen');
       form.hidden = true;
       done.hidden = false;
+      track('generate_lead', {
+        form_id: 'contact',
+        form_source: submissionSource,
+        contact_method: submissionMethod,
+      });
     } catch (err) {
+      track('aal_form_error', {
+        form_id: 'contact',
+        form_source: submissionSource,
+        error_type: 'delivery',
+      });
       errSend.textContent = `${(err as Error).message} ${ovl.dataset.sendErrorSuffix}`;
       errSend.hidden = false;
     } finally {
@@ -3406,5 +3479,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   const wanted = new URLSearchParams(location.search).get('anfrage');
   const pre =
     wanted && document.querySelector<HTMLElement>(`.vrow[data-id="${CSS.escape(wanted)}"]`);
-  if (pre) open('ask', pre.dataset.vehicle, pre.dataset.topic);
+  if (pre) {
+    const suppliedSource = new URLSearchParams(location.search).get('aal_source');
+    setFormSource(suppliedSource === 'vehicle_detail_contact' ? suppliedSource : 'vehicle_link');
+    open('ask', pre.dataset.vehicle, pre.dataset.topic);
+  }
 </script>

@@ -59,7 +59,7 @@ const structuredData = {
   fonts="family=Geist:wght@300..700"
 >
   <div class="page">
-    <header class="bar">
+    <header class="bar" data-track-section="vehicle_header">
       <a class="back" href="/">
         <Icon icon={ArrowLeft02Icon} />
         Zurück
@@ -69,7 +69,7 @@ const structuredData = {
       </a>
     </header>
 
-    <main class="grid">
+    <main class="grid" data-track-section="vehicle_detail">
       <figure class="media" data-slider>
         <div class="track">
           {
@@ -139,7 +139,12 @@ const structuredData = {
 
         {v.description && <p class="desc">{v.description}</p>}
 
-        <a class="primary" href={`/?anfrage=${v.id}`}>
+        <a
+          class="primary"
+          href={`/?anfrage=${encodeURIComponent(v.id)}&aal_source=vehicle_detail_contact`}
+          data-track-id="vehicle_detail_contact"
+          data-track-vehicle={v.id}
+        >
           <Icon icon={Sent02Icon} />
           Preis &amp; Verfügbarkeit anfragen
           <span class="go"><Icon icon={ArrowRight01Icon} /></span>
@@ -161,7 +166,7 @@ const structuredData = {
 
     {
       others.length > 0 && (
-        <section class="more">
+        <section class="more" data-track-section="related_vehicles">
           <h2>Weitere Fahrzeuge</h2>
           <div class="cards">
             {others.map((o) => (
@@ -193,7 +198,7 @@ const structuredData = {
       )
     }
 
-    <footer class="foot">
+    <footer class="foot" data-track-section="vehicle_footer">
       <a href="/impressum">Impressum</a>
       <a href="/datenschutz">Datenschutz</a>
     </footer>
