@@ -8,6 +8,7 @@ Implementation handoff for the current Astro homepage. This records implemented 
 - The light contact button opens the existing enquiry dialog. WhatsApp, phone and email use the configured contact links. Instagram appears when `site.instagramUrl` is a valid HTTPS URL; its label is CMS-editable.
 - Footer copy and navigation come from the frontpage document. Existing process and financing sections remain intact.
 - The header uses the configured logo at 72 × 72 px on desktop and 56 × 56 px at the mobile breakpoint (760 px).
+- Mobile hero and three trust statements share the first small viewport (`100svh`, minus header and safe-area space), with intrinsic growth for short screens, zoom or longer CMS copy. The portrait is laid out below the copy; no fixed height clips the content. `hero.vehiclesLinkLabel` controls the new vehicle anchor text. Mobile vehicle consultation CTA follows the slider and price note; desktop keeps it above the slider.
 - `scripts/build-favicons.mjs` derives PNG favicons from `public/logo.png`, trimming transparent padding and fitting the original artwork on white. Outputs: `favicon-32.png` (32 px), `favicon-96.png` (96 px), and `apple-touch-icon.png` (180 px).
 
 ## Live Google reviews

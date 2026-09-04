@@ -158,6 +158,7 @@ export default {
         requiredString('phoneLabel', 'Telefon-Button'),
         requiredString('whatsappLabel', 'WhatsApp-Button'),
         requiredString('whatsappLinkLabel', 'WhatsApp-Link unter dem Hero-Button'),
+        requiredString('vehiclesLinkLabel', 'Sprunglink zu den Fahrzeugen'),
         requiredString('ctaLabel', 'Anfrage-Button'),
       ],
     },

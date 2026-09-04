@@ -99,63 +99,71 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
     <main id="start" tabindex="-1">
       <div class="console">
-        <div class="hero-row">
-          <picture class="hero-artwork">
-            <source
-              media="(max-width: 760px)"
-              srcset={`${page.hero.mobileImageSmall} 480w, ${page.hero.mobileImage} 941w`}
-              sizes="calc(100vw - 40px)"
-            />
-            <img
-              src={page.hero.desktopImage}
-              srcset={`${page.hero.desktopImageSmall} 1000w, ${page.hero.desktopImage} 1672w`}
-              sizes="(max-width: 760px) 100vw, (max-width: 1480px) calc(100vw - 80px), 1400px"
-              alt={page.hero.imageAlt}
-              width="1672"
-              height="941"
-              fetchpriority="high"
-            />
-          </picture>
-          <div class="mid">
-            <span class="hero-label">{page.hero.eyebrow}</span>
-            <h1>{page.hero.headline}<br /><span class="a">{page.hero.headlineAccent}</span></h1>
-            <blockquote class="sub">
-              <p>{page.hero.quote}</p>
-            </blockquote>
+        <div class="hero-fold">
+          <div class="hero-row">
+            <picture class="hero-artwork">
+              <source
+                media="(max-width: 760px)"
+                srcset={`${page.hero.mobileImageSmall} 480w, ${page.hero.mobileImage} 941w`}
+                sizes="calc(100vw - 40px)"
+              />
+              <img
+                src={page.hero.desktopImage}
+                srcset={`${page.hero.desktopImageSmall} 1000w, ${page.hero.desktopImage} 1672w`}
+                sizes="(max-width: 760px) 100vw, (max-width: 1480px) calc(100vw - 80px), 1400px"
+                alt={page.hero.imageAlt}
+                width="1672"
+                height="941"
+                fetchpriority="high"
+              />
+            </picture>
+            <div class="mid">
+              <span class="hero-label">{page.hero.eyebrow}</span>
+              <h1>{page.hero.headline}<br /><span class="a">{page.hero.headlineAccent}</span></h1>
+              <blockquote class="sub">
+                <p>{page.hero.quote}</p>
+              </blockquote>
 
-            <button class="primary hero-primary" type="button" data-view="ask">
-              {page.hero.ctaLabel}
-              <span class="go"><Icon icon={ArrowRight02Icon} /></span>
-            </button>
+              <button class="primary hero-primary" type="button" data-view="ask">
+                {page.hero.ctaLabel}
+                <span class="go"><Icon icon={ArrowRight02Icon} /></span>
+              </button>
 
-            {
-              waHref ? (
-                <a class="hero-whatsapp" href={waHref} target="_blank" rel="noopener">
-                  <Icon icon={WhatsappIcon} />
-                  {page.hero.whatsappLinkLabel}
+              <div class="hero-links">
+                {
+                  waHref ? (
+                    <a class="hero-whatsapp" href={waHref} target="_blank" rel="noopener">
+                      <Icon icon={WhatsappIcon} />
+                      {page.hero.whatsappLinkLabel}
+                    </a>
+                  ) : (
+                    <button class="hero-whatsapp" type="button" data-view="ask">
+                      <Icon icon={WhatsappIcon} />
+                      {page.hero.whatsappLabel}
+                    </button>
+                  )
+                }
+                  <a class="hero-vehicles" href="#vehicle-slider">
+                  {page.hero.vehiclesLinkLabel}
+                  <Icon icon={ArrowRight02Icon} />
                 </a>
-              ) : (
-                <button class="hero-whatsapp" type="button" data-view="ask">
-                  <Icon icon={WhatsappIcon} />
-                  {page.hero.whatsappLabel}
-                </button>
-              )
-            }
+              </div>
+            </div>
           </div>
-        </div>
 
-        <ul class="trust-strip" aria-label={page.intro.promisesLabel}>
-          {
-            page.intro.promises.map((promise) => (
-              <li>
-                <>
-                  <strong>{promise.title}</strong>
-                  <span>{promise.text}</span>
-                </>
-              </li>
-            ))
-          }
-        </ul>
+          <ul class="trust-strip" aria-label={page.intro.promisesLabel}>
+            {
+              page.intro.promises.map((promise) => (
+                <li>
+                  <>
+                    <strong>{promise.title}</strong>
+                    <span>{promise.text}</span>
+                  </>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
 
         <!-- Vorstellung und Fahrzeuge bilden einen gemeinsamen Bereich. -->
         <section class="panel" id="fahrzeuge" aria-labelledby="offers-title" tabindex="-1">
@@ -172,7 +180,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
             </div>
           </div>
           <div class="offers-toolbar">
-            <button class="panel-more" type="button" data-view="ask">
+            <button class="panel-more panel-more--desktop" type="button" data-view="ask">
               {page.offers.ctaLabel}
               <Icon icon={ArrowRight02Icon} />
             </button>
@@ -250,6 +258,10 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           </div>
 
           <p class="tail">{site.priceNote}</p>
+          <button class="panel-more panel-more--mobile" type="button" data-view="ask">
+            {page.offers.ctaLabel}
+            <Icon icon={ArrowRight02Icon} />
+          </button>
         </section>
       </div>
 
@@ -947,7 +959,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     align-items: center;
     gap: 10px;
     min-height: 44px;
-    margin-top: 10px;
+    margin-top: 0;
     font-size: 13px;
     color: var(--accent-text);
   }
@@ -958,6 +970,30 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   .hero-whatsapp .ic {
     width: 20px;
     height: 20px;
+  }
+  .hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 24px;
+    margin-top: 10px;
+  }
+  .hero-vehicles {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    color: var(--accent-text);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .hero-vehicles :global(.ic) {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    transform: rotate(90deg);
   }
   .trust-strip,
   .panel {
@@ -1146,6 +1182,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   .panel-more:hover {
     text-decoration: underline;
     text-underline-offset: 4px;
+  }
+  .panel-more--mobile {
+    display: none;
   }
   .panel-more .ic {
     width: 20px;
@@ -2735,7 +2774,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
 
   @media (max-width: 760px) {
     .app {
-      padding: 16px 20px 0;
+      padding: calc(16px + env(safe-area-inset-top, 0px)) 20px 0;
     }
     .bar {
       min-height: 48px;
@@ -2762,53 +2801,91 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     .console {
       margin-top: 20px;
     }
+    .hero-fold {
+      display: flex;
+      flex-direction: column;
+      /* Small viewport stays stable while browser chrome opens/closes.
+         Min-height, never a height cap: zoom and longer CMS copy may grow. */
+      min-height: calc(
+        100svh - 92px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)
+      );
+    }
     .hero-row {
-      display: block;
-      height: clamp(760px, 165vw, 1100px);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: auto;
       min-height: 0;
       border-radius: 12px;
     }
     .mid {
+      order: 0;
+      flex: none;
       justify-content: flex-start;
-      padding: 28px 24px;
+      padding: 20px 20px 12px;
     }
     .hero-label {
       font-size: 9px;
     }
     h1 {
-      margin-top: 14px;
-      font-size: clamp(25px, 6.8vw, 40px);
+      margin-top: 12px;
+      font-size: clamp(26px, 7vw, 38px);
     }
     .sub {
-      margin-top: 20px;
+      margin-top: 12px;
       max-width: 34ch;
     }
     .sub p {
       font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.45;
     }
     .hero-primary {
-      margin-top: 24px;
+      margin-top: 16px;
       min-width: 0;
       width: 100%;
-      height: 54px;
+      height: 52px;
       padding-inline: 16px 10px;
       gap: 12px;
       font-size: 14px;
     }
     .hero-whatsapp {
-      margin-top: 10px;
+      margin-top: 0;
+      font-size: 12px;
+    }
+    .hero-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .hero-vehicles {
+      justify-content: flex-end;
       font-size: 12px;
     }
     .hero-artwork {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      inset: auto;
+      order: 1;
+      flex: 1;
+      min-height: clamp(140px, 21svh, 230px);
     }
     .hero-artwork img {
-      object-position: center top;
+      position: absolute;
+      inset: 0;
+      object-position: center 50%;
+    }
+    .hero-artwork::after {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 40px;
+      background: linear-gradient(#dceaf2, transparent);
+      pointer-events: none;
     }
     .trust-strip {
-      padding-block: 24px;
+      flex: none;
+      padding-block: 16px;
     }
     .trust-strip li {
       padding-inline: 10px;
@@ -2835,11 +2912,19 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     }
     .offers-toolbar {
       flex-wrap: wrap;
+      justify-content: flex-end;
       gap: 8px 16px;
       margin-top: 16px;
     }
     .panel-more {
       font-size: 13px;
+    }
+    .panel-more--desktop {
+      display: none;
+    }
+    .panel-more--mobile {
+      display: inline-flex;
+      margin-top: 16px;
     }
     .offers {
       gap: 16px;

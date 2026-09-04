@@ -36,7 +36,8 @@
       "mobileImage": "/hero-mobile-941.webp",
       "mobileImageSmall": "/hero-mobile-480.webp",
       "imageAlt": "Alex vom Autoladen Altes Land",
-      "whatsappLinkLabel": "Oder direkt per WhatsApp"
+      "whatsappLinkLabel": "Oder direkt per WhatsApp",
+      "vehiclesLinkLabel": "Fahrzeuge ansehen"
     },
     "offers": {
       "sliderLabel": "Fahrzeuge entdecken",
