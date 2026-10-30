@@ -24,6 +24,8 @@ Der Import legt fehlende Startseite/Website-Dokumente an, ergänzt fehlende Feld
 
 ### Über-mich-Seite einrichten
 
+Unter **Über mich → Vita** lassen sich Zeitraum, Station, Tätigkeit, Ort, Beschreibung und Reihenfolge pflegen. Der Abschnitt erscheint nur mit vollständigen Stationen und lässt sich ausschalten. Die Einrichtung importiert keine erfundenen Lebenslaufdaten. Die lokale Designvorschau unter `/ueber-mich?vita-vorschau=1#vita` ist ausschließlich im Entwicklungsmodus verfügbar.
+
 Der Import übernimmt für das neue Dokument `aboutPage` die **veröffentlichten** Texte und das Foto aus dem bisherigen `frontpage.about`. Unveröffentlichte Startseiten-Entwürfe werden nicht übernommen. Bestehende Änderungen an `aboutPage` bleiben erhalten; der alte Inhalt wird nicht gelöscht. Bis das neue Dokument veröffentlicht ist, verwendet die Unterseite die vorhandenen Dialoginhalte, bei einem CMS-Ausfall die lokalen Defaults.
 
 ```bash

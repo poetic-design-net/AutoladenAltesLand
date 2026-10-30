@@ -97,6 +97,10 @@ Sanity's rooftop-tent fields own copy, responsive imagery, gallery order/alt tex
 
 The existing Base layout, global tokens, Hugeicons and original photo are reused. A 21st catalog search was consulted; no external component or generated image was needed. Sanity's dedicated **Über mich** singleton owns the page content and SEO. The old dialog content remains archived as the migration source. Homepage intro, mobile Alex link and footer now navigate to the standalone page; mobile active-section tracking ignores that cross-page link. Contact actions return to the existing inquiry form with an open topic and no vehicle context.
 
+### Vita extension
+
+The about-page Vita adapts kedhareswer's **Experience Timeline Section / Pigment Experience Ledger**, retrieved through the 21st CLI (demo 38037). Dates sit opposite larger navy station titles; each row opens a personal description. A restrained green pigment highlight marks hover, keyboard focus and open rows. Native details preserve keyboard/touch and no-JavaScript access; mobile stacks dates above titles. The static SVG wash respects reduced motion and adds no React or animation runtime. Provenance and the development-only example preview are documented in `docs/vita.md`. Public content comes exclusively from confirmed Sanity station data; an empty Vita stays hidden.
+
 ## Do's and Don'ts
 
 - Do retain the supplied logo, Alex imagery, source-backed vehicle data and contact details. Visible homepage content and navigation labels are sourced from Sanity; JSON defaults provide resilience when content is missing.

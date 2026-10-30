@@ -492,6 +492,13 @@
     "contactText": "Erzähl mir kurz, was du suchst. Den Rest klären wir gemeinsam.",
     "contactNote": "Unverbindlich, persönlich und ohne Verkaufsdruck.",
     "phoneLabel": "Einfach anrufen",
-    "whatsappLabel": "Direkt per WhatsApp"
+    "whatsappLabel": "Direkt per WhatsApp",
+    "vita": {
+      "enabled": true,
+      "eyebrow": "Vita",
+      "heading": "Mein Weg zum Autoladen.",
+      "intro": "Die Stationen, die meine Arbeit heute prägen.",
+      "items": []
+    }
   }
 }

@@ -24,6 +24,7 @@ export default {
   groups: [
     { name: 'intro', title: 'Einstieg & Foto', default: true },
     { name: 'story', title: 'Über mich & Beratung' },
+    { name: 'vita', title: 'Vita' },
     { name: 'contact', title: 'Kontaktabschluss' },
     { name: 'seo', title: 'SEO & Navigation' },
   ],
@@ -47,6 +48,64 @@ export default {
     text('ruleHeading', 'Überschrift zur Beratung', 'story'),
     paragraphs('ruleParagraphs', 'Absätze zur Beratung'),
     text('ruleEmphasis', 'Hervorgehobener Schlusssatz', 'story'),
+    {
+      name: 'vita',
+      title: 'Vita & berufliche Stationen',
+      type: 'object',
+      group: 'vita',
+      description:
+        'Nur bestätigte Angaben eintragen. Ohne vollständige Stationen bleibt die Vita auf der Website ausgeblendet.',
+      fields: [
+        { name: 'enabled', title: 'Vita anzeigen', type: 'boolean', initialValue: true },
+        { name: 'eyebrow', title: 'Kleine Überschrift', type: 'string', initialValue: 'Vita' },
+        {
+          name: 'heading',
+          title: 'Überschrift',
+          type: 'string',
+          initialValue: 'Mein Weg zum Autoladen.',
+          validation: (R) => R.required(),
+        },
+        { name: 'intro', title: 'Einleitung', type: 'text', rows: 2 },
+        {
+          name: 'items',
+          title: 'Stationen',
+          type: 'array',
+          description:
+            'Reihenfolge per Ziehen ändern. Zeitraum, Titel und Beschreibung sind erforderlich. Eine leere Liste blendet den Abschnitt aus.',
+          of: [
+            {
+              type: 'object',
+              title: 'Station',
+              fields: [
+                {
+                  name: 'period',
+                  title: 'Zeitraum',
+                  type: 'string',
+                  description: 'Jahr, Zeitraum oder „Seit …“. Keine geschätzten Jahreszahlen.',
+                  validation: (R) => R.required(),
+                },
+                {
+                  name: 'title',
+                  title: 'Station / Unternehmen',
+                  type: 'string',
+                  validation: (R) => R.required(),
+                },
+                { name: 'role', title: 'Tätigkeit / Qualifikation', type: 'string' },
+                { name: 'location', title: 'Ort (optional)', type: 'string' },
+                {
+                  name: 'description',
+                  title: 'Persönlicher Text zur Station',
+                  type: 'text',
+                  rows: 5,
+                  validation: (R) => R.required(),
+                },
+              ],
+              preview: { select: { title: 'title', subtitle: 'period' } },
+            },
+          ],
+        },
+      ],
+    },
     text('kicker', 'Kontakt-Überschrift', 'contact'),
     text('contactText', 'Einladung zum Gespräch', 'contact', true),
     text('ctaLabel', 'Anfragebutton', 'contact'),

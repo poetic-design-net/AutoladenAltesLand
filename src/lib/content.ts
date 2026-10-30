@@ -1,6 +1,7 @@
 import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
 import defaults from '../data/content-defaults.json';
+import type { VitaContent } from './vita';
 
 const client = createClient({
   projectId: import.meta.env.SANITY_PROJECT_ID ?? 'dgeh1xh8',
@@ -11,11 +12,12 @@ const client = createClient({
 
 const imageBuilder = imageUrlBuilder(client);
 
-export const { fallbackSite, fallbackFrontpage, fallbackAboutPage } = defaults;
+export const { fallbackSite, fallbackFrontpage } = defaults;
 
 export type SiteSettings = typeof fallbackSite;
 export type Frontpage = typeof fallbackFrontpage;
-export type AboutPage = typeof fallbackAboutPage;
+export type AboutPage = Omit<typeof defaults.fallbackAboutPage, 'vita'> & { vita: VitaContent };
+export const fallbackAboutPage: AboutPage = defaults.fallbackAboutPage;
 
 function merge<T>(fallback: T, value: unknown): T {
   if (Array.isArray(fallback))
