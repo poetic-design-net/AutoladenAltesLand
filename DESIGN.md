@@ -99,7 +99,7 @@ The existing Base layout, global tokens, Hugeicons and original photo are reused
 
 ### Vita extension
 
-The about-page Vita adapts kedhareswer's **Experience Timeline Section / Pigment Experience Ledger**, retrieved through the 21st CLI (demo 38037). Dates sit opposite larger navy station titles; each row opens a personal description. A restrained green pigment highlight marks hover, keyboard focus and open rows. Native details preserve keyboard/touch and no-JavaScript access; mobile stacks dates above titles. The static SVG wash respects reduced motion and adds no React or animation runtime. Provenance and the development-only example preview are documented in `docs/vita.md`. Public content comes exclusively from confirmed Sanity station data; an empty Vita stays hidden.
+The about-page Vita adapts kedhareswer's **Experience Timeline Section / Pigment Experience Ledger**, retrieved through the 21st CLI (demo 38037). Dates sit opposite larger navy station titles; each row opens a personal description. A restrained green pigment highlight marks hover, keyboard focus and open rows. Native details preserve keyboard/touch and no-JavaScript access; mobile stacks dates above titles. The static SVG wash respects reduced motion and adds no React or animation runtime. Provenance is documented in `docs/vita.md`. The user requested three clearly labelled, editable placeholders in Sanity; the normal page renders those records directly. An empty or disabled Vita stays hidden.
 
 ## Do's and Don'ts
 

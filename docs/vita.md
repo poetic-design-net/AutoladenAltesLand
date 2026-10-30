@@ -13,9 +13,9 @@ The Vita section extends `/ueber-mich` with a date-led, expandable career ledger
 
 The **Über mich → Vita** Sanity group owns visibility, headings, introduction, station order, period, title, role, optional location and description. An empty list or disabled section hides the entire Vita. Incomplete records are omitted rather than rendered as empty controls.
 
-No dated biographical facts were present in the supplied project. Therefore defaults and the Sanity import intentionally contain **no example career history**. Add Alexander's confirmed station details and publish to show the real Vita.
+At the user's explicit request on 2026-10-30, the Sanity document contains three clearly labelled placeholders: Ausbildung, Berufliche Station and Autoladen Altes Land. Each uses a non-factual period such as “Zeitraum ergänzen” and editable placeholder copy. They render on the normal `/ueber-mich` route and can be replaced in **Über mich → Vita**.
 
-For design review only, the local development URL `/ueber-mich?vita-vorschau=1#vita` displays a clearly labelled example structure. `src/data/vita-preview.ts` is imported only in development; this query cannot activate sample entries in production. Never import this fixture into Sanity.
+The former development-only fixture and query override have been removed. All versions of the page now read the same Sanity fields. Local fallback defaults intentionally keep an empty list so a regular import never reintroduces deleted placeholders or replaces an authored Vita.
 
 ```sh
 npm --prefix studio run import -- --only=aboutPage

@@ -12,9 +12,6 @@ import { contactLinks, getContent } from '../lib/content';
 import { canonicalUrl, SITE_URL } from '../lib/seo';
 
 const { site, page, about } = await getContent();
-// Explicit local preview only: fabricated career history must never be published.
-const previewVita = import.meta.env.DEV && Astro.url.searchParams.get('vita-vorschau') === '1';
-const vita = previewVita ? (await import('../data/vita-preview')).vitaPreview : about.vita;
 const { telHref, waHref } = contactLinks(site);
 const enquiryHref = '/?anfrage=allgemein&aal_source=about_contact';
 const url = canonicalUrl('/ueber-mich');
@@ -85,7 +82,7 @@ const structuredData = {
         </figure>
       </section>
 
-      <VitaTimeline content={vita} preview={previewVita} />
+      <VitaTimeline content={about.vita} />
 
       <section
         class="approach"

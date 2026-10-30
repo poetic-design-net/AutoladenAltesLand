@@ -10,21 +10,15 @@ import { vitaItems, type VitaContent } from '../lib/vita';
 
 interface Props {
   content: VitaContent;
-  preview?: boolean;
 }
 
-const { content, preview = false } = Astro.props;
+const { content } = Astro.props;
 const items = vitaItems(content.items);
 ---
 
 {
   content.enabled && items.length > 0 && (
     <section class="vita" id="vita" aria-labelledby="vita-title" data-track-section="about_vita">
-      {preview && (
-        <p class="preview-note" role="note">
-          Designvorschau · Beispielstationen, keine bestätigten Vita-Angaben.
-        </p>
-      )}
       <header class="vita-head">
         <div>
           <p class="eyebrow">{content.eyebrow}</p>
@@ -278,15 +272,6 @@ const items = vitaItems(content.items);
     line-height: 1.8;
     white-space: pre-line;
     overflow-wrap: anywhere;
-  }
-  .preview-note {
-    margin-bottom: 32px;
-    padding: 14px 18px;
-    border: 1px dashed var(--accent);
-    border-radius: 8px;
-    color: var(--accent);
-    font-size: 13px;
-    line-height: 1.6;
   }
   @media (max-width: 760px) {
     .vita {
