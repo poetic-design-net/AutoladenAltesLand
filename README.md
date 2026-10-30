@@ -15,6 +15,7 @@ Unter **Startseite**:
 
 Unter **Website**: Logo, Name, Telefonnummer, WhatsApp, E-Mail und Preis-Hinweis.
 Unter **Fahrzeuge**: Bilder, Preise, Verfügbarkeit, Merkmale und Sortierung.
+Unter **Über mich → Vita**: die Stationen der Timeline mit Zeitraum, Tätigkeit, Ort, Beschreibung und Reihenfolge. Die drei gekennzeichneten Platzhalter können direkt ersetzt werden.
 
 Änderungen im Studio **veröffentlichen**. Die Website lädt die veröffentlichten Inhalte serverseitig ohne Sanity-CDN-Cache. Für reine Inhaltsänderungen ist kein Code-Deployment erforderlich. Schemaänderungen erfordern dagegen einen neuen Build und ein Deployment des Studios.
 
@@ -39,7 +40,16 @@ npm run dev
 npm run build
 ```
 
-Das bestehende Studio wird separat über Vercel gehostet. Ein Website-Deployment aktualisiert dessen gebündelte Eingabefelder nicht automatisch.
+## Veröffentlichung über GitHub
+
+Beide Vercel-Projekte sind mit `poetic-design-net/AutoladenAltesLand` verbunden und veröffentlichen automatisch nach einem Push auf **`main`**:
+
+| Anwendung | Vercel-Projekt | Root Directory | Live-Adresse |
+| --- | --- | --- | --- |
+| Website | `autoladen-altes-land` | Repository-Wurzel | https://autoladen-altes-land.vercel.app |
+| Sanity Studio | `autoladen-studio` | `studio` | https://studio-aal.vercel.app |
+
+Andere Branches, beispielsweise `relaunch`, erzeugen Vorschau-Deployments. Einen geprüften Stand nach `main` übernehmen und pushen; anschließend die Deployment-Ergebnisse beider Projekte prüfen. Ein separater manueller CLI-Upload ist nicht erforderlich. Sanity-Inhaltsimporte sind kein Build-Schritt und laufen beim Deployment nicht erneut.
 
 ## Inhaltssynchronisierung dieses Relaunches
 
@@ -55,7 +65,7 @@ node studio/sync-homepage.mjs --apply
 
 Der Import benötigt `SANITY_TOKEN` aus `studio/.env`. Er sichert die Startseiten-Dokumente in einem temporären Verzeichnis, ergänzt fehlende Felder, setzt die beiden gelieferten Hero-Bilder und die vorgesehenen Ich-Texte. Bestehende Fahrzeug- und Website-Dokumente bleiben unberührt. Entwürfe bleiben Entwürfe; Revisionsprüfung schützt vor parallelen Änderungen.
 
-Dies ist ein gezielter Relaunch-Import, **kein regelmäßiger Deployment-Schritt**: er setzt ausgewählte Texte und Hero-Bilder erneut auf diesen Stand. Nach redaktionellen Änderungen nicht ungeprüft erneut ausführen. Das ältere `studio/seed.js` ist ein historischer, überschreibender Import und für normale Aktualisierungen nicht verwenden.
+Dies ist ein gezielter Relaunch-Import, **kein regelmäßiger Deployment-Schritt**: er setzt ausgewählte Texte und Hero-Bilder erneut auf diesen Stand. Nach redaktionellen Änderungen nicht ungeprüft erneut ausführen. Für die allgemeine Einrichtung verwendet das inzwischen aktualisierte `studio/seed.js` einen ergänzenden Import, der bestehende Änderungen bewahrt. Anleitung und Vorschau-Befehl stehen in [SANITY_SETUP.md](SANITY_SETUP.md).
 
 ## Hero-Bilder
 

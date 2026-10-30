@@ -51,10 +51,8 @@ node --test tests/cms.test.mjs
 
 Das Online-Studio gehört zum Vercel-Projekt **autoladen-studio** im Team **frdrks-projects**. Das andere Projekt namens `studio` ist nicht die Adresse aus der Sanity-Verwaltung.
 
-```bash
-cd studio
-vercel link --yes --project autoladen-studio --scope frdrks-projects
-vercel --prod --yes
-```
+Website und Studio werden über das GitHub-Repository **poetic-design-net/AutoladenAltesLand** veröffentlicht. Beide Projekte verwenden **main** als Produktionszweig. Das Website-Projekt `autoladen-altes-land` baut aus der Repository-Wurzel, `autoladen-studio` aus dem Unterverzeichnis **studio** mit Node.js 22 und `studio/vercel.json`.
 
-Website-Code separat im Vercel-Projekt `autoladen-altes-land` veröffentlichen, wenn neue CMS-Felder eingebunden wurden.
+Nach erfolgreichen Tests und Builds den geprüften Stand nach `main` übernehmen und pushen. Vercel baut und veröffentlicht beide Projekte automatisch. Andere Branches erzeugen Vorschauen. Bei Schemaänderungen auch den erfolgreichen Studio-Build prüfen; erst dieser aktualisiert die Online-Eingabefelder. Ein manueller `vercel --prod`-Upload ist im normalen Ablauf nicht nötig.
+
+Die Import-Scripte werden beim Deployment nicht ausgeführt. Bereits veröffentlichte Sanity-Inhalte und redaktionelle Änderungen bleiben erhalten.
