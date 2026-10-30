@@ -1,0 +1,5 @@
+.env*
+studio/.env*
+studio/backups/
+studio/node_modules/
+node_modules/

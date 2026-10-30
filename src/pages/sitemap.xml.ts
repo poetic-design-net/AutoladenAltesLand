@@ -6,6 +6,7 @@ export const GET: APIRoute = async () => {
   const vehicles = await getAllVehicles();
   const paths = [
     '/',
+    '/ueber-mich',
     '/impressum',
     '/datenschutz',
     ...vehicles.map((vehicle) => `/fahrzeuge/${encodeURIComponent(vehicle.id)}`),

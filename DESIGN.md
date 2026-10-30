@@ -61,7 +61,7 @@ The homepage overrides the global light-theme font with Geist and Manrope. Headl
 
 Header and hero have a 1400px maximum width; inner content is capped at 1240px. Desktop horizontal page padding is 40px, mobile padding is 20px. The hero uses separate supplied desktop/mobile WebP assets through a picture element. Text sits in the desktop image's left free space and the mobile image's upper free space.
 
-The plain trust strip has three columns. Intro and offers form one section: the intro heading becomes the vehicle heading, with the introduction and Alex dialog link alongside it on desktop and below it under 1024px. There is no duplicate icon-benefit row or separate “Was gerade geht” heading. Equal-sized vehicle cards form a native horizontal scroll-snap track on every viewport. Its left edge aligns to the 1240px content column; its right edge reaches the viewport. Mobile reveals part of the next card. Previous/next controls appear only when content overflows; touch, trackpad, keyboard arrows and Home/End work without autoplay. Sanity controls the vehicle count and order.
+The plain trust strip has three columns. Intro and offers form one section: the intro heading becomes the vehicle heading, with the introduction and Über-mich page link alongside it on desktop and below it under 1024px. There is no duplicate icon-benefit row or separate “Was gerade geht” heading. Equal-sized vehicle cards form a native horizontal scroll-snap track on every viewport. Its left edge aligns to the 1240px content column; its right edge reaches the viewport. Mobile reveals part of the next card. Previous/next controls appear only when content overflows; touch, trackpad, keyboard arrows and Home/End work without autoplay. Sanity controls the vehicle count and order.
 
 Process and financing retain their existing layouts and behavior; they were expressly excluded from this redesign. Their provider-facing copy now uses Alex’s first-person singular voice. Footer content uses three desktop groups and stacks on mobile.
 
@@ -80,7 +80,7 @@ Cards and hero use gently rounded corners. Small status labels are not interacti
 - Offers: whole-card links to real vehicle pages; status overlays, current CMS prices and facts. Do not substitute mockup specifications for real data.
 - Footer: direct phone/email/WhatsApp links, section links, FAQ/contact dialogs and legal links.
 - Dialogs: background inertness, initial focus, Escape closure, Tab containment and focus restoration. FAQ answers use native details/summary.
-- Mobile navigation: four section links appear at 150px of vertical scroll on viewports up to 760px wide and hide again below that threshold. Hidden navigation is inert. Active section is identified semantically and visually.
+- Mobile navigation: three section links and the Alex page link appear at 150px of vertical scroll on viewports up to 760px wide and hide again below that threshold. Hidden navigation is inert. Active section is identified semantically and visually.
 - Icons: existing Hugeicons stroke-rounded set. Parent-scoped Astro styles use `:global(.ic)` when styling the child icon component.
 
 ### Rooftop-tent banner and gallery
@@ -90,6 +90,12 @@ The local extension after process and before financing pairs a navy copy field w
 Four supplied original installation photos plus a manufacturer award image form a compact horizontal scroll-snap gallery. Photo thumbnails may crop for consistency; the award thumbnail uses `contain` so the seal stays whole. The modal viewer contains the full image. A small source-linked note attributes the verified ntv/DISQ award to Naturbummler, not Alex. Native modal focus containment and Escape closure, arrow-key navigation, focus restoration, visible focus rings and reduced-motion handling remain intact. Photo links still open the images without JavaScript; enlarged images load only when selected.
 
 Sanity's rooftop-tent fields own copy, responsive imagery, gallery order/alt text and visibility, with local defaults. The inquiry opens the existing contact dialog with the `dachzelt` topic and `rooftent_contact` attribution. Preserve the distinction between the illustrative banner and original gallery photos, plus the README and per-image provenance JSON in `public/dachzelte`. The surface brief and verification record live in `docs/dachzelte.md`.
+
+## About page
+
+`/ueber-mich` continues the homepage's warm background, Geist/Manrope typography, navy actions and restrained green accents. Its two-column introduction pairs the existing dialog copy with Alex's original landscape photo without a forced crop. The advisory section uses a quiet dividing line and readable paragraphs; a navy contact footer closes the page. On mobile, text and photography stack, links retain 44px touch targets, and there is no new animation.
+
+The existing Base layout, global tokens, Hugeicons and original photo are reused. A 21st catalog search was consulted; no external component or generated image was needed. Sanity's dedicated **Über mich** singleton owns the page content and SEO. The old dialog content remains archived as the migration source. Homepage intro, mobile Alex link and footer now navigate to the standalone page; mobile active-section tracking ignores that cross-page link. Contact actions return to the existing inquiry form with an open topic and no vehicle context.
 
 ## Do's and Don'ts
 

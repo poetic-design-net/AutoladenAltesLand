@@ -11,14 +11,15 @@ const client = createClient({
 
 const imageBuilder = imageUrlBuilder(client);
 
-export const { fallbackSite, fallbackFrontpage } = defaults;
+export const { fallbackSite, fallbackFrontpage, fallbackAboutPage } = defaults;
 
 export type SiteSettings = typeof fallbackSite;
 export type Frontpage = typeof fallbackFrontpage;
+export type AboutPage = typeof fallbackAboutPage;
 
 function merge<T>(fallback: T, value: unknown): T {
   if (Array.isArray(fallback))
-    return (Array.isArray(value) && value.length ? value : fallback) as T;
+    return (Array.isArray(value) ? value : structuredClone(fallback)) as T;
   if (fallback && typeof fallback === 'object') {
     const source = value && typeof value === 'object' ? (value as Record<string, unknown>) : {};
     return Object.fromEntries(
@@ -28,7 +29,7 @@ function merge<T>(fallback: T, value: unknown): T {
       ])
     ) as T;
   }
-  return (value === undefined || value === null || value === '' ? fallback : value) as T;
+  return (value === undefined || value === null ? fallback : value) as T;
 }
 
 function imageUrl(image: unknown, fallback: string, width: number, height: number) {
@@ -43,14 +44,24 @@ function heroImageUrl(image: unknown, fallback: string, width: number) {
 
 const QUERY = `{
   "site": *[_id == "siteSettings"][0],
-  "page": *[_id == "frontpage"][0]
+  "page": *[_id == "frontpage"][0],
+  "about": *[_id == "aboutPage"][0]
 }`;
 
-export async function getContent(): Promise<{ site: SiteSettings; page: Frontpage }> {
+export async function getContent(): Promise<{
+  site: SiteSettings;
+  page: Frontpage;
+  about: AboutPage;
+}> {
   try {
-    const raw = await client.fetch<{ site?: any; page?: any }>(QUERY);
+    const raw = await client.fetch<{ site?: any; page?: any; about?: any }>(QUERY);
     const site = merge(fallbackSite, raw.site);
     const page = merge(fallbackFrontpage, raw.page);
+    // Until the dedicated document is published, retain the current dialog copy.
+    const aboutSource = raw.about ?? raw.page?.about;
+    const about = merge(fallbackAboutPage, aboutSource);
+    about.image = heroImageUrl(aboutSource?.image, fallbackAboutPage.image, 1600);
+    about.imageAlt = aboutSource?.image?.alt || about.imageAlt;
     const tent = raw.page?.rooftent;
     page.rooftent.image = heroImageUrl(tent?.image, fallbackFrontpage.rooftent.image, 1600);
     page.rooftent.imageSmall = heroImageUrl(
@@ -106,10 +117,14 @@ export async function getContent(): Promise<{ site: SiteSettings; page: Frontpag
     page.about.image = imageUrl(raw.page?.about?.image, fallbackFrontpage.about.image, 1600, 1067);
     page.about.imageAlt =
       raw.page?.about?.image?.alt || `${site.contactName} vom ${site.brandName}`;
-    return { site, page };
+    return { site, page, about };
   } catch (error) {
     console.warn('[sanity] Website-Inhalte konnten nicht geladen werden, nutze Fallback:', error);
-    return { site: { ...fallbackSite }, page: structuredClone(fallbackFrontpage) };
+    return {
+      site: structuredClone(fallbackSite),
+      page: structuredClone(fallbackFrontpage),
+      about: structuredClone(fallbackAboutPage),
+    };
   }
 }
 

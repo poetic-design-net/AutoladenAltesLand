@@ -19,6 +19,7 @@ const img = imageUrlBuilder(client);
 export type VehicleDetail = Vehicle & { description: string };
 
 const QUERY = `{
+  "configured": defined(*[_id == "siteSettings"][0]),
   "limit": coalesce(*[_id == "siteSettings"][0].featuredVehicleCount, 3),
   "items": *[_type == "fahrzeug" && verfuegbar == true && defined(slug.current) && defined(name)] | order(sortierung asc, _createdAt asc) {
     "id": slug.current, name, kicker, topic, status, tone,
@@ -52,8 +53,8 @@ function map(d: any): VehicleDetail {
 
 async function load(): Promise<{ all: VehicleDetail[]; limit: number }> {
   try {
-    const r = await client.fetch<{ limit: number; items: any[] }>(QUERY);
-    if (r.items.length) return { all: r.items.map(map), limit: r.limit };
+    const r = await client.fetch<{ configured: boolean; limit: number; items: any[] }>(QUERY);
+    if (r.configured || r.items.length) return { all: r.items.map(map), limit: r.limit };
   } catch (e) {
     console.warn('[sanity] Fahrzeuge konnten nicht geladen werden, nutze Fallback:', e);
   }

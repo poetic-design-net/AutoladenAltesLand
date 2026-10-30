@@ -28,7 +28,7 @@ import { httpsUrl } from '../lib/reviews';
 import { businessSchema } from '../lib/seo';
 import { getGoogleReviews } from '../lib/google-reviews';
 
-const [{ site, page }, vehicles] = await Promise.all([getContent(), getFeaturedVehicles()]);
+const [{ site, page, about }, vehicles] = await Promise.all([getContent(), getFeaturedVehicles()]);
 const { telHref, waHref, mailHref } = contactLinks(site);
 const instagramHref = httpsUrl(site.instagramUrl);
 const reviews = await getGoogleReviews(page.reviews);
@@ -76,7 +76,11 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
         <span class="bar-name">{site.brandName}</span>
       </a>
       <nav class="header-nav" aria-label={page.header.navigationLabel}>
-        {page.header.links.map((link) => <a href={`#${link.target}`}>{link.label}</a>)}
+        {
+          page.header.links.map((link) => (
+            <a href={link.target === 'alex' ? '/ueber-mich' : `#${link.target}`}>{link.label}</a>
+          ))
+        }
       </nav>
       <div class="header-actions">
         {
@@ -186,9 +190,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
             </div>
             <div class="intro-copy">
               <p>{page.intro.text}</p>
-              <button class="alex-more" type="button" data-view="alex" aria-haspopup="dialog">
+              <a class="alex-more" href="/ueber-mich" data-track-id="about_page">
                 {page.hero.aboutLinkLabel}<Icon icon={ArrowRight02Icon} />
-              </button>
+              </a>
             </div>
           </div>
           <div class="offers-toolbar">
@@ -451,7 +455,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       >
         {
           page.mobileNavigation.links.map((link) => (
-            <a href={`#${link.target}`}>
+            <a href={link.target === 'alex' ? '/ueber-mich' : `#${link.target}`}>
               <>
                 <Icon
                   icon={
@@ -553,7 +557,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
                         {link.label}
                       </button>
                     ) : (
-                      <a href={`#${link.target}`}>{link.label}</a>
+                      <a href={link.target === 'alex' ? '/ueber-mich' : `#${link.target}`}>
+                        {link.label}
+                      </a>
                     )
                   )}
               </div>
@@ -563,7 +569,7 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       </div>
       <div class="footer-bottom">
         <span>© {new Date().getFullYear()} {site.brandName}</span>
-        <nav aria-label="Rechtliches">
+        <nav aria-label={site.legalLabels.legalNavigation}>
           <a href="/impressum">{page.footer.legalLabel}</a>
           <a href="/datenschutz">{page.footer.privacyLabel}</a>
         </nav>
@@ -618,50 +624,8 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
           }
         </div>
         <button class="primary" type="button" data-view="ask"
-          >{page.about.ctaLabel}<span class="go"><Icon icon={ArrowRight02Icon} /></span></button
+          >{about.ctaLabel}<span class="go"><Icon icon={ArrowRight02Icon} /></span></button
         >
-      </div>
-    </section>
-
-    <!-- Alex: der ganze Text -->
-    <section
-      class="sheet"
-      id="sheet-alex"
-      data-track-section="alex_dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="alex-title"
-      hidden
-    >
-      <div class="grab"></div>
-      <div class="sh-head">
-        <div>
-          <div class="sh-title" id="alex-title">{page.about.title}</div>
-          <div class="sh-sub">{page.about.subtitle}</div>
-        </div>
-        <button class="sh-x" type="button" aria-label={page.form.closeLabel} data-close>
-          <Icon icon={Cancel01Icon} />
-        </button>
-      </div>
-      <div class="sh-body">
-        <div class="band">
-          <img src={page.about.image} alt={page.about.imageAlt} width="1600" height="1067" />
-          <div class="duo"></div>
-        </div>
-        <p class="lead">{page.about.lead}</p>
-        {page.about.paragraphs.map((paragraph) => <p class="para">{paragraph}</p>)}
-        <p class="kicker">{page.about.kicker}</p>
-
-        <div class="rule">
-          <span class="rule-l">{page.about.ruleHeading}</span>
-          {page.about.ruleParagraphs.map((paragraph) => <p class="para">{paragraph}</p>)}
-          <p class="para strong">{page.about.ruleEmphasis}</p>
-        </div>
-
-        <button class="send" type="button" data-view="ask">
-          <Icon icon={BubbleChatIcon} />
-          {page.about.ctaLabel}
-        </button>
       </div>
     </section>
 
@@ -2468,63 +2432,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     padding: 18px 26px 0;
   }
 
-  .band {
-    height: 200px;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    background: var(--accent-deep);
-  }
-  .band img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 30%;
-  }
-  .band .duo {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0, 40, 79, 0.08), rgba(0, 40, 79, 0.6));
-  }
-  .lead {
-    margin-top: 18px;
-    font-size: 17px;
-    line-height: 1.5;
-    font-weight: 500;
-    letter-spacing: -0.012em;
-    color: var(--ink);
-  }
-  .para {
-    margin-top: 14px;
-    font-size: 15.5px;
-    line-height: 1.62;
-    color: var(--ink-2);
-  }
-  .para.strong {
-    color: var(--ink);
-    font-weight: 500;
-  }
-  .kicker {
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.026em;
-    color: var(--ink);
-  }
-  .rule {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-  }
-  .rule-l {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
   .terms {
     margin-top: 14px;
     font-size: 11.5px;
@@ -3128,15 +3035,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
     .sh-body {
       padding: 18px 22px 0;
     }
-    .band {
-      height: 180px;
-    }
-    .lead {
-      font-size: 16.5px;
-    }
-    .para {
-      font-size: 15px;
-    }
   }
 </style>
 
@@ -3150,7 +3048,9 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   const mobileViewport = matchMedia('(max-width: 760px)');
   const mobileNavigationScrollThreshold = 150;
   const barLinks = [...mobileBar.querySelectorAll<HTMLAnchorElement>('a')];
-  const navSections = barLinks.map((link) => document.querySelector<HTMLElement>(link.hash)!);
+  const navSections = barLinks.map((link) =>
+    link.hash ? document.querySelector<HTMLElement>(link.hash) : null
+  );
   let navFrame = 0;
 
   const updateNavigation = () => {
@@ -3166,9 +3066,10 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
       target?.focus({ preventScroll: true });
     }
     if (expanded) {
-      let active = 0;
+      let active = -1;
       navSections.forEach((section, index) => {
-        if (section.getBoundingClientRect().top <= Math.min(96, innerHeight * 0.2)) active = index;
+        if (section && section.getBoundingClientRect().top <= Math.min(96, innerHeight * 0.2))
+          active = index;
       });
       barLinks.forEach((link, index) => {
         if (index === active) link.setAttribute('aria-current', 'location');
@@ -3195,7 +3096,6 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   const app = document.querySelector<HTMLElement>('.app')!;
   const sheets: Record<string, HTMLElement> = {
     faq: document.getElementById('sheet-faq')!,
-    alex: document.getElementById('sheet-alex')!,
     cars: document.getElementById('sheet-cars')!,
     ask: document.getElementById('sheet-ask')!,
   };
@@ -3481,12 +3381,16 @@ const road = 'M100 80 C180 80 220 40 300 40 S420 70 500 70 S620 35 700 35 S820 7
   );
 
   /* Von der Detailseite: ?anfrage=<id> öffnet das Formular vorbelegt */
-  const wanted = new URLSearchParams(location.search).get('anfrage');
+  const query = new URLSearchParams(location.search);
+  const wanted = query.get('anfrage');
   const pre =
     wanted && document.querySelector<HTMLElement>(`.vrow[data-id="${CSS.escape(wanted)}"]`);
   if (pre) {
-    const suppliedSource = new URLSearchParams(location.search).get('aal_source');
+    const suppliedSource = query.get('aal_source');
     setFormSource(suppliedSource === 'vehicle_detail_contact' ? suppliedSource : 'vehicle_link');
     open('ask', pre.dataset.vehicle, pre.dataset.topic);
+  } else if (wanted === 'allgemein') {
+    setFormSource(query.get('aal_source') === 'about_contact' ? 'about_contact' : 'page_contact');
+    open('ask', undefined, 'offen');
   }
 </script>

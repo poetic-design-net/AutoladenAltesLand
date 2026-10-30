@@ -1,0 +1,61 @@
+const text = (name, title, group, multiline = false) => ({
+  name,
+  title,
+  group,
+  type: multiline ? 'text' : 'string',
+  ...(multiline ? { rows: 3 } : {}),
+  validation: (R) => R.required(),
+});
+
+const paragraphs = (name, title) => ({
+  name,
+  title,
+  group: 'story',
+  type: 'array',
+  description: 'Absätze hinzufügen, bearbeiten und per Ziehen sortieren.',
+  of: [{ type: 'text', rows: 4 }],
+  validation: (R) => R.required().min(1),
+});
+
+export default {
+  name: 'aboutPage',
+  title: 'Über mich',
+  type: 'document',
+  groups: [
+    { name: 'intro', title: 'Einstieg & Foto', default: true },
+    { name: 'story', title: 'Über mich & Beratung' },
+    { name: 'contact', title: 'Kontaktabschluss' },
+    { name: 'seo', title: 'SEO & Navigation' },
+  ],
+  fields: [
+    text('eyebrow', 'Hinweis über der Überschrift', 'intro'),
+    text('title', 'Hauptüberschrift', 'intro'),
+    text('subtitle', 'Untertitel unter dem Foto', 'intro'),
+    text('lead', 'Persönlicher Einstieg', 'intro', true),
+    {
+      name: 'image',
+      title: 'Alex-Foto',
+      type: 'image',
+      group: 'intro',
+      description: 'Das Foto aus dem bisherigen Dialog. Der Bildausschnitt bleibt erhalten.',
+      options: { hotspot: true },
+      fields: [{ name: 'alt', title: 'Bildbeschreibung', type: 'string' }],
+      validation: (R) => R.required(),
+    },
+    text('imageAlt', 'Bildbeschreibung (wenn am Foto keine hinterlegt ist)', 'intro'),
+    paragraphs('paragraphs', 'Persönliche Absätze'),
+    text('ruleHeading', 'Überschrift zur Beratung', 'story'),
+    paragraphs('ruleParagraphs', 'Absätze zur Beratung'),
+    text('ruleEmphasis', 'Hervorgehobener Schlusssatz', 'story'),
+    text('kicker', 'Kontakt-Überschrift', 'contact'),
+    text('contactText', 'Einladung zum Gespräch', 'contact', true),
+    text('ctaLabel', 'Anfragebutton', 'contact'),
+    text('contactNote', 'Hinweis unter dem Button', 'contact'),
+    text('phoneLabel', 'Telefon-Link', 'contact'),
+    text('whatsappLabel', 'WhatsApp-Link', 'contact'),
+    text('backLabel', 'Link zur Startseite', 'seo'),
+    text('seoTitle', 'Seitentitel', 'seo'),
+    text('seoDescription', 'Meta-Beschreibung', 'seo', true),
+  ],
+  preview: { select: { title: 'title', media: 'image' } },
+};

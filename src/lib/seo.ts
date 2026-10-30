@@ -16,6 +16,7 @@ export function serializeJsonLd(value: unknown) {
 }
 
 export function businessSchema(site: SiteSettings, description: string) {
+  const legal = site.legal;
   return {
     '@context': 'https://schema.org',
     '@graph': [

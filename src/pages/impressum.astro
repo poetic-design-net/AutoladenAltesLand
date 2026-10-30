@@ -1,45 +1,91 @@
 ---
 import Base from '../layouts/Base.astro';
-import { legal } from '../data/site';
 import { contactLinks, getSiteSettings } from '../lib/content';
 
 const site = await getSiteSettings();
+const { legal, legalLabels: labels } = site;
 const { telHref, mailHref } = contactLinks(site);
 ---
 
-<Base title={`Impressum – ${site.brandName}`} description={`Impressum der ${legal.company}`} theme="light" ogImage={site.logo} ogImageAlt={site.logoAlt} siteName={site.brandName}>
+<Base
+  title={`${labels.imprintTitle} – ${site.brandName}`}
+  description={`Impressum der ${legal.company}`}
+  theme="light"
+  ogImage={site.logo}
+  ogImageAlt={site.logoAlt}
+  siteName={site.brandName}
+>
   <main class="legal">
-    <a class="back" href="/">← Zurück</a>
-    <h1>Impressum</h1>
-    <p class="law">Angaben gemäß § 5 DDG</p>
+    <a class="back" href="/">{labels.backLabel}</a>
+    <h1>{labels.imprintTitle}</h1>
+    <p class="law">{labels.law}</p>
     <dl>
-      <dt>Anbieter</dt>
+      <dt>{labels.provider}</dt>
       <dd>{legal.company}<br />{legal.street}<br />{legal.city}</dd>
-      <dt>Vertreten durch</dt>
-      <dd>Geschäftsführer {legal.ceo}</dd>
-      <dt>Kontakt</dt>
+      <dt>{labels.represented}</dt>
+      <dd>{labels.ceo} {legal.ceo}</dd>
+      <dt>{labels.contact}</dt>
       <dd>
-        Telefon <a href={telHref}>{site.phone}</a><br />
-        E-Mail <a href={mailHref}>{site.email}</a><br />
-        Web <a href={`https://${legal.web}`}>{legal.web}</a>
+        {labels.phone}
+        <a href={telHref}>{site.phone}</a><br />
+        {labels.email}
+        <a href={mailHref}>{site.email}</a><br />
+        {labels.web}
+        <a href={`https://${legal.web}`}>{legal.web}</a>
       </dd>
-      <dt>Registereintrag</dt>
+      <dt>{labels.register}</dt>
       <dd>{legal.register}</dd>
-      <dt>Umsatzsteuer-ID</dt>
+      <dt>{labels.vatId}</dt>
       <dd>{legal.vatId}</dd>
-      <dt>Verantwortlich für den Inhalt</dt>
+      <dt>{labels.responsible}</dt>
       <dd>{legal.ceo}<br />{legal.street}<br />{legal.city}</dd>
     </dl>
   </main>
 </Base>
 
 <style>
-  .legal { width: min(680px, 100% - 40px); margin: 0 auto; padding: 56px 0 120px; }
-  .back { font-size: 13.5px; font-weight: 600; }
-  h1 { margin-top: 20px; font-size: 40px; font-weight: 600; letter-spacing: -0.035em; }
-  .law { margin-top: 10px; font-size: 14px; color: var(--ink-3); }
-  dl { margin-top: 28px; display: grid; grid-template-columns: 200px 1fr; gap: 16px 20px; font-size: 15.5px; line-height: 1.5; }
-  dt { font-weight: 600; color: var(--ink-2); }
-  dd { margin: 0; }
-  @media (max-width: 640px) { dl { grid-template-columns: 1fr; gap: 4px 0; } dt { margin-top: 12px; } }
+  .legal {
+    width: min(680px, 100% - 40px);
+    margin: 0 auto;
+    padding: 56px 0 120px;
+  }
+  .back {
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  h1 {
+    margin-top: 20px;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+  }
+  .law {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  dl {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px 20px;
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+  dt {
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  dd {
+    margin: 0;
+  }
+  @media (max-width: 640px) {
+    dl {
+      grid-template-columns: 1fr;
+      gap: 4px 0;
+    }
+    dt {
+      margin-top: 12px;
+    }
+  }
 </style>

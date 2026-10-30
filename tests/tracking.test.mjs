@@ -55,6 +55,14 @@ test('internal routes strip arbitrary parameters while preserving vehicle identi
   );
   assert.equal(safePagePath('/?reach=private'), ' /'.trim());
   assert.equal(safePagePath('/unexpected/private@example.com'), '/other');
+  assert.equal(safePagePath('/ueber-mich?email=private@example.com'), '/ueber-mich');
+  assert.deepEqual(
+    linkDetails(
+      '/?anfrage=allgemein&aal_source=about_contact',
+      'https://www.autoladen-altesland.de'
+    ),
+    { action: 'contact', contact_method: 'form', destination: '/' }
+  );
   assert.equal(trackingId('<script>'), '');
 });
 test('event payload cannot include form values or an arbitrary URL', () => {

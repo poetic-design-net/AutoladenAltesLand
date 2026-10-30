@@ -1,3 +1,4 @@
+import vehicleDefaults from './vehicle-defaults.json';
 export const legal = {
   company: 'Autoladen Altes Land GmbH',
   street: 'Johann-Ropers-Trift 10',
@@ -37,41 +38,4 @@ export type Vehicle = {
 };
 
 /** Beispiel-Fahrzeuge, solange in Sanity nichts gepflegt ist. */
-export const vehicles: Vehicle[] = [
-  {
-    id: 'fiat-ducato-kastenwagen',
-    name: 'FIAT DUCATO Kastenwagen',
-    kicker: 'Nutzfahrzeug',
-    topic: 'transporter',
-    status: 'Sofort verfügbar',
-    tone: 'green',
-    image: '/veh1.jpg',
-    alt: 'FIAT DUCATO Kastenwagen',
-    features: ['Für Handwerk & Lieferdienst', 'EU-Neuwagen oder Jahreswagen', 'Gewerblich & privat'],
-    price: { value: '34.900 €', terms: 'EU-Neuwagen und Jahreswagen' },
-  },
-  {
-    id: 'e-limousine',
-    name: 'Elektrische Limousine',
-    kicker: 'Dienstwagen',
-    topic: 'firma',
-    status: 'Kurzfristig möglich',
-    tone: 'blue',
-    image: '/veh2.jpg',
-    alt: 'Elektrische Limousine',
-    features: ['Vollelektrisch', 'Als Dienstwagen geeignet', 'Privat & gewerblich'],
-    price: { value: '42.900 €', old: '46.900 €', terms: 'Jahreswagen' },
-  },
-  {
-    id: 'kompakt-stromer',
-    name: 'Kompakter Stromer',
-    kicker: 'Alltag & Familie',
-    topic: 'privat',
-    status: 'Auf Anfrage',
-    tone: 'grey',
-    image: '/veh3.jpg',
-    alt: 'Kompaktes Elektrofahrzeug',
-    features: ['Vollelektrisch', 'Viel Platz für den Alltag', 'Privat & gewerblich'],
-    price: { value: '27.900 €', terms: 'EU-Neuwagen' },
-  },
-];
+export const vehicles = vehicleDefaults as Vehicle[];

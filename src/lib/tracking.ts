@@ -40,7 +40,8 @@ export function campaignRecord(value: unknown): Record<string, string> {
 
 export function safePagePath(path: string): string {
   const pathname = path.split(/[?#]/)[0];
-  if (['/', '/impressum', '/datenschutz', '/app'].includes(pathname)) return pathname;
+  if (['/', '/ueber-mich', '/impressum', '/datenschutz', '/app'].includes(pathname))
+    return pathname;
   const vehicle = pathname.match(/^\/fahrzeuge\/([a-z0-9_-]+)\/?$/i);
   return vehicle ? `/fahrzeuge/${vehicle[1]}` : '/other';
 }

@@ -9,7 +9,70 @@
     "email": "alex@autoladen-altesland.de",
     "instagramUrl": "https://www.instagram.com/alex.autoladen/",
     "featuredVehicleCount": 3,
-    "priceNote": "Kaufpreise netto zzgl. MwSt. für Gewerbe. Streichpreis ist der reguläre Preis."
+    "priceNote": "Kaufpreise netto zzgl. MwSt. für Gewerbe. Streichpreis ist der reguläre Preis.",
+    "legal": {
+      "company": "Autoladen Altes Land GmbH",
+      "street": "Johann-Ropers-Trift 10",
+      "city": "21720 Grünendeich",
+      "ceo": "Alexander Philippowsky",
+      "vatId": "DE453802095",
+      "register": "HRB 211846, Amtsgericht Tostedt",
+      "web": "www.autoladen-altesland.de"
+    },
+    "vehiclePage": {
+      "backLabel": "Zurück",
+      "priceLabel": "Kaufpreis",
+      "ctaLabel": "Preis & Verfügbarkeit anfragen",
+      "phoneLabel": "Anrufen",
+      "whatsappLabel": "WhatsApp",
+      "note": "Geht direkt an Alex – nicht an ein Portal.",
+      "relatedHeading": "Weitere Fahrzeuge",
+      "previousLabel": "Vorheriges Bild",
+      "nextLabel": "Nächstes Bild",
+      "imageLabel": "Bild",
+      "seoText": "Frag Alex nach Preis und Verfügbarkeit."
+    },
+    "legalLabels": {
+      "backLabel": "← Zurück",
+      "imprintTitle": "Impressum",
+      "privacyTitle": "Datenschutz",
+      "law": "Angaben gemäß § 5 DDG",
+      "provider": "Anbieter",
+      "represented": "Vertreten durch",
+      "ceo": "Geschäftsführer",
+      "contact": "Kontakt",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "web": "Web",
+      "register": "Registereintrag",
+      "vatId": "Umsatzsteuer-ID",
+      "responsible": "Verantwortlich für den Inhalt",
+      "privacyController": "Verantwortlicher",
+      "legalNavigation": "Rechtliches"
+    },
+    "privacySections": [
+      {
+        "heading": "Was die Seite verarbeitet",
+        "paragraphs": [
+          "Beim Absenden einer Anfrage: die Angaben aus dem Formular (Name, Kontaktweg, Nummer bzw. Adresse, Nachricht). Sie werden per E-Mail an {{email}} zugestellt und dort gespeichert. Die Anfrage enthält außerdem die Kennung des verwendeten Kontaktbuttons. Kampagnenangaben werden nur bei erteilter Analyse-Einwilligung mitgegeben.",
+          "Versanddienstleister für Formular-Anfragen: Resend Inc., USA (Auftragsverarbeitung auf Basis der EU-Standardvertragsklauseln).",
+          "Schriften werden von Google Fonts geladen. Dabei wird deine IP-Adresse an Google übermittelt.",
+          "Hosting: Vercel Inc., USA (Auftragsverarbeitung auf Basis der EU-Standardvertragsklauseln). Beim Aufruf werden Server-Logdaten wie IP-Adresse und Zeitpunkt verarbeitet."
+        ]
+      },
+      {
+        "heading": "Google-Bewertungen",
+        "paragraphs": [
+          "Die Kundenbewertungen werden serverseitig über Google Places abgerufen. Dafür wird deine IP-Adresse nicht an die Places API weitergegeben. Beim Laden der Google-Profilbilder stellt dein Browser jedoch eine Verbindung zu Google her; dabei erhält Google insbesondere deine IP-Adresse. Die vollständigen Bewertungen öffnest du über einen externen Link auf Google Maps. Weitere Informationen findest du in der Datenschutzerklärung von Google (https://policies.google.com/privacy)."
+        ]
+      },
+      {
+        "heading": "Deine Rechte",
+        "paragraphs": [
+          "Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch und Datenübertragbarkeit. Kontakt: {{email}} oder per Post an die oben genannte Anschrift."
+        ]
+      }
+    ]
   },
   "fallbackFrontpage": {
     "seoTitle": "Autoladen Altes Land | Dein Auto in Grünendeich finden",
@@ -403,5 +466,32 @@
         }
       ]
     }
+  },
+  "fallbackAboutPage": {
+    "title": "Moin, ich bin Alex.",
+    "subtitle": "Ein Ansprechpartner. Fertig.",
+    "image": "/alex.webp",
+    "imageAlt": "Alex vom Autoladen Altes Land",
+    "lead": "Persönlich, direkt und ohne großes Verkaufstheater.",
+    "paragraphs": [
+      "Mir ist lieber, wir sprechen zehn Minuten vernünftig darüber, was du wirklich brauchst, als dass ich dir drei Hochglanzangebote schicke, die am Ende nicht passen.",
+      "Wenn ich weiß, wonach du suchst, kann ich dir meistens ziemlich schnell sagen, was machbar ist."
+    ],
+    "kicker": "Also: Was soll’s werden?",
+    "ruleHeading": "Warum ein Ansprechpartner reicht",
+    "ruleParagraphs": [
+      "Bei mir bist du nicht an eine bestimmte Marke gebunden und musst dich auch nicht selbst durch unzählige Angebote kämpfen.",
+      "Ich suche das Fahrzeug, das zu deinem Bedarf und deinem Budget passt."
+    ],
+    "ruleEmphasis": "Für Unternehmen genauso wie für Privatkunden.",
+    "ctaLabel": "Kurz mit Alex sprechen",
+    "eyebrow": "Über mich",
+    "backLabel": "Zur Startseite",
+    "seoTitle": "Über Alex | Autoladen Altes Land",
+    "seoDescription": "Lerne Alex vom Autoladen Altes Land kennen. Persönliche, markenunabhängige Fahrzeugberatung für Unternehmen und Privatkunden – direkt und auf Augenhöhe.",
+    "contactText": "Erzähl mir kurz, was du suchst. Den Rest klären wir gemeinsam.",
+    "contactNote": "Unverbindlich, persönlich und ohne Verkaufsdruck.",
+    "phoneLabel": "Einfach anrufen",
+    "whatsappLabel": "Direkt per WhatsApp"
   }
 }

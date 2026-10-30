@@ -16,7 +16,7 @@ const requiredText = (name, title, rows = 3, extra = {}) => ({
 });
 
 const sectionTargets = [
-  { title: 'Über Alex', value: 'alex' },
+  { title: 'Über mich (Unterseite)', value: 'alex' },
   { title: 'Fahrzeuge', value: 'fahrzeuge' },
   { title: 'Ablauf', value: 'ablauf' },
   { title: 'Leasing & Finanzierung', value: 'finanzierung' },
@@ -32,7 +32,7 @@ const navigationLinks = (name, title, { footer = false, mobile = false } = {}) =
           .custom(
             (items) =>
               new Set(items?.map((item) => item.target)).size === 4 ||
-              'Jeder Abschnitt muss genau einmal vorkommen.'
+              'Jedes Ziel muss genau einmal vorkommen.'
           )
       : R.required()
           .min(1)
@@ -72,7 +72,6 @@ export default {
     { name: 'process', title: 'Ablauf' },
     { name: 'rooftent', title: 'Dachzelte' },
     { name: 'finance', title: 'Leasing & Finanzierung' },
-    { name: 'about', title: 'Über Alex' },
     { name: 'reviews', title: 'Google-Rezensionen' },
     { name: 'form', title: 'Anfrage' },
     { name: 'footer', title: 'Footer' },
@@ -182,7 +181,7 @@ export default {
       group: 'navigation',
       fields: [
         requiredString('navigationLabel', 'Navigationsbezeichnung'),
-        navigationLinks('links', 'Sprunglinks'),
+        navigationLinks('links', 'Navigationslinks'),
         requiredString('contactLabel', 'Kontaktbutton'),
         requiredString('whatsappLabel', 'Barrierefreie WhatsApp-Beschriftung'),
       ],
@@ -196,7 +195,7 @@ export default {
         'Erscheint automatisch nach dem Hero. Beschriftungen und Reihenfolge sind hier änderbar.',
       fields: [
         requiredString('label', 'Navigationsbezeichnung'),
-        navigationLinks('links', 'Vier Abschnitte', { mobile: true }),
+        navigationLinks('links', 'Vier Navigationsziele', { mobile: true }),
       ],
     },
     {
@@ -408,9 +407,9 @@ export default {
     },
     {
       name: 'about',
-      title: 'Über Alex',
+      title: 'Bisheriger Über-Alex-Dialog (Archiv)',
       type: 'object',
-      group: 'about',
+      hidden: true,
       fields: [
         requiredString('title', 'Überschrift'),
         requiredString('subtitle', 'Untertitel'),

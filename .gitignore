@@ -28,3 +28,6 @@ old-static-site/
 
 # Local visual verification captures
 .impeccable/review/
+
+# Local content backups (may include unpublished drafts)
+studio/backups/
