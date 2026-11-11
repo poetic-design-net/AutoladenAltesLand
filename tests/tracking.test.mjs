@@ -56,6 +56,7 @@ test('internal routes strip arbitrary parameters while preserving vehicle identi
   assert.equal(safePagePath('/?reach=private'), ' /'.trim());
   assert.equal(safePagePath('/unexpected/private@example.com'), '/other');
   assert.equal(safePagePath('/ueber-mich?email=private@example.com'), '/ueber-mich');
+  assert.equal(safePagePath('/dachzelte?x=1'), '/dachzelte');
   assert.deepEqual(
     linkDetails(
       '/?anfrage=allgemein&aal_source=about_contact',

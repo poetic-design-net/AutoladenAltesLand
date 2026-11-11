@@ -8,8 +8,8 @@
     "whatsapp": "491751574646",
     "email": "alex@autoladen-altesland.de",
     "instagramUrl": "https://www.instagram.com/alex.autoladen/",
-    "featuredVehicleCount": 3,
-    "priceNote": "Kaufpreise netto zzgl. MwSt. für Gewerbe. Streichpreis ist der reguläre Preis.",
+    "featuredVehicleCount": 0,
+    "priceNote": "Nachlässe beziehen sich auf die unverbindliche Preisempfehlung des Herstellers und gelten für Gewerbekunden. Dein konkretes Angebot bekommst du auf Anfrage.",
     "legal": {
       "company": "Autoladen Altes Land GmbH",
       "street": "Johann-Ropers-Trift 10",
@@ -22,15 +22,15 @@
     "vehiclePage": {
       "backLabel": "Zurück",
       "priceLabel": "Kaufpreis",
-      "ctaLabel": "Preis & Verfügbarkeit anfragen",
+      "ctaLabel": "Angebot anfragen",
       "phoneLabel": "Anrufen",
       "whatsappLabel": "WhatsApp",
-      "note": "Geht direkt an Alex – nicht an ein Portal.",
+      "note": "Geht direkt an mich – nicht an ein Portal.",
       "relatedHeading": "Weitere Fahrzeuge",
       "previousLabel": "Vorheriges Bild",
       "nextLabel": "Nächstes Bild",
       "imageLabel": "Bild",
-      "seoText": "Frag Alex nach Preis und Verfügbarkeit."
+      "seoText": "Jetzt Angebot anfragen – deutschlandweite Lieferung inklusive."
     },
     "legalLabels": {
       "backLabel": "← Zurück",
@@ -75,22 +75,22 @@
     ]
   },
   "fallbackFrontpage": {
-    "seoTitle": "Autoladen Altes Land | Dein Auto in Grünendeich finden",
-    "seoDescription": "Alex findet dein passendes Auto: markenunabhängige Beratung, Fahrzeugsuche, Leasing und Finanzierung in Grünendeich im Alten Land. Persönlich für privat und Gewerbe.",
+    "seoTitle": "Transporter & Firmenwagen | Autoladen Altes Land",
+    "seoDescription": "Transporter und Firmenwagen zu starken Konditionen: ein Ansprechpartner, markenunabhängig, mit Leasing und Finanzierung. Deutschlandweite Lieferung inklusive.",
     "seoImage": "/hero-desktop-1672.webp",
     "seoImageAlt": "Alex – dein Ansprechpartner beim Autoladen Altes Land",
     "hero": {
-      "eyebrow": "Persönlich statt Verkaufstheater",
-      "aboutLinkLabel": "Mehr über Alex",
+      "eyebrow": "Transporter & Firmenwagen · Altes Land",
+      "aboutLinkLabel": "Mehr über mich",
       "availability": "Persönlich erreichbar",
       "personTitle": "Moin, ich bin Alex.",
-      "personIntro": "Persönlich, direkt und ohne großes Verkaufstheater.",
+      "personIntro": "Aus Grünendeich, seit 20 Jahren im Automobilhandel. Persönlich für dich da – im Alten Land und in der Elbe-Weser-Region.",
       "moreLabel": "Was das für dich heißt",
       "portrait": "/alex-tall.webp",
       "portraitAlt": "Alex vom Autoladen Altes Land",
       "headline": "Ein Ansprechpartner.",
       "headlineAccent": "Fertig.",
-      "quote": "Gerade wenn Autos nicht dein Tagesgeschäft sind, musst du auch keins daraus machen.",
+      "quote": "Du sagst, was du brauchst. Ich finde das passende Fahrzeug – gewerblich wie privat.",
       "phoneLabel": "Anrufen",
       "whatsappLabel": "WhatsApp",
       "ctaLabel": "Fahrzeugwunsch besprechen",
@@ -100,7 +100,8 @@
       "mobileImageSmall": "/hero-mobile-480.webp",
       "imageAlt": "Alex vom Autoladen Altes Land",
       "whatsappLinkLabel": "Oder direkt per WhatsApp",
-      "vehiclesLinkLabel": "Fahrzeuge ansehen"
+      "vehiclesLinkLabel": "Angebote ansehen",
+      "note": "Deutschlandweite Lieferung inklusive."
     },
     "rooftent": {
       "enabled": true,
@@ -149,7 +150,13 @@
           "alt": "Naturbummler-Dachzelt mit ntv/DISQ-Siegel Deutschlands Qualitäts-Sieger 2026 – Auszeichnung des Herstellers",
           "fit": "contain"
         }
-      ]
+      ],
+      "seoTitle": "Dachzelte | Autoladen Altes Land",
+      "seoDescription": "Dachzelte mit persönlicher Beratung in Grünendeich im Alten Land – passend zu deinem Auto und deinen Plänen.",
+      "teaserText": "Übrigens: Dachzelte bekommst du bei mir auch.",
+      "teaserLinkLabel": "Zu den Dachzelten",
+      "navLabel": "Dachzelte",
+      "backLabel": "Zur Startseite"
     },
     "offers": {
       "sliderLabel": "Fahrzeuge entdecken",
@@ -157,15 +164,16 @@
       "nextLabel": "Weitere Fahrzeuge",
       "heading": "Was gerade geht",
       "intro": "Ein paar Beispiele. Dein Wunschfahrzeug finden wir gemeinsam.",
-      "ctaLabel": "Alle Möglichkeiten besprechen",
+      "ctaLabel": "Anderes Fahrzeug anfragen",
       "allLabel": "alle ansehen",
       "sheetSubtitle": "Beispiele – kein Bestand, kein Katalog.",
-      "priceLabel": "Kaufpreis"
+      "priceLabel": "Kaufpreis",
+      "cardCtaLabel": "Angebot anfragen"
     },
     "intro": {
-      "eyebrow": "Persönlich. Unabhängig. Für dich.",
-      "heading": "Du sagst, was du brauchst.\nAlex findet, was zu dir passt.",
-      "text": "Ich kümmere mich um Angebote, Prüfung, Zulassung, Lieferung und – wenn du möchtest – auch um Leasing oder Finanzierung. Du bekommst alles aus einer Hand und sparst Zeit, Nerven und oft auch Geld.",
+      "eyebrow": "",
+      "heading": "Welcher passt zu deinem Betrieb?",
+      "text": "Andere Größen und Ausstattungen? Frag mich einfach.",
       "promises": [
         {
           "title": "Persönlich beraten",
@@ -176,8 +184,8 @@
           "text": "Ich finde, was wirklich zu dir passt."
         },
         {
-          "title": "Geprüft geliefert",
-          "text": "Sicher unterwegs von Anfang an."
+          "title": "Lieferung inklusive",
+          "text": "Deutschlandweit, ohne zusätzliche Lieferkosten."
         }
       ],
       "benefits": [
@@ -200,36 +208,28 @@
       "promisesLabel": "Was du von mir erwarten kannst"
     },
     "process": {
-      "heading": "Vom ersten Hallo bis zum ersten Grinsen.",
-      "intro": "Du sagst mir, was du suchst. Ich kümmere mich um Angebote, Prüfung, Zulassung und Lieferung.",
+      "heading": "So läuft’s.",
+      "intro": "Drei Schritte – den Rest erledige ich.",
       "steps": [
         {
-          "title": "Kontakt aufnehmen",
-          "text": "Schreib mir oder ruf einfach an – ganz ohne Formulare-Marathon."
+          "title": "Sag mir, was du brauchst.",
+          "text": "Fahrzeug, Ausstattung, Budget – das klären wir gemeinsam."
         },
         {
-          "title": "Wünsche klären",
-          "text": "Ich finde mit dir heraus, welches Fahrzeug wirklich zu dir, deinem Alltag und deinem Budget passt."
+          "title": "Du bekommst dein Angebot.",
+          "text": "Ich suche passende Fahrzeuge. Du entscheidest und bestellst verbindlich."
         },
         {
-          "title": "Angebote erhalten",
-          "text": "Du bekommst ausgewählte, nachvollziehbare Angebote – ohne dich selbst durch unzählige Inserate kämpfen zu müssen."
-        },
-        {
-          "title": "Geprüft, zugelassen & geliefert",
-          "text": "Ich prüfe das Fahrzeug, kümmere mich um die Zulassung und bringe es auf Wunsch direkt zu dir."
-        },
-        {
-          "title": "Einsteigen. Losfahren. Grinsen.",
-          "text": "Ab hier musst du nichts mehr entscheiden. Außer vielleicht, wohin die erste Fahrt geht."
+          "title": "Ich kümmere mich um den Rest.",
+          "text": "Ich beschaffe dein Fahrzeug, organisiere auf Wunsch die Zulassung und lasse es zu dir liefern. Die Lieferung ist inklusive."
         }
       ],
       "ctaLabel": "Fahrzeugwunsch besprechen",
       "finePrint": "Unverbindlich, persönlich und ohne Verkaufsdruck."
     },
     "finance": {
-      "heading": "Dein Auto. Dein Weg.",
-      "intro": "Ob Leasing oder Finanzierung: Gemeinsam finden wir eine Lösung, die zu deinem Budget und deinen Plänen passt – verständlich, transparent und ohne unnötiges Fachchinesisch.",
+      "heading": "Kaufen, finanzieren oder leasen?",
+      "intro": "Ich erstelle dir auf Wunsch auch ein Finanzierungs- oder Leasingangebot über meine Partner. Deinen bisherigen Wagen nehme ich gerne in Zahlung.",
       "comparisonLabel": "oder",
       "ways": [
         {
@@ -265,7 +265,8 @@
       "helpText": "Kein Problem. Ich erkläre dir beide Möglichkeiten anhand deines Wunschfahrzeugs und rechne mit dir durch, welche Variante für dich sinnvoll ist.",
       "ctaLabel": "Möglichkeiten besprechen",
       "finePrint": "Unverbindlich und ohne Finanzierungs-Fachchinesisch.",
-      "legal": "Konkrete Konditionen richten sich unter anderem nach Fahrzeug, Laufzeit, Anzahlung, Fahrleistung, Bonität und Finanzierungspartner. Alle Angebote werden individuell erstellt."
+      "legal": "Konkrete Konditionen richten sich unter anderem nach Fahrzeug, Laufzeit, Anzahlung, Fahrleistung, Bonität und Finanzierungspartner. Alle Angebote werden individuell erstellt.",
+      "compareLabel": "Leasing und Finanzierung im Vergleich"
     },
     "about": {
       "title": "Moin, ich bin Alex.",
@@ -284,10 +285,10 @@
         "Ich suche das Fahrzeug, das zu deinem Bedarf und deinem Budget passt."
       ],
       "ruleEmphasis": "Für Unternehmen genauso wie für Privatkunden.",
-      "ctaLabel": "Kurz mit Alex sprechen"
+      "ctaLabel": "Lass uns kurz sprechen"
     },
     "form": {
-      "title": "Kurz mit Alex sprechen",
+      "title": "Lass uns kurz sprechen",
       "subtitle": "Drei Angaben – mehr brauche ich nicht.",
       "topicLabel": "Worum geht’s?",
       "topics": [
@@ -322,13 +323,13 @@
       "messageLabel": "Kurz dazu",
       "optionalLabel": "– optional",
       "messagePlaceholder": "Was ist dir wichtig?",
-      "submitLabel": "An Alex senden",
+      "submitLabel": "Absenden",
       "submittingLabel": "Wird gesendet …",
-      "finePrint": "Geht direkt an Alex – nicht an ein Portal.",
+      "finePrint": "Geht direkt an mich – nicht an ein Portal.",
       "contextPrefix": "Anfrage zu:",
-      "sendErrorSuffix": "– ruf Alex gern direkt an.",
-      "successTitle": "Ist bei Alex.",
-      "successText": "Er schaut, ob er so etwas findet, und meldet sich persönlich bei dir.",
+      "sendErrorSuffix": "– ruf mich gern direkt an.",
+      "successTitle": "Ist angekommen.",
+      "successText": "Ich schaue, was ich für dich finde, und melde mich persönlich bei dir.",
       "doneLabel": "Fertig",
       "closeLabel": "Schließen",
       "removeContextLabel": "Bezug entfernen"
@@ -339,7 +340,7 @@
       "enabled": true,
       "eyebrow": "Echte Erfahrungen",
       "heading": "Nicht von mir behauptet.\nVon Kunden erzählt.",
-      "intro": "Was Kunden über die Zusammenarbeit mit Alex sagen.",
+      "intro": "Was Kunden über die Zusammenarbeit mit mir sagen.",
       "sourceLabel": "Google Bewertungen",
       "sourceUrl": "https://share.google/gFobC5DRrZ41b2eUf",
       "rating": null,
@@ -384,7 +385,7 @@
           "target": "fahrzeuge"
         },
         {
-          "label": "Über Alex",
+          "label": "Über mich",
           "target": "alex"
         },
         {
@@ -418,7 +419,7 @@
         },
         {
           "question": "Kümmerst du dich auch um Zulassung und Lieferung?",
-          "answer": "Ja. Ich prüfe das Fahrzeug, kümmere mich um die Zulassung und bringe es auf Wunsch direkt zu dir."
+          "answer": "Ja. Ich organisiere auf Wunsch die Zulassung und lasse das Fahrzeug zu dir liefern – deutschlandweit, die Lieferung ist inklusive."
         },
         {
           "question": "Kann ich Leasing oder Finanzierung besprechen?",
@@ -442,14 +443,14 @@
           "target": "finanzierung"
         }
       ],
-      "contactLabel": "Mit Alex sprechen",
-      "whatsappLabel": "Alex auf WhatsApp schreiben"
+      "contactLabel": "Kurz sprechen",
+      "whatsappLabel": "Per WhatsApp schreiben"
     },
     "mobileNavigation": {
       "label": "Schnellnavigation",
       "links": [
         {
-          "label": "Alex",
+          "label": "Über mich",
           "target": "alex"
         },
         {
@@ -484,11 +485,11 @@
       "Ich suche das Fahrzeug, das zu deinem Bedarf und deinem Budget passt."
     ],
     "ruleEmphasis": "Für Unternehmen genauso wie für Privatkunden.",
-    "ctaLabel": "Kurz mit Alex sprechen",
+    "ctaLabel": "Lass uns kurz sprechen",
     "eyebrow": "Über mich",
     "backLabel": "Zur Startseite",
     "seoTitle": "Über Alex | Autoladen Altes Land",
-    "seoDescription": "Lerne Alex vom Autoladen Altes Land kennen. Persönliche, markenunabhängige Fahrzeugberatung für Unternehmen und Privatkunden – direkt und auf Augenhöhe.",
+    "seoDescription": "Moin, ich bin Alex vom Autoladen Altes Land: persönliche, markenunabhängige Fahrzeugberatung für Unternehmen und Privatkunden – direkt und auf Augenhöhe.",
     "contactText": "Erzähl mir kurz, was du suchst. Den Rest klären wir gemeinsam.",
     "contactNote": "Unverbindlich, persönlich und ohne Verkaufsdruck.",
     "phoneLabel": "Einfach anrufen",

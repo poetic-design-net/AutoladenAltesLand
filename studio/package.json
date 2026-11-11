@@ -12,7 +12,7 @@
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
     "migrate": "node seed.js",
-    "sync:homepage": "node sync-homepage.mjs",
+    "sync:revision": "node sync-revision.mjs",
     "import": "node seed.js",
     "import:apply": "node seed.js --apply"
   },

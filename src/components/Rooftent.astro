@@ -32,7 +32,7 @@ const awardSource = httpsUrl(c.awardSourceUrl);
           alt={c.imageAlt}
           width="1600"
           height="800"
-          loading="lazy"
+          fetchpriority="high"
           decoding="async"
         />
         <div class="copy">
@@ -40,20 +40,19 @@ const awardSource = httpsUrl(c.awardSourceUrl);
             <Icon icon={TentIcon} size={32} />
             {c.eyebrow}
           </p>
-          <h2 id="rooftent-title">{c.heading}</h2>
+          <h1 id="rooftent-title">{c.heading}</h1>
           <p class="description">{c.text}</p>
-          <button
-            type="button"
+          {/* Das Anfrageformular liegt auf der Startseite; ?anfrage=dachzelt öffnet es mit dem Thema. */}
+          <a
             class="inquiry"
-            data-view="ask"
-            data-topic="dachzelt"
+            href="/?anfrage=dachzelt&aal_source=rooftent_contact"
             data-track-id="rooftent_contact"
           >
             {c.ctaLabel}
             <span>
               <Icon icon={ArrowRight02Icon} />
             </span>
-          </button>
+          </a>
           <p class="fine">{c.finePrint}</p>
         </div>
       </div>
@@ -201,7 +200,7 @@ const awardSource = httpsUrl(c.awardSourceUrl);
   .eyebrow :global(.ic) {
     flex: none;
   }
-  h2 {
+  h1 {
     white-space: pre-line;
     margin: 22px 0;
     font-size: clamp(32px, 3.6vw, 50px);
@@ -414,7 +413,7 @@ const awardSource = httpsUrl(c.awardSourceUrl);
       z-index: 1;
       pointer-events: none;
     }
-    h2 {
+    h1 {
       font-size: clamp(30px, 7.5vw, 40px);
       margin: 20px 0 16px;
     }

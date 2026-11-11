@@ -1,12 +1,15 @@
 import type { APIRoute } from 'astro';
 import { getAllVehicles } from '../lib/vehicles';
+import { getContent } from '../lib/content';
 import { canonicalUrl, escapeXml } from '../lib/seo';
 
 export const GET: APIRoute = async () => {
-  const vehicles = await getAllVehicles();
+  const [vehicles, { page }] = await Promise.all([getAllVehicles(), getContent()]);
   const paths = [
     '/',
     '/ueber-mich',
+    // Only listed while the page exists; a disabled tent section answers 404.
+    ...(page.rooftent.enabled ? ['/dachzelte'] : []),
     '/impressum',
     '/datenschutz',
     ...vehicles.map((vehicle) => `/fahrzeuge/${encodeURIComponent(vehicle.id)}`),

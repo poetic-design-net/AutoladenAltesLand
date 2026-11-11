@@ -80,10 +80,11 @@ async function main() {
       values: {
         ...v,
         slug: { _type: 'slug', current: v.id },
-        price: v.price.value,
-        priceOld: v.price.old,
-        priceTerms: v.price.terms,
-        verfuegbar: true,
+        price: v.price?.value,
+        priceOld: v.price?.old,
+        priceTerms: v.price?.terms,
+        // New model tiles stay hidden until they are switched on deliberately.
+        verfuegbar: false,
         sortierung: (i + 1) * 10,
       },
     })),

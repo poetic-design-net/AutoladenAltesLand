@@ -1,11 +1,14 @@
 /**
- * Fahrzeuge aus Sanity. Fällt auf die statischen Beispiel-Fahrzeuge in
- * src/data/site.ts zurück, solange in Sanity nichts gepflegt ist oder die
- * Anfrage fehlschlägt – die Seite bleibt damit immer lauffähig.
+ * Fahrzeuge aus Sanity. Fällt auf die Modell-Kacheln in
+ * src/data/vehicle-defaults.json zurück, wenn die Anfrage fehlschlägt –
+ * die Seite bleibt damit immer lauffähig.
  */
 import { createClient } from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
-import { vehicles as fallback, type Vehicle } from '../data/site';
+import defaults from '../data/vehicle-defaults.json';
+import { toVehicle, type VehicleDetail } from './vehicle-view';
+
+export type { VehicleDetail };
 
 const client = createClient({
   projectId: import.meta.env.SANITY_PROJECT_ID ?? 'dgeh1xh8',
@@ -16,50 +19,35 @@ const client = createClient({
 });
 const img = imageUrlBuilder(client);
 
-export type VehicleDetail = Vehicle & { description: string };
-
 const QUERY = `{
   "configured": defined(*[_id == "siteSettings"][0]),
-  "limit": coalesce(*[_id == "siteSettings"][0].featuredVehicleCount, 3),
+  "limit": coalesce(*[_id == "siteSettings"][0].featuredVehicleCount, 0),
   "items": *[_type == "fahrzeug" && verfuegbar == true && defined(slug.current) && defined(name)] | order(sortierung asc, _createdAt asc) {
     "id": slug.current, name, kicker, topic, status, tone,
     image, "alt": image.alt, gallery, features, beschreibung,
-    price, priceOld, priceTerms
+    discount, ctaLabel, price, priceOld, priceTerms
   }
 }`;
 
-const url = (i: any) => img.image(i).width(1200).height(800).fit('crop').auto('format').url();
-
-function map(d: any): VehicleDetail {
-  return {
-    id: d.id,
-    name: d.name,
-    kicker: d.kicker ?? '',
-    topic: d.topic ?? 'firma',
-    status: d.status ?? '',
-    tone: d.tone ?? 'green',
-    image: d.image ? url(d.image) : '',
-    images: (d.gallery ?? []).filter((g: any) => g?.asset).map(url),
-    alt: d.alt ?? d.name,
-    features: d.features ?? [],
-    description: d.beschreibung ?? '',
-    price: {
-      value: d.price ?? 'Preis auf Anfrage',
-      old: d.priceOld || undefined,
-      terms: d.priceTerms ?? '',
-    },
-  };
-}
+const url = (i: any, width: number, height: number) =>
+  img.image(i).width(width).height(height).fit('crop').auto('format').url();
 
 async function load(): Promise<{ all: VehicleDetail[]; limit: number }> {
   try {
     const r = await client.fetch<{ configured: boolean; limit: number; items: any[] }>(QUERY);
-    if (r.configured || r.items.length) return { all: r.items.map(map), limit: r.limit };
+    if (r.configured || r.items.length)
+      return { all: r.items.map((d) => toVehicle(d, url)), limit: r.limit };
   } catch (e) {
     console.warn('[sanity] Fahrzeuge konnten nicht geladen werden, nutze Fallback:', e);
   }
-  // ponytail: Fallback bleibt, bis Sanity befüllt ist – dann kann er weg
-  return { all: fallback.map((v) => ({ ...v, description: '' })), limit: 3 };
+  // ponytail: Nachlässe ändern sich; im Ausfall zeigt die Live-Seite keine Angaben aus dem Code.
+  // Lokal (DEV) bleiben sie sichtbar, damit der Endzustand ohne Sanity prüfbar ist.
+  return {
+    all: defaults.map((v) =>
+      toVehicle({ ...v, discount: import.meta.env.DEV ? (v as any).discount : '' }, url)
+    ),
+    limit: 0,
+  };
 }
 
 /** Alle sichtbaren Fahrzeuge, in Sanity-Reihenfolge */
@@ -67,12 +55,8 @@ export async function getAllVehicles() {
   return (await load()).all;
 }
 
-/** Die auf auf der Startseite gezeigten Fahrzeuge (Anzahl aus Sanity) */
-export async function getFeaturedVehicles() {
+/** Startseite: `featured` für die Kacheln (Anzahl aus Sanity, 0 = alle), `all` für den Anfrage-Bezug */
+export async function getHomepageVehicles() {
   const { all, limit } = await load();
-  return limit > 0 ? all.slice(0, limit) : all;
-}
-
-export async function getVehicle(id: string) {
-  return (await load()).all.find((v) => v.id === id) ?? null;
+  return { all, featured: limit > 0 ? all.slice(0, limit) : all };
 }

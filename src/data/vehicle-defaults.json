@@ -1,52 +1,71 @@
 [
   {
-    "id": "fiat-ducato-kastenwagen",
-    "name": "FIAT DUCATO Kastenwagen",
-    "kicker": "Nutzfahrzeug",
+    "id": "fiat-ducato-l3-h2",
+    "name": "Fiat Ducato L3 H2",
+    "kicker": "Transporter",
     "topic": "transporter",
-    "status": "Sofort verfügbar",
-    "tone": "green",
-    "image": "/veh1.jpg",
-    "alt": "FIAT DUCATO Kastenwagen",
-    "features": [
-      "Für Handwerk & Lieferdienst",
-      "EU-Neuwagen oder Jahreswagen",
-      "Gewerblich & privat"
-    ],
-    "price": {
-      "value": "34.900 €",
-      "terms": "EU-Neuwagen und Jahreswagen"
-    }
+    "discount": "Bis zu 42 % Nachlass",
+    "ctaLabel": "Ducato anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
   },
   {
-    "id": "e-limousine",
-    "name": "Elektrische Limousine",
-    "kicker": "Dienstwagen",
+    "id": "vw-crafter-l2-h2",
+    "name": "VW Crafter L2 H2",
+    "kicker": "Transporter",
+    "topic": "transporter",
+    "discount": "Bis zu 46 % Nachlass",
+    "ctaLabel": "Crafter anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+  },
+  {
+    "id": "renault-master",
+    "name": "Renault Master, z. B. L3 H2",
+    "kicker": "Transporter",
+    "topic": "transporter",
+    "discount": "Bis zu 45 % Nachlass",
+    "ctaLabel": "Master anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+  },
+  {
+    "id": "ford-transit-custom",
+    "name": "Ford Transit Custom, z. B. L2 H1",
+    "kicker": "Transporter",
+    "topic": "transporter",
+    "discount": "Bis zu 38 % Nachlass",
+    "ctaLabel": "Transit Custom anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+  },
+  {
+    "id": "vw-transporter",
+    "name": "VW Transporter, z. B. L1 H1",
+    "kicker": "Transporter",
+    "topic": "transporter",
+    "discount": "Bis zu 36 % Nachlass",
+    "ctaLabel": "Transporter anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+  },
+  {
+    "id": "skoda-octavia",
+    "name": "Škoda Octavia",
+    "kicker": "Firmenwagen",
     "topic": "firma",
-    "status": "Kurzfristig möglich",
-    "tone": "blue",
-    "image": "/veh2.jpg",
-    "alt": "Elektrische Limousine",
-    "features": ["Vollelektrisch", "Als Dienstwagen geeignet", "Privat & gewerblich"],
-    "price": {
-      "value": "42.900 €",
-      "old": "46.900 €",
-      "terms": "Jahreswagen"
-    }
+    "ctaLabel": "Octavia anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Gewerblich & privat"]
   },
   {
-    "id": "kompakt-stromer",
-    "name": "Kompakter Stromer",
-    "kicker": "Alltag & Familie",
-    "topic": "privat",
-    "status": "Auf Anfrage",
-    "tone": "grey",
-    "image": "/veh3.jpg",
-    "alt": "Kompaktes Elektrofahrzeug",
-    "features": ["Vollelektrisch", "Viel Platz für den Alltag", "Privat & gewerblich"],
-    "price": {
-      "value": "27.900 €",
-      "terms": "EU-Neuwagen"
-    }
+    "id": "vw-golf",
+    "name": "VW Golf",
+    "kicker": "Firmenwagen",
+    "topic": "firma",
+    "ctaLabel": "Golf anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Gewerblich & privat"]
+  },
+  {
+    "id": "dacia-spring",
+    "name": "Dacia Spring",
+    "kicker": "Firmenwagen",
+    "topic": "firma",
+    "ctaLabel": "Spring anfragen",
+    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Gewerblich & privat"]
   }
 ]

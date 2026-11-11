@@ -79,11 +79,23 @@ export default {
       rows: 6,
     },
     {
-      name: 'price',
-      title: 'Kaufpreis',
+      name: 'discount',
+      title: 'Nachlass-Hinweis (optional)',
       type: 'string',
-      description: 'z. B. „34.900 €“',
-      validation: (R) => R.required(),
+      description:
+        'z. B. „Bis zu 42 % Nachlass“. Erscheint als Plakette auf der Kachel und ersetzt dort den Status-Text.',
+    },
+    {
+      name: 'ctaLabel',
+      title: 'Button-Text der Kachel (optional)',
+      type: 'string',
+      description: 'z. B. „Ducato anfragen“. Leer = Standardtext aus Startseite → Fahrzeuge.',
+    },
+    {
+      name: 'price',
+      title: 'Kaufpreis (optional)',
+      type: 'string',
+      description: 'z. B. „34.900 €“. Leer lassen, wenn es keinen festen Preis gibt.',
     },
     {
       name: 'priceOld',
@@ -110,9 +122,15 @@ export default {
     { title: 'Reihenfolge', name: 'sort', by: [{ field: 'sortierung', direction: 'asc' }] },
   ],
   preview: {
-    select: { title: 'name', subtitle: 'price', media: 'image', on: 'verfuegbar' },
-    prepare({ title, subtitle, media, on }) {
-      return { title, subtitle: `${on ? '' : 'versteckt · '}${subtitle ?? ''}`, media };
+    select: {
+      title: 'name',
+      discount: 'discount',
+      price: 'price',
+      media: 'image',
+      on: 'verfuegbar',
+    },
+    prepare({ title, discount, price, media, on }) {
+      return { title, subtitle: `${on ? '' : 'versteckt · '}${discount || price || ''}`, media };
     },
   },
 };

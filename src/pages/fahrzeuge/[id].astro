@@ -6,12 +6,15 @@ import {
   ArrowLeft02Icon,
   ArrowRight01Icon,
   Call02Icon,
+  Car03Icon,
+  VanIcon,
   Sent02Icon,
   Tick02Icon,
   WhatsappIcon,
 } from '@hugeicons/core-free-icons';
 import { contactLinks, getSiteSettings } from '../../lib/content';
 import { getAllVehicles } from '../../lib/vehicles';
+import { vehicleDescription } from '../../lib/vehicle-view';
 import { canonicalUrl, SITE_URL } from '../../lib/seo';
 
 const [all, site] = await Promise.all([getAllVehicles(), getSiteSettings()]);
@@ -52,7 +55,7 @@ const structuredData = {
 
 <Base
   title={`${v.name} – ${site.brandName}`}
-  description={`${v.name}: ${v.features.join(', ')}. Kaufpreis ${v.price.value}. ${copy.seoText}`}
+  description={vehicleDescription(v, copy)}
   ogImage={v.image || site.logo}
   ogImageAlt={v.alt || v.name}
   siteName={site.brandName}
@@ -85,10 +88,21 @@ const structuredData = {
             ))
           }
         </div>
-        <span class="status">
-          <span class={`dot tone-${v.tone}`}></span>
-          {v.status}
-        </span>
+        {
+          pics.length === 0 && (
+            <span class="media-empty" aria-hidden="true">
+              <Icon icon={v.topic === 'transporter' ? VanIcon : Car03Icon} />
+            </span>
+          )
+        }
+        {
+          v.status && (
+            <span class="status">
+              <span class={`dot tone-${v.tone}`} />
+              {v.status}
+            </span>
+          )
+        }
         {
           pics.length > 1 && (
             <>
@@ -118,12 +132,17 @@ const structuredData = {
         <span class="kicker">{v.kicker}</span>
         <h1>{v.name}</h1>
 
-        <div class="price">
-          {v.price.old && <span class="p-old">{v.price.old}</span>}
-          <span class="p-new">{v.price.value}</span>
-          <span class="p-unit">{copy.priceLabel}</span>
-        </div>
-        <p class="terms">{v.price.terms}</p>
+        {v.discount && <p class="deal">{v.discount}</p>}
+        {
+          v.price.value && (
+            <div class="price">
+              {v.price.old && <span class="p-old">{v.price.old}</span>}
+              <span class="p-new">{v.price.value}</span>
+              <span class="p-unit">{copy.priceLabel}</span>
+            </div>
+          )
+        }
+        {v.price.terms && <p class="terms">{v.price.terms}</p>}
 
         {
           v.features.length > 0 && (
@@ -147,7 +166,7 @@ const structuredData = {
           data-track-vehicle={v.id}
         >
           <Icon icon={Sent02Icon} />
-          {copy.ctaLabel}
+          {v.ctaLabel || copy.ctaLabel}
           <span class="go"><Icon icon={ArrowRight01Icon} /></span>
         </a>
         <div class="acts">
@@ -174,20 +193,24 @@ const structuredData = {
               <a class="card" href={`/fahrzeuge/${o.id}`}>
                 <span
                   class="card-pic"
-                  style={`background-image:url(${o.image})`}
-                  role="img"
-                  aria-label={o.alt}
+                  style={o.image ? `background-image:url(${o.thumb || o.image})` : undefined}
+                  role={o.image ? 'img' : undefined}
+                  aria-label={o.image ? o.alt : undefined}
                 />
                 <span class="card-txt">
                   <span class="t">{o.name}</span>
-                  <span class="s">
-                    <span class={`dot tone-${o.tone}`} />
-                    {o.status}
-                  </span>
-                  <span class="prow">
-                    {o.price.old && <span class="p-old">{o.price.old}</span>}
-                    <span class="p-new">{o.price.value}</span>
-                  </span>
+                  {(o.discount || o.status) && (
+                    <span class="s">
+                      {!o.discount && <span class={`dot tone-${o.tone}`} />}
+                      {o.discount || o.status}
+                    </span>
+                  )}
+                  {o.price.value && (
+                    <span class="prow">
+                      {o.price.old && <span class="p-old">{o.price.old}</span>}
+                      <span class="p-new">{o.price.value}</span>
+                    </span>
+                  )}
                 </span>
                 <span class="ch">
                   <Icon icon={ArrowRight01Icon} />
@@ -353,6 +376,27 @@ const structuredData = {
     font-weight: 600;
     letter-spacing: -0.035em;
   }
+  .media-empty {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: #9fb0c0;
+  }
+  .media-empty :global(.ic) {
+    width: 96px;
+    height: 96px;
+  }
+  .deal {
+    width: fit-content;
+    margin-top: 20px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+  }
   .price {
     margin-top: 20px;
     display: flex;
@@ -511,6 +555,7 @@ const structuredData = {
     width: 96px;
     height: 80px;
     border-radius: 14px;
+    background-color: var(--surface-2);
     background-size: cover;
     background-position: 50%;
     flex: none;

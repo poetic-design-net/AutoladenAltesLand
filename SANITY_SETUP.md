@@ -4,7 +4,7 @@ Online-Studio: https://studio-aal.vercel.app — Projekt `dgeh1xh8`, Dataset `pr
 
 - **Startseite** öffnet direkt das vorhandene Dokument. Die Reiter enthalten SEO, Einstieg, Navigation, Fahrzeuge, Vorteilsleiste, Ablauf, Dachzelte mit Galerie, Leasing/Finanzierung, Google-Bewertungen, Anfrageformular und Footer inklusive FAQ.
 - **Über mich** verwaltet die Unterseite `/ueber-mich`: Überschriften, persönlicher Einstieg, Foto und Bildbeschreibung, beliebig erweiterbare Absätze, Beratung, Kontaktabschluss sowie SEO. Logo, Ansprechpartner, Telefonnummer, WhatsApp und Rechtliches stammen weiterhin aus den zentralen Einstellungen. „Mehr über Alex“, die mobile Alex-Navigation und der Footer führen auf diese Seite; das alte Alex-Modal entfällt.
-- **Fahrzeuge** verwaltet Angebote, Bilder/Galerien, Beschreibung, Preise, Reihenfolge und Sichtbarkeit. Wenn alle Fahrzeuge ausgeblendet werden, bleibt die Liste leer.
+- **Fahrzeuge** verwaltet Angebote, Bilder/Galerien, Beschreibung, Nachlass-Hinweis oder Preis (beides optional), Button-Text, Reihenfolge und Sichtbarkeit. Wenn alle Fahrzeuge ausgeblendet werden, bleibt die Liste leer.
 - **Website, Kontakt & Rechtliches** enthält Logo, Kontaktinformationen, Instagram, Fahrzeugdetailseiten-Texte, Unternehmensangaben, Impressum-Beschriftungen und Datenschutzabschnitte. `{{email}}` in Datenschutzabsätzen verwendet die zentrale E-Mail-Adresse.
 
 Änderungen mit **Publish / Veröffentlichen** freigeben. Die Website lädt veröffentlichte Inhalte serverseitig; Entwürfe erscheinen nicht öffentlich. Neue Felder und Studio-Menüs benötigen ein Studio-Deployment, normale Textänderungen nicht.
@@ -37,7 +37,7 @@ Anschließend Website und Studio veröffentlichen. Die neue Seite lädt Änderun
 
 Vor jedem Schreibdurchlauf entsteht eine lokale Sicherung unter `studio/backups/` (nicht in Git). Änderungen an vorhandenen Dokumenten sind durch ihre Revision gegen gleichzeitige Bearbeitung geschützt. Keine Dokumente werden gelöscht. Alte Dokumenttypen werden nicht mehr im Studio angeboten.
 
-`npm --prefix studio run migrate` ist ebenfalls nur eine Vorschau. Die älteren `sync-*.mjs` sind historische, gezielte Migrationen; für die allgemeine Einrichtung ausschließlich den neuen Import verwenden.
+`npm --prefix studio run migrate` ist ebenfalls nur eine Vorschau. Die älteren `sync-*.mjs` sind historische, gezielte Migrationen (`sync-revision.mjs` ist der Import der Review-Runde vom November 2026, siehe README); für die allgemeine Einrichtung ausschließlich den neuen Import verwenden.
 
 ## Entwicklung und Veröffentlichung
 

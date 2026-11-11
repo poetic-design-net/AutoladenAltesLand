@@ -17,6 +17,8 @@ const sourceUrl = httpsUrl(content.sourceUrl);
 const writeUrl = httpsUrl(content.writeUrl);
 const items = latestFiveStarReviews(content.items, sourceUrl);
 const summary = reviewSummary(content.rating, content.count, content.verifiedAt);
+// Ohne Rezensionen und ohne geprüfte Gesamtwertung nichts ankündigen: nur ein schmaler Verweis.
+const compact = items.length === 0 && !summary;
 const formatDate = (date: string) =>
   new Date(`${date}T12:00:00Z`).toLocaleDateString('de-DE', {
     day: 'numeric',
@@ -37,72 +39,79 @@ const initials = (name: string) =>
 {
   content.enabled && sourceUrl && (
     <section
-      class="reviews"
+      class:list={['reviews', { 'reviews--compact': compact }]}
       id="bewertungen"
       aria-labelledby="reviews-title"
       data-track-section="reviews"
     >
-      <div class="reviews-head">
-        <div>
-          <span class="reviews-label">{content.eyebrow}</span>
-          <h2 id="reviews-title">{content.heading}</h2>
-          <p class="reviews-intro">{content.intro}</p>
-        </div>
-        <a
-          class="reviews-summary"
-          href={sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-track-id="reviews_summary"
-        >
-          <span class="reviews-source">
-            {content.live ? (
-              <span class="google-attribution" translate="no">
-                Google Maps
-              </span>
-            ) : (
-              content.sourceLabel
-            )}
-            <Icon icon={LinkSquare01Icon} />
-          </span>
-          {summary && (
-            <>
-              <span class="reviews-score">
-                <strong>
-                  {summary.rating.toLocaleString('de-DE', {
-                    minimumFractionDigits: 1,
-                    maximumFractionDigits: 1,
-                  })}
-                </strong>
-                <span
-                  class="stars aggregate-stars"
-                  role="img"
-                  aria-label={`${summary.rating} von 5 Sternen`}
-                >
-                  <span class="stars stars-base" aria-hidden="true">
-                    {Array.from({ length: 5 }, () => (
-                      <Icon icon={StarIcon} />
-                    ))}
-                  </span>
+      {compact && (
+        <h2 id="reviews-title" class="reviews-compact-title">
+          {content.sourceLabel}
+        </h2>
+      )}
+      {!compact && (
+        <div class="reviews-head">
+          <div>
+            <span class="reviews-label">{content.eyebrow}</span>
+            <h2 id="reviews-title">{content.heading}</h2>
+            <p class="reviews-intro">{content.intro}</p>
+          </div>
+          <a
+            class="reviews-summary"
+            href={sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-track-id="reviews_summary"
+          >
+            <span class="reviews-source">
+              {content.live ? (
+                <span class="google-attribution" translate="no">
+                  Google Maps
+                </span>
+              ) : (
+                content.sourceLabel
+              )}
+              <Icon icon={LinkSquare01Icon} />
+            </span>
+            {summary && (
+              <>
+                <span class="reviews-score">
+                  <strong>
+                    {summary.rating.toLocaleString('de-DE', {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 1,
+                    })}
+                  </strong>
                   <span
-                    class="stars stars-fill"
-                    style={`width:${(summary.rating / 5) * 100}%`}
-                    aria-hidden="true"
+                    class="stars aggregate-stars"
+                    role="img"
+                    aria-label={`${summary.rating} von 5 Sternen`}
                   >
-                    {Array.from({ length: 5 }, () => (
-                      <Icon icon={StarIcon} />
-                    ))}
+                    <span class="stars stars-base" aria-hidden="true">
+                      {Array.from({ length: 5 }, () => (
+                        <Icon icon={StarIcon} />
+                      ))}
+                    </span>
+                    <span
+                      class="stars stars-fill"
+                      style={`width:${(summary.rating / 5) * 100}%`}
+                      aria-hidden="true"
+                    >
+                      {Array.from({ length: 5 }, () => (
+                        <Icon icon={StarIcon} />
+                      ))}
+                    </span>
                   </span>
                 </span>
-              </span>
-              <span class="reviews-count">
-                {summary.count.toLocaleString('de-DE')} Rezensionen insgesamt
-              </span>
-              <span class="reviews-date">Stand: {formatDate(summary.date)}</span>
-            </>
-          )}
-        </a>
-      </div>
+                <span class="reviews-count">
+                  {summary.count.toLocaleString('de-DE')} Rezensionen insgesamt
+                </span>
+                <span class="reviews-date">Stand: {formatDate(summary.date)}</span>
+              </>
+            )}
+          </a>
+        </div>
+      )}
 
       {items.length > 0 ? (
         <>
@@ -290,6 +299,33 @@ const initials = (name: string) =>
   .reviews-terms a {
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+  .reviews.reviews--compact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 24px;
+    max-width: 1240px;
+    padding: 20px 28px;
+    border-radius: 12px;
+  }
+  .reviews--compact .reviews-compact-title {
+    margin: 0;
+    white-space: normal;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .reviews--compact .reviews-empty {
+    flex: 1 1 240px;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+  }
+  .reviews--compact .reviews-bottom {
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
   .reviews {
     width: 100%;

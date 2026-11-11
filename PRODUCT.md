@@ -16,11 +16,11 @@ Alex runs the business himself. Provider-facing copy uses first-person singular,
 
 ## Capabilities and Constraints
 
-Astro renders the website; Sanity manages its content. Vehicle enquiries use the existing contact dialog. The user confirmed on 2026-09-04 that Alex also sells rooftop tents. The rooftop-tent CTA starts a general enquiry, not an online purchase. Prices, inventory and rental availability are not supplied.
+Astro renders the website; Sanity manages its content. Vehicle enquiries use the existing contact dialog. The user confirmed on 2026-09-04 that Alex also sells rooftop tents. Rooftop tents live on their own page `/dachzelte` (moved off the homepage on 2026-11-11); the homepage only links there. The rooftop-tent CTA starts a general enquiry, not an online purchase. Prices, inventory and rental availability are not supplied.
 
 ## Brand Commitments
 
-Preserve the supplied logo, original photographs, existing website identity, working process section and financing section. Mobile navigation stays. The mobile hero uses its original spacious photo composition, without forcing the whole hero into one viewport.
+Preserve the supplied logo, original photographs and existing website identity. After the November 2026 client review the user approved a 3–5 step process (same road design) and a compact financing block with a collapsible comparison; do not restore the long versions. Vehicle tiles are model offers with an optional discount label; never show invented prices. Mobile navigation stays. The mobile hero uses its original spacious photo composition, without forcing the whole hero into one viewport.
 
 ## Evidence on Hand
 

@@ -10,11 +10,12 @@ Unter **Startseite**:
 - **Navigation**: Desktop-Links, Kontaktbutton und Beschriftung/Reihenfolge der mobilen Bottom-Navigation.
 - **Einstieg**: Desktop- und Mobile-Hero-Grafik, Alternativtext, Überschrift, Einleitung und Buttons.
 - **Vorstellung & Vorteile**: Intro, drei Aussagen unter dem Hero und drei Vorteile inklusive Symbol.
-- **Fahrzeuge**, **Ablauf**, **Leasing & Finanzierung**, **Über Alex**, **Anfrage**: jeweilige Texte und Beschriftungen.
+- **Fahrzeuge**, **Ablauf** (3 bis 5 Schritte), **Leasing & Finanzierung**, **Anfrage**: jeweilige Texte und Beschriftungen. Die Alex-Leiste steht unter **Einstieg**.
+- **Dachzelte**: Inhalte der Unterseite `/dachzelte` sowie Hinweis und Footer-Link auf der Startseite.
 - **Footer**: Abschlusssatz, Links, WhatsApp-Beschriftung und Fragen & Antworten.
 
 Unter **Website**: Logo, Name, Telefonnummer, WhatsApp, E-Mail und Preis-Hinweis.
-Unter **Fahrzeuge**: Bilder, Preise, Verfügbarkeit, Merkmale und Sortierung.
+Unter **Fahrzeuge**: Bilder, Nachlass-Hinweis oder Preis (beides optional), Button-Text, Verfügbarkeit, Merkmale und Sortierung.
 Unter **Über mich → Vita**: die Stationen der Timeline mit Zeitraum, Tätigkeit, Ort, Beschreibung und Reihenfolge. Die drei gekennzeichneten Platzhalter können direkt ersetzt werden.
 
 Änderungen im Studio **veröffentlichen**. Die Website lädt die veröffentlichten Inhalte serverseitig ohne Sanity-CDN-Cache. Für reine Inhaltsänderungen ist kein Code-Deployment erforderlich. Schemaänderungen erfordern dagegen einen neuen Build und ein Deployment des Studios.
@@ -51,21 +52,21 @@ Beide Vercel-Projekte sind mit `poetic-design-net/AutoladenAltesLand` verbunden 
 
 Andere Branches, beispielsweise `relaunch`, erzeugen Vorschau-Deployments. Einen geprüften Stand nach `main` übernehmen und pushen; anschließend die Deployment-Ergebnisse beider Projekte prüfen. Ein separater manueller CLI-Upload ist nicht erforderlich. Sanity-Inhaltsimporte sind kein Build-Schritt und laufen beim Deployment nicht erneut.
 
-## Inhaltssynchronisierung dieses Relaunches
+## Inhalte der Review-Runde (November 2026)
 
-`src/data/content-defaults.json` enthält gemeinsame Fallback-Inhalte für Website und Import. `src/lib/content.ts` verbindet diese mit veröffentlichten Sanity-Inhalten und erzeugt die Bild-URLs.
+`src/data/content-defaults.json` enthält die Fallback-Texte, `src/data/vehicle-defaults.json` die acht Modell-Kacheln. `src/lib/content.ts` verbindet die Fallbacks mit den veröffentlichten Sanity-Inhalten.
 
 ```sh
-# Nur lesen: zeigt die geplanten Änderungen
-node studio/sync-homepage.mjs
-
-# Explizit veröffentlichen: Hero-Assets und Relaunch-Inhalte
-node studio/sync-homepage.mjs --apply
+node studio/sync-revision.mjs                    # Vorschau: alt → neu je Feld, schreibt nichts
+node studio/sync-revision.mjs --apply            # Texte setzen, Kacheln versteckt anlegen
+node studio/sync-revision.mjs --apply --golive   # Platzhalter aus, Kacheln an, Preis-Hinweis neu
 ```
 
-Der Import benötigt `SANITY_TOKEN` aus `studio/.env`. Er sichert die Startseiten-Dokumente in einem temporären Verzeichnis, ergänzt fehlende Felder, setzt die beiden gelieferten Hero-Bilder und die vorgesehenen Ich-Texte. Bestehende Fahrzeug- und Website-Dokumente bleiben unberührt. Entwürfe bleiben Entwürfe; Revisionsprüfung schützt vor parallelen Änderungen.
+Reihenfolge: **erst Code und Studio live, dann Inhalte.** Der alte Code kann weder drei Ablauf-Schritte noch Fahrzeuge ohne Preis darstellen. Das Skript benötigt `SANITY_TOKEN` in `studio/.env`, sichert nach `studio/backups/` und ersetzt nur Texte, die noch dem früheren Standard entsprechen; im Studio geänderte Stellen meldet es und lässt sie stehen (`--force` überschreibt). Es ist ein einmaliger Import, kein Deployment-Schritt.
 
-Dies ist ein gezielter Relaunch-Import, **kein regelmäßiger Deployment-Schritt**: er setzt ausgewählte Texte und Hero-Bilder erneut auf diesen Stand. Nach redaktionellen Änderungen nicht ungeprüft erneut ausführen. Für die allgemeine Einrichtung verwendet das inzwischen aktualisierte `studio/seed.js` einen ergänzenden Import, der bestehende Änderungen bewahrt. Anleitung und Vorschau-Befehl stehen in [SANITY_SETUP.md](SANITY_SETUP.md).
+Endzustand ohne Sanity ansehen: `SANITY_DATASET=vorschau npm run dev` erzwingt die lokalen Fallbacks samt acht Kacheln.
+
+Das frühere `studio/sync-homepage.mjs` wurde entfernt; mit den neuen Standardwerten hätte ein erneuter Lauf Inhalte beschädigt.
 
 ## Hero-Bilder
 

@@ -1,4 +1,3 @@
-import vehicleDefaults from './vehicle-defaults.json';
 export const legal = {
   company: 'Autoladen Altes Land GmbH',
   street: 'Johann-Ropers-Trift 10',
@@ -21,12 +20,18 @@ export type Vehicle = {
   status: string;
   tone: Tone;
   image: string;
+  /** Kleinere Fassung für Kacheln */
+  thumb?: string;
   alt: string;
   /** Weitere Bilder für den Slider auf der Detailseite */
   images?: string[];
   features: string[];
+  /** z. B. „Bis zu 42 % Nachlass“ – ersetzt auf Kacheln die Status-Plakette */
+  discount?: string;
+  /** Button-Text der Kachel, z. B. „Ducato anfragen“ */
+  ctaLabel?: string;
   /**
-   * Kaufpreis. `old` ist optional und muss der tatsächlich verlangte reguläre
+   * Kaufpreis; `value` ist leer, wenn es keinen festen Preis gibt. `old` ist optional und muss der tatsächlich verlangte reguläre
    * Preis sein – ein Streichpreis ohne echten Bezugspreis ist nicht zulässig.
    */
   price: {
@@ -36,6 +41,3 @@ export type Vehicle = {
     terms: string;
   };
 };
-
-/** Beispiel-Fahrzeuge, solange in Sanity nichts gepflegt ist. */
-export const vehicles = vehicleDefaults as Vehicle[];

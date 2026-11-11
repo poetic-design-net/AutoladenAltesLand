@@ -17,3 +17,7 @@ Desktop (1440×900), mobile (390×844), horizontal gallery and full-image dialog
 The detector's missing-src warning is intentional: the closed lightbox has no source until an image is selected; JS assigns src/alt before `showModal()`, avoiding a large unused initial download. Original links work without JavaScript. New color/size advisories correspond to the supplied banner design, not unrelated global changes.
 
 The additional award photo/note uses `node studio/sync-rooftent-award.mjs [--apply]`: additive, backed up and revision guarded; no replacement of existing gallery images. The nature eyebrow is “Raus in die Natur.” in both Sanity and defaults.
+
+## Update 2026-11-11: own page
+
+After the client review the banner and gallery moved from the homepage to `/dachzelte` (`src/pages/dachzelte.astro`, same `Rooftent.astro` and the same Sanity fields under Startseite → Dachzelte). The homepage keeps a one-line pointer before the footer and a footer link. The inquiry button is a link to `/?anfrage=dachzelt&aal_source=rooftent_contact`, which opens the homepage form with the `dachzelt` topic. The Sanity switch hides page, pointer, footer link and sitemap entry together. `/dachzelte` shares its path with the static folder `public/dachzelte/`; `tests/rooftent.test.mjs` checks that both the page and an image resolve.

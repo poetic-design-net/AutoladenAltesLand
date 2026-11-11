@@ -42,17 +42,27 @@ test('rooftent defaults keep original photos and an attributed manufacturer awar
   }
 });
 
-test('rendered divider follows process and has five enlargeable gallery images', async () => {
-  const response = await fetch('http://localhost:4321/');
+test('rooftop tents live on their own page; the homepage only links there', async () => {
+  const origin = process.env.TEST_ORIGIN || 'http://localhost:4321';
+  const response = await fetch(`${origin}/dachzelte`);
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.ok(html.indexOf('id="ablauf"') < html.indexOf('id="dachzelte"'));
-  assert.ok(html.indexOf('id="dachzelte"') < html.indexOf('id="finanzierung"'));
-  assert.match(html, /data-topic="dachzelt"/);
+  assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
+  assert.match(html, /href="\/\?anfrage=dachzelt&(amp;)?aal_source=rooftent_contact"/);
   assert.match(html, /data-track-id="rooftent_contact"/);
   assert.equal((html.match(/data-gallery-image/g) || []).length, 5);
   assert.match(html, /data-fit="contain"/);
   assert.match(html, /rooftent_award_source/);
-  assert.match(html, /data-val="dachzelt"/);
   assert.match(html, /class="viewer"/);
+  // Static tent images share the /dachzelte/ path prefix with the page.
+  const image = await fetch(`${origin}/dachzelte/dachzelt-bulli-see-800.webp`);
+  assert.equal(image.status, 200);
+  assert.match(image.headers.get('content-type') || '', /image\/webp/);
+
+  const home = await (await fetch(`${origin}/`)).text();
+  assert.doesNotMatch(home, /id="dachzelte"/);
+  assert.doesNotMatch(home, /data-gallery-image/);
+  assert.match(home, /href="\/dachzelte"/);
+  assert.match(home, /data-val="dachzelt"/);
+  assert.ok(home.indexOf('id="ablauf"') < home.indexOf('id="finanzierung"'));
 });

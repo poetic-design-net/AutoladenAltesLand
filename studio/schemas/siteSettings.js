@@ -290,8 +290,8 @@ export default {
       type: 'number',
       group: 'vehicles',
       description:
-        'Anzahl im horizontalen Startseiten-Slider. 0 = alle sichtbaren Fahrzeuge; die Reihenfolge wird am Fahrzeug festgelegt.',
-      initialValue: 3,
+        'Anzahl der Kacheln auf der Startseite. 0 = alle sichtbaren Fahrzeuge; die Reihenfolge wird am Fahrzeug festgelegt.',
+      initialValue: 0,
       validation: (R) => R.required().min(0).integer(),
     },
     {

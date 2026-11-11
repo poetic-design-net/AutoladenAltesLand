@@ -64,6 +64,8 @@ export async function getContent(): Promise<{
     const about = merge(fallbackAboutPage, aboutSource);
     about.image = heroImageUrl(aboutSource?.image, fallbackAboutPage.image, 1600);
     about.imageAlt = aboutSource?.image?.alt || about.imageAlt;
+    // ponytail: Eine im Studio geleerte Zusatzzeile heißt „ausblenden“, nicht „Standardtext“.
+    if (raw.page) page.hero.note = raw.page.hero?.note ?? '';
     const tent = raw.page?.rooftent;
     page.rooftent.image = heroImageUrl(tent?.image, fallbackFrontpage.rooftent.image, 1600);
     page.rooftent.imageSmall = heroImageUrl(
@@ -111,8 +113,8 @@ export async function getContent(): Promise<{
     page.hero.portrait = imageUrl(
       raw.page?.hero?.portrait,
       fallbackFrontpage.hero.portrait,
-      960,
-      1440
+      240,
+      360
     );
     page.hero.portraitAlt =
       raw.page?.hero?.portrait?.alt || `${site.contactName} vom ${site.brandName}`;
