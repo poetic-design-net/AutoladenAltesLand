@@ -6,7 +6,11 @@
     "topic": "transporter",
     "discount": "Bis zu 42 % Nachlass",
     "ctaLabel": "Ducato anfragen",
-    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+    "features": [
+      "Lieferung inklusive",
+      "Kauf, Leasing oder Finanzierung",
+      "Andere Größen auf Anfrage"
+    ]
   },
   {
     "id": "vw-crafter-l2-h2",
@@ -15,7 +19,11 @@
     "topic": "transporter",
     "discount": "Bis zu 46 % Nachlass",
     "ctaLabel": "Crafter anfragen",
-    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+    "features": [
+      "Lieferung inklusive",
+      "Kauf, Leasing oder Finanzierung",
+      "Andere Größen auf Anfrage"
+    ]
   },
   {
     "id": "renault-master",
@@ -24,7 +32,11 @@
     "topic": "transporter",
     "discount": "Bis zu 45 % Nachlass",
     "ctaLabel": "Master anfragen",
-    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+    "features": [
+      "Lieferung inklusive",
+      "Kauf, Leasing oder Finanzierung",
+      "Andere Größen auf Anfrage"
+    ]
   },
   {
     "id": "ford-transit-custom",
@@ -33,7 +45,11 @@
     "topic": "transporter",
     "discount": "Bis zu 38 % Nachlass",
     "ctaLabel": "Transit Custom anfragen",
-    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+    "features": [
+      "Lieferung inklusive",
+      "Kauf, Leasing oder Finanzierung",
+      "Andere Größen auf Anfrage"
+    ]
   },
   {
     "id": "vw-transporter",
@@ -42,7 +58,11 @@
     "topic": "transporter",
     "discount": "Bis zu 36 % Nachlass",
     "ctaLabel": "Transporter anfragen",
-    "features": ["Lieferung inklusive", "Kauf, Leasing oder Finanzierung", "Andere Größen auf Anfrage"]
+    "features": [
+      "Lieferung inklusive",
+      "Kauf, Leasing oder Finanzierung",
+      "Andere Größen auf Anfrage"
+    ]
   },
   {
     "id": "skoda-octavia",

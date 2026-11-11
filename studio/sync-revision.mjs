@@ -87,6 +87,7 @@ const PLAN = [
       'form.successText',
       'header.contactLabel',
       'header.whatsappLabel',
+      'header.links',
       'footer.links',
       'mobileNavigation.links',
       'faq.items',
@@ -95,7 +96,6 @@ const PLAN = [
       'rooftent.backLabel',
       'rooftent.teaserText',
       'rooftent.teaserLinkLabel',
-      'rooftent.navLabel',
     ],
   },
   {

@@ -20,6 +20,7 @@ const sectionTargets = [
   { title: 'Fahrzeuge', value: 'fahrzeuge' },
   { title: 'Ablauf', value: 'ablauf' },
   { title: 'Leasing & Finanzierung', value: 'finanzierung' },
+  { title: 'Dachzelte (Unterseite)', value: 'dachzelte' },
 ];
 const navigationLinks = (name, title, { footer = false, mobile = false } = {}) => ({
   name,
@@ -28,15 +29,16 @@ const navigationLinks = (name, title, { footer = false, mobile = false } = {}) =
   validation: (R) =>
     mobile
       ? R.required()
-          .length(4)
+          .min(4)
+          .max(5)
           .custom(
             (items) =>
-              new Set(items?.map((item) => item.target)).size === 4 ||
-              'Jedes Ziel muss genau einmal vorkommen.'
+              new Set(items?.map((item) => item.target)).size === items?.length ||
+              'Jedes Ziel darf nur einmal vorkommen.'
           )
       : R.required()
           .min(1)
-          .max(footer ? 8 : 4),
+          .max(footer ? 8 : 5),
   of: [
     {
       type: 'object',
@@ -110,7 +112,6 @@ export default {
         requiredString('backLabel', 'Unterseite – Link zurück zur Startseite'),
         requiredString('teaserText', 'Startseite – Hinweis auf die Dachzelt-Seite'),
         requiredString('teaserLinkLabel', 'Startseite – Linktext zur Dachzelt-Seite'),
-        requiredString('navLabel', 'Footer – Linktext zur Dachzelt-Seite'),
         requiredString('galleryLabel', 'Galerieüberschrift'),
         requiredString('galleryNote', 'Galerie-Kurztext'),
         requiredString('openLabel', 'Bild öffnen – Beschriftung'),
@@ -206,7 +207,7 @@ export default {
         'Erscheint automatisch nach dem Hero. Beschriftungen und Reihenfolge sind hier änderbar.',
       fields: [
         requiredString('label', 'Navigationsbezeichnung'),
-        navigationLinks('links', 'Vier Navigationsziele', { mobile: true }),
+        navigationLinks('links', 'Vier oder fünf Navigationsziele', { mobile: true }),
       ],
     },
     {

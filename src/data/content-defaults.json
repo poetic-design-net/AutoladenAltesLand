@@ -155,7 +155,6 @@
       "seoDescription": "Dachzelte mit persönlicher Beratung in Grünendeich im Alten Land – passend zu deinem Auto und deinen Plänen.",
       "teaserText": "Übrigens: Dachzelte bekommst du bei mir auch.",
       "teaserLinkLabel": "Zu den Dachzelten",
-      "navLabel": "Dachzelte",
       "backLabel": "Zur Startseite"
     },
     "offers": {
@@ -401,6 +400,10 @@
           "target": "finanzierung"
         },
         {
+          "label": "Dachzelte",
+          "target": "dachzelte"
+        },
+        {
           "label": "Kontakt",
           "target": "ask"
         }
@@ -441,6 +444,10 @@
         {
           "label": "Leasing & Finanzierung",
           "target": "finanzierung"
+        },
+        {
+          "label": "Dachzelte",
+          "target": "dachzelte"
         }
       ],
       "contactLabel": "Kurz sprechen",
@@ -464,6 +471,10 @@
         {
           "label": "Finanzierung",
           "target": "finanzierung"
+        },
+        {
+          "label": "Dachzelte",
+          "target": "dachzelte"
         }
       ]
     }

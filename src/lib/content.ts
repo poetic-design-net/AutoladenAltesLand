@@ -136,6 +136,18 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   return (await getContent()).site;
 }
 
+/** Navigationsziele aus Sanity: zwei Unterseiten, sonst Abschnitte der Startseite. */
+export function navHref(target: string, home = true) {
+  if (target === 'alex') return '/ueber-mich';
+  if (target === 'dachzelte') return '/dachzelte';
+  return `${home ? '' : '/'}#${target}`;
+}
+
+/** Der Dachzelt-Link verschwindet überall, sobald die Seite in Sanity ausgeschaltet ist. */
+export function navLinks<T extends { target: string }>(links: T[], page: Frontpage) {
+  return links.filter((link) => link.target !== 'dachzelte' || page.rooftent.enabled);
+}
+
 export function contactLinks(site: SiteSettings) {
   return {
     telHref: site.phone ? `tel:${site.phone.replace(/[^+\d]/g, '')}` : null,

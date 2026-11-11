@@ -42,6 +42,15 @@ test('rooftent defaults keep original photos and an attributed manufacturer awar
   }
 });
 
+test('default navigation offers the tent page in header, mobile bar and footer', async () => {
+  const { fallbackFrontpage: page } = JSON.parse(
+    await readFile(new URL('../src/data/content-defaults.json', import.meta.url), 'utf8')
+  );
+  for (const links of [page.header.links, page.mobileNavigation.links, page.footer.links])
+    assert.ok(links.some((link) => link.target === 'dachzelte'));
+  assert.equal(page.mobileNavigation.links.length, 5);
+});
+
 test('rooftop tents live on their own page; the homepage only links there', async () => {
   const origin = process.env.TEST_ORIGIN || 'http://localhost:4321';
   const response = await fetch(`${origin}/dachzelte`);
@@ -62,7 +71,12 @@ test('rooftop tents live on their own page; the homepage only links there', asyn
   const home = await (await fetch(`${origin}/`)).text();
   assert.doesNotMatch(home, /id="dachzelte"/);
   assert.doesNotMatch(home, /data-gallery-image/);
+  // The pointer is always there; navigation links come from Sanity (see the defaults test).
   assert.match(home, /href="\/dachzelte"/);
+  // Sub-pages share the homepage footer and reach its dialogs through links.
+  assert.match(html, /class="foot[ "]/);
+  assert.match(html, /href="\/\?dialog=faq"/);
+  assert.match(html, /href="\/#fahrzeuge"/);
   assert.match(home, /data-val="dachzelt"/);
   assert.ok(home.indexOf('id="ablauf"') < home.indexOf('id="finanzierung"'));
 });
