@@ -244,14 +244,12 @@ export default {
       title: 'Name',
       type: 'string',
       group: 'brand',
-      validation: (R) => R.required(),
     },
     {
       name: 'contactName',
       title: 'Ansprechpartner',
       type: 'string',
       group: 'brand',
-      validation: (R) => R.required(),
     },
     {
       name: 'logo',
@@ -300,7 +298,6 @@ export default {
       type: 'text',
       rows: 2,
       group: 'vehicles',
-      validation: (R) => R.required(),
     },
   ],
   preview: { prepare: () => ({ title: 'Website' }) },

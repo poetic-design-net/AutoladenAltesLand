@@ -1,17 +1,12 @@
-const requiredString = (name, title, extra = {}) => ({
-  name,
-  title,
-  type: 'string',
-  validation: (R) => R.required(),
-  ...extra,
-});
+// Texte sind bewusst keine Pflichtfelder: Ein leeres Feld zeigt auf der Website den
+// Standardtext (merge() in src/lib/content.ts) und darf das Veröffentlichen nicht blockieren.
+const stringField = (name, title, extra = {}) => ({ name, title, type: 'string', ...extra });
 
-const requiredText = (name, title, rows = 3, extra = {}) => ({
+const textField = (name, title, rows = 3, extra = {}) => ({
   name,
   title,
   type: 'text',
   rows,
-  validation: (R) => R.required(),
   ...extra,
 });
 
@@ -43,8 +38,8 @@ const navigationLinks = (name, title, { footer = false, mobile = false } = {}) =
     {
       type: 'object',
       fields: [
-        requiredString('label', 'Beschriftung'),
-        requiredString('target', 'Ziel', {
+        stringField('label', 'Beschriftung'),
+        stringField('target', 'Ziel', {
           options: {
             list: footer
               ? [
@@ -91,12 +86,12 @@ export default {
           type: 'boolean',
           initialValue: true,
         },
-        requiredString('eyebrow', 'Hinweis über der Überschrift'),
-        requiredText('heading', 'Überschrift (Zeilenumbruch möglich)', 2),
-        requiredText('text', 'Beschreibung'),
-        requiredString('ctaLabel', 'Anfragebutton'),
-        requiredString('topicLabel', 'Thema im Anfrageformular'),
-        requiredString('finePrint', 'Hinweis unter dem Button'),
+        stringField('eyebrow', 'Hinweis über der Überschrift'),
+        textField('heading', 'Überschrift (Zeilenumbruch möglich)', 2),
+        textField('text', 'Beschreibung'),
+        stringField('ctaLabel', 'Anfragebutton'),
+        stringField('topicLabel', 'Thema im Anfrageformular'),
+        stringField('finePrint', 'Hinweis unter dem Button'),
         {
           name: 'image',
           title: 'Bannermotiv',
@@ -104,20 +99,20 @@ export default {
           options: { hotspot: true },
           description:
             'Breites Motiv mit Dachzelt rechts. Text und dunkler Verlauf werden von der Website ergänzt.',
-          fields: [requiredString('alt', 'Bildbeschreibung')],
+          fields: [stringField('alt', 'Bildbeschreibung')],
           validation: (R) => R.required(),
         },
-        requiredString('seoTitle', 'Unterseite /dachzelte – Seitentitel'),
-        requiredText('seoDescription', 'Unterseite /dachzelte – Meta-Beschreibung', 2),
-        requiredString('backLabel', 'Unterseite – Link zurück zur Startseite'),
-        requiredString('teaserText', 'Startseite – Hinweis auf die Dachzelt-Seite'),
-        requiredString('teaserLinkLabel', 'Startseite – Linktext zur Dachzelt-Seite'),
-        requiredString('galleryLabel', 'Galerieüberschrift'),
-        requiredString('galleryNote', 'Galerie-Kurztext'),
-        requiredString('openLabel', 'Bild öffnen – Beschriftung'),
-        requiredString('closeLabel', 'Galerie schließen – Beschriftung'),
-        requiredString('previousLabel', 'Vorheriges Bild – Beschriftung'),
-        requiredString('nextLabel', 'Nächstes Bild – Beschriftung'),
+        stringField('seoTitle', 'Unterseite /dachzelte – Seitentitel'),
+        textField('seoDescription', 'Unterseite /dachzelte – Meta-Beschreibung', 2),
+        stringField('backLabel', 'Unterseite – Link zurück zur Startseite'),
+        stringField('teaserText', 'Startseite – Hinweis auf die Dachzelt-Seite'),
+        stringField('teaserLinkLabel', 'Startseite – Linktext zur Dachzelt-Seite'),
+        stringField('galleryLabel', 'Galerieüberschrift'),
+        stringField('galleryNote', 'Galerie-Kurztext'),
+        stringField('openLabel', 'Bild öffnen – Beschriftung'),
+        stringField('closeLabel', 'Galerie schließen – Beschriftung'),
+        stringField('previousLabel', 'Vorheriges Bild – Beschriftung'),
+        stringField('nextLabel', 'Nächstes Bild – Beschriftung'),
         {
           name: 'awardText',
           title: 'Hersteller-Auszeichnung – Hinweis',
@@ -149,7 +144,7 @@ export default {
                   options: { hotspot: true },
                   validation: (R) => R.required(),
                 },
-                requiredString('alt', 'Bildbeschreibung / Bildunterschrift'),
+                stringField('alt', 'Bildbeschreibung / Bildunterschrift'),
                 {
                   name: 'fit',
                   title: 'Vorschaubild',
@@ -168,8 +163,8 @@ export default {
         },
       ],
     },
-    requiredString('seoTitle', 'Seitentitel', { group: 'seo' }),
-    requiredText('seoDescription', 'Meta-Beschreibung', 3, { group: 'seo' }),
+    stringField('seoTitle', 'Seitentitel', { group: 'seo' }),
+    textField('seoDescription', 'Meta-Beschreibung', 3, { group: 'seo' }),
     {
       name: 'seoImage',
       title: 'Social-Vorschaubild',
@@ -192,10 +187,10 @@ export default {
       type: 'object',
       group: 'navigation',
       fields: [
-        requiredString('navigationLabel', 'Navigationsbezeichnung'),
+        stringField('navigationLabel', 'Navigationsbezeichnung'),
         navigationLinks('links', 'Navigationslinks'),
-        requiredString('contactLabel', 'Kontaktbutton'),
-        requiredString('whatsappLabel', 'Barrierefreie WhatsApp-Beschriftung'),
+        stringField('contactLabel', 'Kontaktbutton'),
+        stringField('whatsappLabel', 'Barrierefreie WhatsApp-Beschriftung'),
       ],
     },
     {
@@ -206,7 +201,7 @@ export default {
       description:
         'Erscheint automatisch nach dem Hero. Beschriftungen und Reihenfolge sind hier änderbar.',
       fields: [
-        requiredString('label', 'Navigationsbezeichnung'),
+        stringField('label', 'Navigationsbezeichnung'),
         navigationLinks('links', 'Vier oder fünf Navigationsziele', { mobile: true }),
       ],
     },
@@ -228,7 +223,7 @@ export default {
               ? 'Freie Fläche links für den Text. Die Seite erzeugt WebP-Größen automatisch.'
               : 'Freie Fläche oben für den Text. Wird bis 760 Pixel Bildschirmbreite verwendet.',
         })),
-        requiredString('imageAlt', 'Alternativtext der Hero-Grafiken'),
+        stringField('imageAlt', 'Alternativtext der Hero-Grafiken'),
         { name: 'eyebrow', title: 'Hinweis über der Hauptüberschrift', type: 'string' },
         { name: 'aboutLinkLabel', title: 'Alex-Leiste: Link zur Über-mich-Seite', type: 'string' },
         {
@@ -237,8 +232,8 @@ export default {
           type: 'string',
           hidden: true,
         },
-        requiredString('personTitle', 'Alex-Leiste: Überschrift'),
-        requiredText('personIntro', 'Alex-Leiste: Kurztext', 2),
+        stringField('personTitle', 'Alex-Leiste: Überschrift'),
+        textField('personIntro', 'Alex-Leiste: Kurztext', 2),
         { name: 'moreLabel', title: 'Früherer Link zu „Über Alex“', type: 'string', hidden: true },
         {
           name: 'portrait',
@@ -248,9 +243,9 @@ export default {
           fields: [{ name: 'alt', title: 'Alt-Text', type: 'string' }],
           validation: (R) => R.required(),
         },
-        requiredString('headline', 'Hauptüberschrift'),
-        requiredString('headlineAccent', 'Hervorgehobene zweite Zeile'),
-        requiredText('quote', 'Einleitung', 2),
+        stringField('headline', 'Hauptüberschrift'),
+        stringField('headlineAccent', 'Hervorgehobene zweite Zeile'),
+        textField('quote', 'Einleitung', 2),
         {
           name: 'note',
           title: 'Zusatzzeile mit Lieferwagen-Symbol (optional)',
@@ -258,11 +253,11 @@ export default {
           description:
             'z. B. „Deutschlandweite Lieferung inklusive.“ Leer = keine Zeile. Kurz halten: Auf dem Handy steht der Text über dem Foto.',
         },
-        requiredString('phoneLabel', 'Telefon-Button'),
-        requiredString('whatsappLabel', 'WhatsApp-Button'),
-        requiredString('whatsappLinkLabel', 'WhatsApp-Link unter dem Hero-Button'),
-        requiredString('vehiclesLinkLabel', 'Hauptbutton: Sprung zu den Fahrzeugen'),
-        requiredString('ctaLabel', 'Zweiter Button: Anfrage'),
+        stringField('phoneLabel', 'Telefon-Button'),
+        stringField('whatsappLabel', 'WhatsApp-Button'),
+        stringField('whatsappLinkLabel', 'WhatsApp-Link unter dem Hero-Button'),
+        stringField('vehiclesLinkLabel', 'Hauptbutton: Sprung zu den Fahrzeugen'),
+        stringField('ctaLabel', 'Zweiter Button: Anfrage'),
       ],
     },
     {
@@ -272,7 +267,7 @@ export default {
       group: 'offers',
       fields: [
         { name: 'ctaLabel', title: 'Button „Anderes Fahrzeug anfragen“', type: 'string' },
-        requiredString('cardCtaLabel', 'Standard-Button auf den Kacheln', {
+        stringField('cardCtaLabel', 'Standard-Button auf den Kacheln', {
           description: 'Gilt für Fahrzeuge ohne eigenen Button-Text, z. B. „Angebot anfragen“.',
         }),
         // Fields of the removed slider and vehicle dialog; kept so stored values stay valid.
@@ -285,7 +280,7 @@ export default {
           'allLabel',
           'sheetSubtitle',
         ].map((name) => ({ name, title: `Früher: ${name}`, type: 'string', hidden: true })),
-        requiredString('priceLabel', 'Preisbezeichnung'),
+        stringField('priceLabel', 'Preisbezeichnung'),
       ],
     },
     {
@@ -295,9 +290,9 @@ export default {
       group: 'intro',
       fields: [
         { name: 'eyebrow', title: 'Hinweis über der Überschrift (optional)', type: 'string' },
-        requiredText('heading', 'Überschrift über den Fahrzeugen', 2),
-        requiredText('text', 'Kurzer Satz neben der Überschrift', 2),
-        requiredString('promisesLabel', 'Bezeichnung der Vorteilsleiste'),
+        textField('heading', 'Überschrift über den Fahrzeugen', 2),
+        textField('text', 'Kurzer Satz neben der Überschrift', 2),
+        stringField('promisesLabel', 'Bezeichnung der Vorteilsleiste'),
         ...['promises', 'benefits'].map((name) => ({
           name,
           title: name === 'promises' ? 'Leiste unter dem Hero' : 'Drei Vorteile',
@@ -309,11 +304,11 @@ export default {
             {
               type: 'object',
               fields: [
-                requiredString('title', 'Titel'),
-                requiredText('text', 'Text', 2),
+                stringField('title', 'Titel'),
+                textField('text', 'Text', 2),
                 ...(name === 'benefits'
                   ? [
-                      requiredString('icon', 'Symbol', {
+                      stringField('icon', 'Symbol', {
                         options: {
                           list: [
                             { title: 'Uhr', value: 'clock' },
@@ -336,8 +331,8 @@ export default {
       type: 'object',
       group: 'process',
       fields: [
-        requiredString('heading', 'Überschrift'),
-        requiredText('intro', 'Einleitung', 2),
+        stringField('heading', 'Überschrift'),
+        textField('intro', 'Einleitung', 2),
         {
           name: 'steps',
           title: 'Schritte (3 bis 5)',
@@ -347,13 +342,13 @@ export default {
           of: [
             {
               type: 'object',
-              fields: [requiredString('title', 'Titel'), requiredText('text', 'Text', 3)],
+              fields: [stringField('title', 'Titel'), textField('text', 'Text', 3)],
               preview: { select: { title: 'title', subtitle: 'text' } },
             },
           ],
         },
-        requiredString('ctaLabel', 'Button'),
-        requiredString('finePrint', 'Hinweis unter dem Button'),
+        stringField('ctaLabel', 'Button'),
+        stringField('finePrint', 'Hinweis unter dem Button'),
       ],
     },
     {
@@ -362,9 +357,9 @@ export default {
       type: 'object',
       group: 'finance',
       fields: [
-        requiredString('heading', 'Überschrift'),
-        requiredText('intro', 'Einleitung', 3),
-        requiredString('comparisonLabel', 'Text zwischen den Möglichkeiten'),
+        stringField('heading', 'Überschrift'),
+        textField('intro', 'Einleitung', 3),
+        stringField('comparisonLabel', 'Text zwischen den Möglichkeiten'),
         {
           name: 'ways',
           title: 'Möglichkeiten',
@@ -395,9 +390,9 @@ export default {
                   },
                   validation: (R) => R.required(),
                 },
-                requiredString('tag', 'Kategorie-Zeile'),
-                requiredString('title', 'Titel'),
-                requiredText('intro', 'Einleitung', 3),
+                stringField('tag', 'Kategorie-Zeile'),
+                stringField('title', 'Titel'),
+                textField('intro', 'Einleitung', 3),
                 {
                   name: 'pros',
                   title: 'Vorteile',
@@ -405,18 +400,18 @@ export default {
                   of: [{ type: 'string' }],
                   validation: (R) => R.required().min(1),
                 },
-                requiredText('fit', 'Für wen passt es?', 3),
+                textField('fit', 'Für wen passt es?', 3),
               ],
               preview: { select: { title: 'title', subtitle: 'tag' } },
             },
           ],
         },
-        requiredString('compareLabel', 'Aufklapp-Zeile für den Vergleich'),
-        requiredString('helpHeading', 'Beratungs-Überschrift'),
-        requiredText('helpText', 'Beratungs-Text', 3),
-        requiredString('ctaLabel', 'Beratungs-Button'),
-        requiredString('finePrint', 'Hinweis unter dem Button'),
-        requiredText('legal', 'Rechtlicher Hinweis', 3),
+        stringField('compareLabel', 'Aufklapp-Zeile für den Vergleich'),
+        stringField('helpHeading', 'Beratungs-Überschrift'),
+        textField('helpText', 'Beratungs-Text', 3),
+        stringField('ctaLabel', 'Beratungs-Button'),
+        stringField('finePrint', 'Hinweis unter dem Button'),
+        textField('legal', 'Rechtlicher Hinweis', 3),
       ],
     },
     {
@@ -425,8 +420,8 @@ export default {
       type: 'object',
       hidden: true,
       fields: [
-        requiredString('title', 'Überschrift'),
-        requiredString('subtitle', 'Untertitel'),
+        stringField('title', 'Überschrift'),
+        stringField('subtitle', 'Untertitel'),
         {
           name: 'image',
           title: 'Bild',
@@ -435,7 +430,7 @@ export default {
           fields: [{ name: 'alt', title: 'Alt-Text', type: 'string' }],
           validation: (R) => R.required(),
         },
-        requiredText('lead', 'Hervorgehobener Einstieg', 2),
+        textField('lead', 'Hervorgehobener Einstieg', 2),
         {
           name: 'paragraphs',
           title: 'Absätze',
@@ -443,8 +438,8 @@ export default {
           of: [{ type: 'text', rows: 3 }],
           validation: (R) => R.required().min(1),
         },
-        requiredString('kicker', 'Zwischenüberschrift'),
-        requiredString('ruleHeading', 'Vorteils-Überschrift'),
+        stringField('kicker', 'Zwischenüberschrift'),
+        stringField('ruleHeading', 'Vorteils-Überschrift'),
         {
           name: 'ruleParagraphs',
           title: 'Vorteils-Absätze',
@@ -452,8 +447,8 @@ export default {
           of: [{ type: 'text', rows: 3 }],
           validation: (R) => R.required().min(1),
         },
-        requiredString('ruleEmphasis', 'Hervorgehobener Schlusssatz'),
-        requiredString('ctaLabel', 'Button'),
+        stringField('ruleEmphasis', 'Hervorgehobener Schlusssatz'),
+        stringField('ctaLabel', 'Button'),
       ],
     },
     {
@@ -462,9 +457,9 @@ export default {
       type: 'object',
       group: 'form',
       fields: [
-        requiredString('title', 'Überschrift'),
-        requiredString('subtitle', 'Untertitel'),
-        requiredString('topicLabel', 'Themen-Frage'),
+        stringField('title', 'Überschrift'),
+        stringField('subtitle', 'Untertitel'),
+        stringField('topicLabel', 'Themen-Frage'),
         {
           name: 'topics',
           title: 'Themen',
@@ -474,7 +469,7 @@ export default {
             {
               type: 'object',
               fields: [
-                requiredString('id', 'Technischer Wert', {
+                stringField('id', 'Technischer Wert', {
                   options: {
                     list: [
                       { title: 'Firmenwagen', value: 'firma' },
@@ -485,32 +480,32 @@ export default {
                     ],
                   },
                 }),
-                requiredString('label', 'Bezeichnung'),
+                stringField('label', 'Bezeichnung'),
               ],
               preview: { select: { title: 'label', subtitle: 'id' } },
             },
           ],
         },
-        requiredString('channelLabel', 'Kontaktweg-Frage'),
-        requiredString('phoneOption', 'Telefon-Option'),
-        requiredString('whatsappOption', 'WhatsApp-Option'),
-        requiredString('phoneLabel', 'Beschriftung Telefonnummer'),
-        requiredString('whatsappLabel', 'Beschriftung WhatsApp-Nummer'),
-        requiredString('phonePlaceholder', 'Platzhalter Telefonnummer'),
-        requiredString('missingContactError', 'Fehler bei fehlender Nummer'),
-        requiredString('messageLabel', 'Beschriftung Nachricht'),
-        requiredString('optionalLabel', 'Optional-Hinweis'),
-        requiredString('messagePlaceholder', 'Platzhalter Nachricht'),
-        requiredString('submitLabel', 'Senden-Button'),
-        requiredString('submittingLabel', 'Text beim Senden'),
-        requiredString('finePrint', 'Hinweis unter dem Button'),
-        requiredString('contextPrefix', 'Fahrzeugbezug-Präfix'),
-        requiredString('sendErrorSuffix', 'Zusatz bei Sendefehler'),
-        requiredString('successTitle', 'Erfolgs-Überschrift'),
-        requiredText('successText', 'Erfolgs-Text', 2),
-        requiredString('doneLabel', 'Abschluss-Button'),
-        requiredString('closeLabel', 'Barrierefreier Text für Schließen'),
-        requiredString('removeContextLabel', 'Barrierefreier Text für Fahrzeugbezug entfernen'),
+        stringField('channelLabel', 'Kontaktweg-Frage'),
+        stringField('phoneOption', 'Telefon-Option'),
+        stringField('whatsappOption', 'WhatsApp-Option'),
+        stringField('phoneLabel', 'Beschriftung Telefonnummer'),
+        stringField('whatsappLabel', 'Beschriftung WhatsApp-Nummer'),
+        stringField('phonePlaceholder', 'Platzhalter Telefonnummer'),
+        stringField('missingContactError', 'Fehler bei fehlender Nummer'),
+        stringField('messageLabel', 'Beschriftung Nachricht'),
+        stringField('optionalLabel', 'Optional-Hinweis'),
+        stringField('messagePlaceholder', 'Platzhalter Nachricht'),
+        stringField('submitLabel', 'Senden-Button'),
+        stringField('submittingLabel', 'Text beim Senden'),
+        stringField('finePrint', 'Hinweis unter dem Button'),
+        stringField('contextPrefix', 'Fahrzeugbezug-Präfix'),
+        stringField('sendErrorSuffix', 'Zusatz bei Sendefehler'),
+        stringField('successTitle', 'Erfolgs-Überschrift'),
+        textField('successText', 'Erfolgs-Text', 2),
+        stringField('doneLabel', 'Abschluss-Button'),
+        stringField('closeLabel', 'Barrierefreier Text für Schließen'),
+        stringField('removeContextLabel', 'Barrierefreier Text für Fahrzeugbezug entfernen'),
       ],
     },
     {
@@ -536,10 +531,10 @@ export default {
           type: 'string',
           validation: (R) => R.regex(/^[\w-]+$/),
         },
-        requiredString('eyebrow', 'Hinweis über der Überschrift'),
-        requiredText('heading', 'Überschrift', 2),
-        requiredText('intro', 'Einleitung', 2),
-        requiredString('sourceLabel', 'Bezeichnung der Quelle'),
+        stringField('eyebrow', 'Hinweis über der Überschrift'),
+        textField('heading', 'Überschrift', 2),
+        textField('intro', 'Einleitung', 2),
+        stringField('sourceLabel', 'Bezeichnung der Quelle'),
         {
           name: 'sourceUrl',
           title: 'Google-Unternehmenseintrag / alle Rezensionen',
@@ -577,7 +572,7 @@ export default {
             {
               type: 'object',
               fields: [
-                requiredString('name', 'Name wie bei Google'),
+                stringField('name', 'Name wie bei Google'),
                 {
                   name: 'rating',
                   title: 'Sterne',
@@ -585,7 +580,7 @@ export default {
                   initialValue: 5,
                   validation: (R) => R.required().min(5).max(5).integer(),
                 },
-                requiredText('text', 'Originaltext', 6),
+                textField('text', 'Originaltext', 6),
                 {
                   name: 'date',
                   title: 'Datum der Rezension',
@@ -604,8 +599,8 @@ export default {
             },
           ],
         },
-        requiredString('selectionLabel', 'Hinweis zur 5-Sterne-Auswahl'),
-        requiredString('allLabel', 'Link zu allen Rezensionen'),
+        stringField('selectionLabel', 'Hinweis zur 5-Sterne-Auswahl'),
+        stringField('allLabel', 'Link zu allen Rezensionen'),
         {
           name: 'writeUrl',
           title: 'Direktlink zum Bewerten',
@@ -614,15 +609,15 @@ export default {
             'Google-Link „Um Rezensionen bitten“ eintragen. Ohne Link wird kein Bewertungsbutton angezeigt.',
           validation: (R) => R.uri({ scheme: ['https'] }),
         },
-        requiredString('writeLabel', 'Button zum Bewerten'),
-        requiredText('emptyText', 'Text, solange noch keine Rezensionen hinterlegt sind', 2),
-        requiredText('note', 'Quellenhinweis unter der Auswahl', 2),
-        requiredString('trackLabel', 'Slider-Bezeichnung für Screenreader'),
-        requiredString('previousLabel', 'Zurück-Pfeil'),
-        requiredString('nextLabel', 'Weiter-Pfeil'),
-        requiredString('readMoreLabel', 'Langen Text öffnen'),
-        requiredString('readLessLabel', 'Langen Text schließen'),
-        requiredString('originalLabel', 'Link zum Original'),
+        stringField('writeLabel', 'Button zum Bewerten'),
+        textField('emptyText', 'Text, solange noch keine Rezensionen hinterlegt sind', 2),
+        textField('note', 'Quellenhinweis unter der Auswahl', 2),
+        stringField('trackLabel', 'Slider-Bezeichnung für Screenreader'),
+        stringField('previousLabel', 'Zurück-Pfeil'),
+        stringField('nextLabel', 'Weiter-Pfeil'),
+        stringField('readMoreLabel', 'Langen Text öffnen'),
+        stringField('readLessLabel', 'Langen Text schließen'),
+        stringField('originalLabel', 'Link zum Original'),
       ],
     },
     {
@@ -631,25 +626,25 @@ export default {
       type: 'object',
       group: 'footer',
       fields: [
-        requiredString('eyebrow', 'Hinweis über der Kontakt-Überschrift'),
-        requiredString('heading', 'Kontakt-Überschrift'),
-        requiredText('intro', 'Persönliche Einladung', 2),
-        requiredString('ctaLabel', 'Hauptbutton'),
-        requiredString('whatsappCtaLabel', 'Großer WhatsApp-Button'),
-        requiredString('finePrint', 'Hinweis unter den Buttons'),
-        requiredString('brandTagline', 'Text unter dem Markennamen'),
-        requiredString('contactLabel', 'Überschrift Kontaktdaten'),
-        requiredString('exploreLabel', 'Überschrift Entdecken-Links'),
-        requiredString('moreLabel', 'Überschrift weitere Links'),
-        requiredText('tagline', 'Persönlicher Abschlusssatz', 2),
-        requiredString('whatsappLabel', 'WhatsApp-Link'),
-        requiredString('instagramLabel', 'Instagram-Linktext'),
-        requiredString('navigationLabel', 'Navigationsbezeichnung'),
+        stringField('eyebrow', 'Hinweis über der Kontakt-Überschrift'),
+        stringField('heading', 'Kontakt-Überschrift'),
+        textField('intro', 'Persönliche Einladung', 2),
+        stringField('ctaLabel', 'Hauptbutton'),
+        stringField('whatsappCtaLabel', 'Großer WhatsApp-Button'),
+        stringField('finePrint', 'Hinweis unter den Buttons'),
+        stringField('brandTagline', 'Text unter dem Markennamen'),
+        stringField('contactLabel', 'Überschrift Kontaktdaten'),
+        stringField('exploreLabel', 'Überschrift Entdecken-Links'),
+        stringField('moreLabel', 'Überschrift weitere Links'),
+        textField('tagline', 'Persönlicher Abschlusssatz', 2),
+        stringField('whatsappLabel', 'WhatsApp-Link'),
+        stringField('instagramLabel', 'Instagram-Linktext'),
+        stringField('navigationLabel', 'Navigationsbezeichnung'),
         navigationLinks('links', 'Footer-Links', { footer: true }),
-        requiredString('phonePrefix', 'Präfix Telefon'),
-        requiredString('emailPrefix', 'Präfix E-Mail'),
-        requiredString('legalLabel', 'Link Impressum'),
-        requiredString('privacyLabel', 'Link Datenschutz'),
+        stringField('phonePrefix', 'Präfix Telefon'),
+        stringField('emailPrefix', 'Präfix E-Mail'),
+        stringField('legalLabel', 'Link Impressum'),
+        stringField('privacyLabel', 'Link Datenschutz'),
       ],
     },
     {
@@ -658,7 +653,7 @@ export default {
       type: 'object',
       group: 'footer',
       fields: [
-        requiredString('title', 'Überschrift'),
+        stringField('title', 'Überschrift'),
         {
           name: 'items',
           title: 'Fragen',
@@ -666,7 +661,7 @@ export default {
           of: [
             {
               type: 'object',
-              fields: [requiredString('question', 'Frage'), requiredText('answer', 'Antwort')],
+              fields: [stringField('question', 'Frage'), textField('answer', 'Antwort')],
             },
           ],
         },

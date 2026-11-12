@@ -4,7 +4,6 @@ const text = (name, title, group, multiline = false) => ({
   group,
   type: multiline ? 'text' : 'string',
   ...(multiline ? { rows: 3 } : {}),
-  validation: (R) => R.required(),
 });
 
 const paragraphs = (name, title) => ({
