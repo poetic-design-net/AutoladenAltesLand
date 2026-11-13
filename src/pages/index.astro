@@ -13,6 +13,7 @@ import {
   SlidersHorizontalIcon,
   SteeringIcon,
   RefreshIcon,
+  Key01Icon,
   CheckmarkBadge01Icon,
   DeliveryTruck01Icon,
   TentIcon,
@@ -58,7 +59,7 @@ const stepIcons: Record<StepIcon, typeof BubbleChatIcon> = {
 const route = processRoute(page.process.steps.length);
 const steps = page.process.steps.map((step, index) => ({ ...route.stops[index], ...step }));
 const road = route.path;
-const wayIcons = { leasing: RefreshIcon, finanzierung: CheckmarkBadge01Icon };
+const wayIcons = { leasing: RefreshIcon, finanzierung: CheckmarkBadge01Icon, mietkauf: Key01Icon };
 const ways = page.finance.ways.map((way) => ({
   ...way,
   icon: wayIcons[way.id as keyof typeof wayIcons] ?? CheckmarkBadge01Icon,
@@ -404,7 +405,7 @@ const ways = page.finance.ways.map((way) => ({
             {page.finance.compareLabel}
             <Icon icon={ArrowRight02Icon} />
           </summary>
-          <div class="ways">
+          <div class="ways" style={`--ways:${ways.length}`}>
             {
               ways.map((w) => (
                 <article class="way">
@@ -415,7 +416,7 @@ const ways = page.finance.ways.map((way) => ({
                   <h3>{w.title}</h3>
                   <p class="way-intro">{w.intro}</p>
                   <ul class="way-pros">
-                    {w.pros.map((x) => (
+                    {(w.pros ?? []).filter(Boolean).map((x) => (
                       <li>
                         <Icon icon={Tick02Icon} />
                         {x}
@@ -426,7 +427,11 @@ const ways = page.finance.ways.map((way) => ({
                 </article>
               ))
             }
-            <span class="oder" aria-hidden="true">{page.finance.comparisonLabel}</span>
+            {ways.slice(1).map((_, i) => (
+              <span class="oder" aria-hidden="true" style={`--at:${(i + 1) / ways.length}`}>
+                {page.finance.comparisonLabel}
+              </span>
+            ))}
           </div>
           <div class="fin-help">
             <div>
@@ -1651,7 +1656,8 @@ const ways = page.finance.ways.map((way) => ({
   .ways {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* Zwei oder drei Wege aus Sanity (Startseite → Leasing & Finanzierung). */
+    grid-template-columns: repeat(var(--ways, 2), minmax(0, 1fr));
     border-radius: 30px;
     background: var(--surface);
     box-shadow:
@@ -1673,7 +1679,7 @@ const ways = page.finance.ways.map((way) => ({
   }
   .oder {
     position: absolute;
-    left: 50%;
+    left: calc(var(--at, 0.5) * 100%);
     top: 40px;
     transform: translateX(-50%);
     padding: 4px 11px;
@@ -1846,6 +1852,9 @@ const ways = page.finance.ways.map((way) => ({
   @media (max-width: 1100px) {
     .way {
       padding: 32px 30px;
+    }
+    .way h3 {
+      font-size: 24px;
     }
   }
 

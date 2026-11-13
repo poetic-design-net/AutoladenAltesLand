@@ -366,13 +366,17 @@ export default {
           type: 'array',
           validation: (R) =>
             R.required()
-              .length(2)
+              .min(2)
+              .max(3)
               .custom((items) => {
                 const ids = items?.map(({ id }) => id) ?? [];
+                if (new Set(ids).size !== ids.length) return 'Jede Art darf nur einmal vorkommen.';
                 return ids.includes('leasing') && ids.includes('finanzierung')
                   ? true
-                  : 'Leasing und Finanzierung müssen jeweils genau einmal vorkommen.';
+                  : 'Leasing und Finanzierung müssen enthalten sein.';
               }),
+          description:
+            'Zwei oder drei Möglichkeiten nebeneinander, z. B. Leasing, Finanzierung und Mietkauf. Reihenfolge per Ziehen.',
           of: [
             {
               type: 'object',
@@ -385,6 +389,7 @@ export default {
                     list: [
                       { title: 'Leasing', value: 'leasing' },
                       { title: 'Finanzierung', value: 'finanzierung' },
+                      { title: 'Mietkauf', value: 'mietkauf' },
                     ],
                     layout: 'radio',
                   },
